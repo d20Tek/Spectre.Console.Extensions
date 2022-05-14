@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".items", ".items", "{1E2AFA
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
 		README.md = README.md
+		ReleaseNotes.md = ReleaseNotes.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D20Tek.Spectre.Console.Extensions", "D20Tek.Spectre.Console.Extensions\D20Tek.Spectre.Console.Extensions.csproj", "{D01A1C74-5D45-4761-8BD2-B34004D6C708}"
