@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Basic.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "default"
+    }
+  }
+}
