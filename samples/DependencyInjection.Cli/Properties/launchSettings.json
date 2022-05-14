@@ -2,7 +2,7 @@
   "profiles": {
     "DependencyInjection.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "default"
+      "commandLineArgs": ""
     }
   }
 }
