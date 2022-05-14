@@ -15,4 +15,6 @@
     <ProjectReference Include="..\..\D20Tek.Spectre.Console.Extensions\D20Tek.Spectre.Console.Extensions.csproj" />
   </ItemGroup>
 
+  <Import Project="..\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems" Label="Shared" />
+
 </Project>

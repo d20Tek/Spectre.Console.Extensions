@@ -1,10 +1,10 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
+using D20Tek.Samples.Common.Commands;
+using D20Tek.Samples.Common.Services;
 using D20Tek.Spectre.Console.Extensions;
 using D20Tek.Spectre.Console.Extensions.Injection;
-using DependencyInjection.Cli.Commands;
-using DependencyInjection.Cli.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 

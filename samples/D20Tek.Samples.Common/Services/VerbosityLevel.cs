@@ -2,7 +2,7 @@
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 
-namespace DependencyInjection.Cli.Commands
+namespace D20Tek.Samples.Common.Services
 {
     public enum VerbosityLevel
     {

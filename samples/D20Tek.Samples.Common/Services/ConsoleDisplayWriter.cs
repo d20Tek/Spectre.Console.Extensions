@@ -1,11 +1,9 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-
-using DependencyInjection.Cli.Commands;
 using Spectre.Console;
 
-namespace DependencyInjection.Cli.Services
+namespace D20Tek.Samples.Common.Services
 {
     internal class ConsoleDisplayWriter : IDisplayWriter
     {

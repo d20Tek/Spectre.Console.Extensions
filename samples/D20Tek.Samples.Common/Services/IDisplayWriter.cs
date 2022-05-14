@@ -1,9 +1,8 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using DependencyInjection.Cli.Commands;
 
-namespace DependencyInjection.Cli.Services
+namespace D20Tek.Samples.Common.Services
 {
     public interface IDisplayWriter
     {

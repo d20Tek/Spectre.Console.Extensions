@@ -1,10 +1,11 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
+using D20Tek.Samples.Common.Services;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 
-namespace DependencyInjection.Cli.Commands
+namespace D20Tek.Samples.Common.Commands
 {
     public class BaseSettings : CommandSettings
     {

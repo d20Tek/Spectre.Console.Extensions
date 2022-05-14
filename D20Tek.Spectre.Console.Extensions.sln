@@ -17,7 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyInjection.Cli", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{7DADA67F-CBE3-4664-B544-7D0FEA8E5081}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "D20Tek.Samples.Common", "samples\D20Tek.Samples.Common\D20Tek.Samples.Common.shproj", "{4F5494AA-3286-4E53-986D-A638D2BB2CCC}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{4f5494aa-3286-4e53-986d-a638d2bb2ccc}*SharedItemsImports = 13
+		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{db25f4aa-2913-4396-9fd0-d674b75a5543}*SharedItemsImports = 5
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -41,6 +47,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DB25F4AA-2913-4396-9FD0-D674B75A5543} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
+		{4F5494AA-3286-4E53-986D-A638D2BB2CCC} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7D1641E6-17C4-4467-946F-C057C45F4A62}

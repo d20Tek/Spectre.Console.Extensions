@@ -1,9 +1,9 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
+using D20Tek.Samples.Common.Commands;
 using D20Tek.Spectre.Console.Extensions.Injection;
 using DependencyInjection.Cli;
-using DependencyInjection.Cli.Commands;
 
 namespace D20Tek.CountryService.Cli
 {
