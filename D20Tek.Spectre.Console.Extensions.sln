@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D20Tek.Spectre.Console.Exte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D20Tek.Spectre.Console.Extensions.UnitTests", "D20Tek.Spectre.Console.Extensions.UnitTests\D20Tek.Spectre.Console.Extensions.UnitTests.csproj", "{75EE79C8-D58B-4FBB-9235-F8824D56F632}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyInjection.Cli", "samples\DependencyInjection.Cli\DependencyInjection.Cli.csproj", "{DB25F4AA-2913-4396-9FD0-D674B75A5543}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{7DADA67F-CBE3-4664-B544-7D0FEA8E5081}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +31,16 @@ Global
 		{75EE79C8-D58B-4FBB-9235-F8824D56F632}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75EE79C8-D58B-4FBB-9235-F8824D56F632}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75EE79C8-D58B-4FBB-9235-F8824D56F632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB25F4AA-2913-4396-9FD0-D674B75A5543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB25F4AA-2913-4396-9FD0-D674B75A5543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB25F4AA-2913-4396-9FD0-D674B75A5543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB25F4AA-2913-4396-9FD0-D674B75A5543}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DB25F4AA-2913-4396-9FD0-D674B75A5543} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7D1641E6-17C4-4467-946F-C057C45F4A62}
