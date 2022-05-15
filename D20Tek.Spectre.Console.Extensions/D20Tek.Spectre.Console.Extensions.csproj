@@ -31,6 +31,7 @@ Includes dependency injection services for the Microsoft.Extensions.DependencyIn
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Ninject" Version="3.3.5" />
     <PackageReference Include="Spectre.Console" Version="0.44.0" />
   </ItemGroup>
 

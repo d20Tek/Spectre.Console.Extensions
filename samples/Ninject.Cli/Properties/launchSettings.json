@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Ninject.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "-h"
+    }
+  }
+}

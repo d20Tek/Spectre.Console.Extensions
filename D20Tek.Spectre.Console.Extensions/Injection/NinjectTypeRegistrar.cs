@@ -1,27 +1,26 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using Microsoft.Extensions.DependencyInjection;
+using Ninject;
 using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions.Injection
 {
     /// <summary>
-    /// Type registry for Spectre.Console that uses the Microsoft.Extensions.DependencyInjection
+    /// Type registry for Spectre.Console that uses the Ninject
     /// framework to register types with the DI engine.
     /// </summary>
-    public sealed class DependencyInjectionTypeRegistrar : ITypeRegistrar
+    public sealed class NinjectTypeRegistrar : ITypeRegistrar
     {
-        private readonly IServiceCollection _builder;
+        private readonly StandardKernel _kernel;
 
         /// <summary>
-        /// Constructor that takes a service collection instance.
+        /// Constructor that takes a standard kernel instance.
         /// </summary>
-        /// <param name="builder">Service collection builder to use for registering types.</param>
-        public DependencyInjectionTypeRegistrar(IServiceCollection builder)
+        /// <param name="kernel">Service builder to use for registering types.</param>
+        public NinjectTypeRegistrar(StandardKernel kernel)
         {
-            ArgumentNullException.ThrowIfNull(builder, nameof(builder));
-            _builder = builder;
+            this._kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
         }
 
         /// <summary>
@@ -31,8 +30,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// <returns>A type resolver.</returns>
         public ITypeResolver Build()
         {
-            var provider = _builder.BuildServiceProvider();
-            return new DependencyInjectionTypeResolver(provider);
+            return new NinjectTypeResolver(_kernel);
         }
 
         /// <summary>
@@ -45,7 +43,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(implementation, nameof(implementation));
 
-            _builder.AddSingleton(service, implementation);
+            this._kernel.Bind(service).To(implementation);
         }
 
         /// <summary>
@@ -58,7 +56,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(implementation, nameof(implementation));
 
-            _builder.AddSingleton(service, implementation);
+            this._kernel.Bind(service).ToConstant(implementation);
         }
 
         /// <summary>
@@ -71,7 +69,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(factoryMethod, nameof(factoryMethod));
 
-            _builder.AddSingleton(service, (provider) => factoryMethod());
+            this._kernel.Bind(service).ToMethod((context) => factoryMethod());
         }
     }
 }
