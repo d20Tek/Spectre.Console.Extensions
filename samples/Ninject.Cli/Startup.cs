@@ -5,28 +5,27 @@ using D20Tek.Samples.Common.Commands;
 using D20Tek.Samples.Common.Services;
 using D20Tek.Spectre.Console.Extensions;
 using D20Tek.Spectre.Console.Extensions.Injection;
-using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 
-namespace DependencyInjection.Cli
+namespace Ninject.Cli
 {
-    internal class Startup : StartupBase<IServiceCollection>
+    internal class Startup : StartupBase<StandardKernel>
     {
-        public override ITypeRegistrar ConfigureServices(IServiceCollection services)
+        public override ITypeRegistrar ConfigureServices(StandardKernel kernel)
         {
             // Create a type registrar and register any dependencies.
             // A type registrar is an adapter for a DI framework.
 
             // register services here...
-            services.AddSingleton<IDisplayWriter, ConsoleDisplayWriter>();
+            kernel.Bind<IDisplayWriter>().To<ConsoleDisplayWriter>();
 
-            return new DependencyInjectionTypeRegistrar(services);
+            return new NinjectTypeRegistrar(kernel);
         }
 
         public override IConfigurator ConfigureCommands(IConfigurator config)
         {
             config.CaseSensitivity(CaseSensitivity.None);
-            config.SetApplicationName("DependencyInjection.Cli");
+            config.SetApplicationName("Ninject.Cli");
             config.ValidateExamples();
 
             config.AddCommand<DefaultCommand>("default")

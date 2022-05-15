@@ -1,7 +1,7 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using Microsoft.Extensions.DependencyInjection;
+using Ninject;
 using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions.Injection
@@ -10,7 +10,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
     /// Factory class for creating configured CommandApp instances that use
     /// Microsoft.Extensions.DependencyInjection framework.
     /// </summary>
-    public static class DependencyInjectionFactory
+    public static class NinjectFactory
     {
         /// <summary>
         /// Factory method to create a CommandApp with the registered services and 
@@ -21,9 +21,9 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// </typeparam>
         /// <returns>Fully configured CommandApp.</returns>
         public static CommandApp CreateCommandApp<TStartup>()
-            where TStartup : StartupBase<IServiceCollection>, new()
+            where TStartup : StartupBase<StandardKernel>, new()
         {
-            return CommonDIFactory<TStartup, IServiceCollection>.CreateCommandApp(new ServiceCollection());
+            return CommonDIFactory<TStartup, StandardKernel>.CreateCommandApp(new StandardKernel());
         }
 
         /// <summary>
@@ -38,10 +38,10 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// </typeparam>
         /// <returns>Fully configured CommandApp.</returns>
         public static CommandApp<TDefaultCommand> CreateCommandApp<TStartup, TDefaultCommand>()
-            where TStartup : StartupBase<IServiceCollection>, new()
+            where TStartup : StartupBase<StandardKernel>, new()
             where TDefaultCommand : class, ICommand
         {
-            return CommonDIFactory<TStartup, IServiceCollection>.CreateCommandApp<TDefaultCommand>(new ServiceCollection());
+            return CommonDIFactory<TStartup, StandardKernel>.CreateCommandApp<TDefaultCommand>(new StandardKernel());
         }
     }
 }

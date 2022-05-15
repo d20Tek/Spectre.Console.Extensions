@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "DependencyInjection.Cli": {
+    "Ninject.Cli": {
       "commandName": "Project",
       "commandLineArgs": "-h"
     }

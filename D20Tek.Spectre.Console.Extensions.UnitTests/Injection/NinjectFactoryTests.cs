@@ -10,7 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
 {
     [TestClass]
-    public class DependencyInjectionFactoryTests
+    public class NinjectFactoryTests
     {
         public class TestCommand : Command
         {
@@ -27,7 +27,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
             // arrange
 
             // act
-            var app = DependencyInjectionFactory.CreateCommandApp<MockDIStartup>();
+            var app = NinjectFactory.CreateCommandApp<MockNinjectStartup>();
 
             // assert
             Assert.IsNotNull(app);
@@ -39,7 +39,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
             // arrange
 
             // act
-            var app = DependencyInjectionFactory.CreateCommandApp<MockDIStartup, TestCommand>();
+            var app = NinjectFactory.CreateCommandApp<MockNinjectStartup, TestCommand>();
 
             // assert
             Assert.IsNotNull(app);

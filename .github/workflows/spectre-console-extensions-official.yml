@@ -1,4 +1,4 @@
-name: Spectre.Console.Extensions Official
+name: official-build
 
 on:
   push:

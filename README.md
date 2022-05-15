@@ -1,19 +1,19 @@
 # d20Tek Spectre.Console Extensions
 [![CI Build](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-ci.yml/badge.svg)](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-ci.yml)
-[![Spectre.Console.Extensions Official](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-official.yml/badge.svg)](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-official.yml)
+[![Official Build](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-official.yml/badge.svg)](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-official.yml)
 [![NuGet Release](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/nuget-release.yml/badge.svg)](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/nuget-release.yml)
 
 ## Introduction
 This package provides extensions for common code and patterns when using Spectre.Console CLI app framework.
 [SpectreConsole](https://github.com/spectreconsole/spectre.console)
 
-The initial release contains implementations of ITypeRegistrar and ITypeResolver to integrate the Microsoft.Extensions.DependencyInjection framework with Spectre.Console.
+The initial releases contain implementations of ITypeRegistrar and ITypeResolver to integrate the Microsoft.Extensions.DependencyInjection and Ninject frameworks with Spectre.Console.
 For future releases, I will investigate integration with other DI frameworks.
 
 ## Installation
 This library is in NuGet package so it is easy to add to your project. To install this package into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
-PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.0.1
+PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.0.2
 ``` 
 
 To install in the Visual Studio UI, go to the Tools menu > "Manage NuGet Packages". Then search for D20Tek.Spectre.Console.Extensions and install it from there.
@@ -71,6 +71,7 @@ For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, plea
 
 * [Basic Cli with DI](samples/Basic.Cli) - full listing for code in the Usage section above.
 * [DependencyInjection.Cli](samples/DependencyInjection.Cli) - More elaborate use of Microsoft.Extensions.DependencyInjection registrar and resolver. Along with using the DependencyInjectionFactory to remove some of the creation complexity.
+* [Ninject.Cli](samples/Ninject.Cli) - Use the Ninject DI framework to build type registrar and resolver. Along with using the NinjectFactory to remove some of the creation complexity.
 
 ## Feedback
 If you use these libraries and have any feedback, bugs, or suggestions, please file them in the Issues section of this repository.
