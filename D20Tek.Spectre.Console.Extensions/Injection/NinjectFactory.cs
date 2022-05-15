@@ -1,7 +1,6 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using Microsoft.Extensions.DependencyInjection;
 using Ninject;
 using Spectre.Console.Cli;
 
@@ -11,7 +10,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
     /// Factory class for creating configured CommandApp instances that use
     /// Microsoft.Extensions.DependencyInjection framework.
     /// </summary>
-    public static class DependencyInjectionFactory
+    public static class NinjectFactory
     {
         /// <summary>
         /// Factory method to create a CommandApp with the registered services and 
@@ -22,7 +21,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// </typeparam>
         /// <returns>Fully configured CommandApp.</returns>
         public static CommandApp CreateCommandApp<TStartup>()
-            where TStartup : StartupBase<IServiceCollection>, new()
+            where TStartup : StartupBase<StandardKernel>, new()
         {
             // Create the DI container and its services.
             var (startup, registrar) = CreateConfiguredRegistrar<TStartup>();
@@ -48,7 +47,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// </typeparam>
         /// <returns>Fully configured CommandApp.</returns>
         public static CommandApp<TDefaultCommand> CreateCommandApp<TStartup, TDefaultCommand>()
-            where TStartup : StartupBase<IServiceCollection>, new()
+            where TStartup : StartupBase<StandardKernel>, new()
             where TDefaultCommand : class, ICommand
         {
             // Create the DI container and its services.
@@ -63,15 +62,15 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             return app;
         }
 
-        private static (StartupBase<IServiceCollection>, ITypeRegistrar) CreateConfiguredRegistrar<TStartup>()
-            where TStartup : StartupBase<IServiceCollection>, new()
+        private static (StartupBase<StandardKernel>, ITypeRegistrar) CreateConfiguredRegistrar<TStartup>()
+            where TStartup : StartupBase<StandardKernel>, new()
         {
             // Create the startup class instance from the app project.
             var startup = new TStartup();
-            var services = new ServiceCollection();
+            var kernel = new StandardKernel();
 
             // Configure all services with this DI framework.
-            var registrar = startup.ConfigureServices(services);
+            var registrar = startup.ConfigureServices(kernel);
 
             return (startup, registrar);
         }
