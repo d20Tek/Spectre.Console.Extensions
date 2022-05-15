@@ -1,4 +1,5 @@
 # d20Tek Spectre.Console Extensions
+[![Spectre.Console.Extensions CI](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-ci.yml/badge.svg)](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-ci.yml)
 
 ## Introduction
 This package provides extensions for common code and patterns when using Spectre.Console CLI app framework.
