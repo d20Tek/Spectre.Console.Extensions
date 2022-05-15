@@ -4,11 +4,11 @@
 This package provides extensions for common code and patterns when using Spectre.Console CLI app framework.
 [SpectreConsole](https://github.com/spectreconsole/spectre.console)
 
-The initial release contains implementations of ITypeRegistrar and ITypeResolver to integration the Microsoft.Extensions.DependencyInjection framework with Spectre.Console.
+The initial release contains implementations of ITypeRegistrar and ITypeResolver to integrate the Microsoft.Extensions.DependencyInjection framework with Spectre.Console.
 For future releases, I will investigate integration with other DI frameworks.
 
 ## Installation
-This library is in NuGet package so it is easy to add to your project. To install this packages into your solution, you can use the Package Manager. In PM, please use the following commands:
+This library is in NuGet package so it is easy to add to your project. To install this package into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
 PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.0.1
 ``` 
@@ -66,7 +66,7 @@ namespace D20Tek.CountryService.Cli
 ### Samples:
 For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, please review the following samples:
 
-* [Basic Cli with DI](samples/Basic.Cli) - full listing for code the Usage section.
+* [Basic Cli with DI](samples/Basic.Cli) - full listing for code in the Usage section above.
 * [DependencyInjection.Cli](samples/DependencyInjection.Cli) - More elaborate use of Microsoft.Extensions.DependencyInjection registrar and resolver. Along with using the DependencyInjectionFactory to remove some of the creation complexity.
 
 ## Feedback
