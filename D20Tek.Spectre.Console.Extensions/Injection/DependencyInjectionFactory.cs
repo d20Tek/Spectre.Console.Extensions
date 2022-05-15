@@ -2,7 +2,6 @@
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using Microsoft.Extensions.DependencyInjection;
-using Ninject;
 using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions.Injection
@@ -24,16 +23,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         public static CommandApp CreateCommandApp<TStartup>()
             where TStartup : StartupBase<IServiceCollection>, new()
         {
-            // Create the DI container and its services.
-            var (startup, registrar) = CreateConfiguredRegistrar<TStartup>();
-
-            // Create the CommandApp with the type registrar.
-            var app = new CommandApp(registrar);
-
-            // Configure any commands in the application.
-            app.Configure(config => startup.ConfigureCommands(config));
-
-            return app;
+            return CommonDIFactory<TStartup, IServiceCollection>.CreateCommandApp(new ServiceCollection());
         }
 
         /// <summary>
@@ -51,29 +41,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             where TStartup : StartupBase<IServiceCollection>, new()
             where TDefaultCommand : class, ICommand
         {
-            // Create the DI container and its services.
-            var (startup, registrar) = CreateConfiguredRegistrar<TStartup>();
-
-            // Create the CommandApp with specified command type and type registrar.
-            var app = new CommandApp<TDefaultCommand>(registrar);
-
-            // Configure any commands in the application.
-            app.Configure(config => startup.ConfigureCommands(config));
-
-            return app;
-        }
-
-        private static (StartupBase<IServiceCollection>, ITypeRegistrar) CreateConfiguredRegistrar<TStartup>()
-            where TStartup : StartupBase<IServiceCollection>, new()
-        {
-            // Create the startup class instance from the app project.
-            var startup = new TStartup();
-            var services = new ServiceCollection();
-
-            // Configure all services with this DI framework.
-            var registrar = startup.ConfigureServices(services);
-
-            return (startup, registrar);
+            return CommonDIFactory<TStartup, IServiceCollection>.CreateCommandApp<TDefaultCommand>(new ServiceCollection());
         }
     }
 }
