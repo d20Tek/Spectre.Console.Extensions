@@ -1,0 +1,71 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".items", ".items", "{1E2AFA48-704D-4E7B-8A90-BB8D79F69E80}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+		ReleaseNotes.md = ReleaseNotes.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D20Tek.Spectre.Console.Extensions", "D20Tek.Spectre.Console.Extensions\D20Tek.Spectre.Console.Extensions.csproj", "{D01A1C74-5D45-4761-8BD2-B34004D6C708}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D20Tek.Spectre.Console.Extensions.UnitTests", "D20Tek.Spectre.Console.Extensions.UnitTests\D20Tek.Spectre.Console.Extensions.UnitTests.csproj", "{75EE79C8-D58B-4FBB-9235-F8824D56F632}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyInjection.Cli", "samples\DependencyInjection.Cli\DependencyInjection.Cli.csproj", "{DB25F4AA-2913-4396-9FD0-D674B75A5543}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{7DADA67F-CBE3-4664-B544-7D0FEA8E5081}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "D20Tek.Samples.Common", "samples\D20Tek.Samples.Common\D20Tek.Samples.Common.shproj", "{4F5494AA-3286-4E53-986D-A638D2BB2CCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic.Cli", "samples\Basic.Cli\Basic.Cli.csproj", "{C81FA14F-FBB2-4152-A25C-A106464AD0A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".workflows", ".workflows", "{CF33EC10-8B20-417F-BA77-90978CB1078D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\nuget-release.yml = .github\workflows\nuget-release.yml
+		.github\workflows\spectre-console-extensions-ci.yml = .github\workflows\spectre-console-extensions-ci.yml
+		.github\workflows\spectre-console-extensions-official.yml = .github\workflows\spectre-console-extensions-official.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{4f5494aa-3286-4e53-986d-a638d2bb2ccc}*SharedItemsImports = 13
+		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{c81fa14f-fbb2-4152-a25c-a106464ad0a0}*SharedItemsImports = 5
+		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{db25f4aa-2913-4396-9fd0-d674b75a5543}*SharedItemsImports = 5
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D01A1C74-5D45-4761-8BD2-B34004D6C708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D01A1C74-5D45-4761-8BD2-B34004D6C708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D01A1C74-5D45-4761-8BD2-B34004D6C708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D01A1C74-5D45-4761-8BD2-B34004D6C708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75EE79C8-D58B-4FBB-9235-F8824D56F632}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75EE79C8-D58B-4FBB-9235-F8824D56F632}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75EE79C8-D58B-4FBB-9235-F8824D56F632}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75EE79C8-D58B-4FBB-9235-F8824D56F632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB25F4AA-2913-4396-9FD0-D674B75A5543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB25F4AA-2913-4396-9FD0-D674B75A5543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB25F4AA-2913-4396-9FD0-D674B75A5543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB25F4AA-2913-4396-9FD0-D674B75A5543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C81FA14F-FBB2-4152-A25C-A106464AD0A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C81FA14F-FBB2-4152-A25C-A106464AD0A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C81FA14F-FBB2-4152-A25C-A106464AD0A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C81FA14F-FBB2-4152-A25C-A106464AD0A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DB25F4AA-2913-4396-9FD0-D674B75A5543} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
+		{4F5494AA-3286-4E53-986D-A638D2BB2CCC} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
+		{C81FA14F-FBB2-4152-A25C-A106464AD0A0} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D1641E6-17C4-4467-946F-C057C45F4A62}
+	EndGlobalSection
+EndGlobal

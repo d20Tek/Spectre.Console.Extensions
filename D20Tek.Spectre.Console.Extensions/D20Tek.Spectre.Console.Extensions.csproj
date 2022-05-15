@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>d20Tek</Authors>
+    <Copyright>Copyright (c) d20Tek.</Copyright>
+    <Description>Extensions for common code and patterns when using Spectre.Console CLI app framework. 
+Includes dependency injection services for the Microsoft.Extensions.DependencyInjection framework.</Description>
+    <PackageProjectUrl>https://github.com/d20Tek/Spectre.Console.Extensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/d20Tek/Spectre.Console.Extensions</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Spectre; Spectre.Console; CLI; dependency injection;</PackageTags>
+    <PackageReleaseNotes>Release 1.0 - Initial project with common dependency injection classes for the Microsoft.Extensions.DependencyInjection framework.</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>5</WarningLevel>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>5</WarningLevel>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Spectre.Console" Version="0.44.0" />
+  </ItemGroup>
+
+</Project>
