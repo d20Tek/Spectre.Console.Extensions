@@ -1,4 +1,4 @@
-name: Spectre.Console.Extensions CI
+name: ci-build
 
 on:
   push:
