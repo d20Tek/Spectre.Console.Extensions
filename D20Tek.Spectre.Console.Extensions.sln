@@ -22,6 +22,13 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "D20Tek.Samples.Common", "sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic.Cli", "samples\Basic.Cli\Basic.Cli.csproj", "{C81FA14F-FBB2-4152-A25C-A106464AD0A0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".workflows", ".workflows", "{CF33EC10-8B20-417F-BA77-90978CB1078D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\nuget-release.yml = .github\workflows\nuget-release.yml
+		.github\workflows\spectre-console-extensions-ci.yml = .github\workflows\spectre-console-extensions-ci.yml
+		.github\workflows\spectre-console-extensions-official.yml = .github\workflows\spectre-console-extensions-official.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{4f5494aa-3286-4e53-986d-a638d2bb2ccc}*SharedItemsImports = 13
