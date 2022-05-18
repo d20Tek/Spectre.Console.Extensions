@@ -8,12 +8,13 @@
     <Authors>d20Tek</Authors>
     <Copyright>Copyright (c) d20Tek.</Copyright>
     <Description>Extensions for common code and patterns when using Spectre.Console CLI app framework. 
-Includes dependency injection services for the Microsoft.Extensions.DependencyInjection framework.</Description>
+Includes dependency injection services for the Microsoft.Extensions.DependencyInjection and Ninject frameworks.</Description>
     <PackageProjectUrl>https://github.com/d20Tek/Spectre.Console.Extensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/d20Tek/Spectre.Console.Extensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Spectre; Spectre.Console; CLI; dependency injection;</PackageTags>
-    <PackageReleaseNotes>Release 1.0 - Initial project with common dependency injection classes for the Microsoft.Extensions.DependencyInjection framework.</PackageReleaseNotes>
+    <PackageReleaseNotes>Release 1.0.2 - Support for type registrars and resolvers for Microsoft.Extensions.DependencyInjection and Ninject frameworks.
+For full release notes, please read: https://github.com/d20Tek/Spectre.Console.Extensions/blob/main/ReleaseNotes.md</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <AnalysisLevel>latest</AnalysisLevel>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
