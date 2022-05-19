@@ -22,6 +22,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         {
             ArgumentNullException.ThrowIfNull(container, nameof(container));
             this._container = container;
+            this._container.Options.AllowOverridingRegistrations = true;
         }
 
         /// <summary>

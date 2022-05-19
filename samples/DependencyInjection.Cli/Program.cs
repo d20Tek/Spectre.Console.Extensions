@@ -3,9 +3,8 @@
 //---------------------------------------------------------------------------------------------------------------------
 using D20Tek.Samples.Common.Commands;
 using D20Tek.Spectre.Console.Extensions.Injection;
-using DependencyInjection.Cli;
 
-namespace D20Tek.CountryService.Cli
+namespace DependencyInjection.Cli
 {
     public class Program
     {
