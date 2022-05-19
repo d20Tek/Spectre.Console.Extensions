@@ -70,7 +70,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(factoryMethod, nameof(factoryMethod));
 
-            this._container.RegisterInstance(service, () => factoryMethod());
+            this._container.Register(service, factoryMethod, Lifestyle.Singleton);
         }
     }
 }
