@@ -5,7 +5,7 @@
 * Created sample console project for SimpleInjector integration.
 * Created CommandAppBuilder as new mechanism for creating, configuring, and running Spectre.Console CommandApps.
 * Migrated all sample apps from DI factories to the new builder pattern.
-* BREAKING CHANGE: Removed DI framework specific factory classes and old StartupBase&lt;T&gt class.
+* BREAKING CHANGE: Removed DI framework specific factory classes and old StartupBase&lt;T&gt; class.
 * Added WithDefaultCommand method to replace Build&lt;T&gt; method... remove duplicate Build methods.
 * Updated all samples to use WithDefaultCommand.
 * Added test coverage for CommandAppBuilder and its extension methods.
