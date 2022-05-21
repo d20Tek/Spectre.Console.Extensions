@@ -1,13 +1,12 @@
 # Release Notes
 
-## Release v1.0.2
+## Release v1.0.3
 * Implemented SimpleInjector type registrar and resolver with unit tests.
-* Added unit tests for SimpleInjector registrar and resolver.
 * Created sample console project for SimpleInjector integration.
-* Created CommandAppBuilder as new mechanism for creating, setting up, and running Spectre.Console CommandApps.
+* Created CommandAppBuilder as new mechanism for creating, configuring, and running Spectre.Console CommandApps.
 * Migrated all sample apps from DI factories to the new builder pattern.
-* BREAKING CHANGE: Removed DI framework specific factory classes and old StartupBase<T> class.
-* Added WithDefaultCommand method to replace Build<T> method... remove duplicate Build methods.
+* BREAKING CHANGE: Removed DI framework specific factory classes and old StartupBase&lt;T&gt class.
+* Added WithDefaultCommand method to replace Build&lt;T&gt; method... remove duplicate Build methods.
 * Updated all samples to use WithDefaultCommand.
 * Added test coverage for CommandAppBuilder and its extension methods.
 

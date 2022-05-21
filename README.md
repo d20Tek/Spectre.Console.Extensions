@@ -9,12 +9,12 @@ This package provides extensions for common code and patterns when using Spectre
 
 The current releases contain implementations of ITypeRegistrar and ITypeResolver to integrate the Microsoft.Extensions.DependencyInjection, Ninject, and SimpleInjector frameworks with Spectre.Console.
 
-We also support the CommandAppBuilder for easily creating and running your instance of Spectre.Console.CommandApp.
+We also support the CommandAppBuilder to easily create, configure, and run your instance of Spectre.Console.CommandApp.
 
 For future releases, I will continue to investigate integration with other DI frameworks.
 
 ## Installation
-This library is in NuGet package so it is easy to add to your project. To install this package into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
+This library is a NuGet package so it is easy to add to your project. To install this package into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
 PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.0.3
 ``` 
@@ -27,8 +27,8 @@ Read more about the current release in our [Release Notes](ReleaseNotes.md).
 Once you've installed the NuGet package, you can start using it in your Spectre.Console projects.
 If you would like basic information about how to build Spectre.Console CommandApps, please read: https://darthpedro.net/lessons-cli/.
 
-### With CommandAppBuilder
-To add dependency injection into a CommandApp using the CommandAppBuilder, you can do the following:
+### With CommandAppBuilder [recommended]
+To add dependency injection into a CommandApp using the CommandAppBuilder, you can do the following in Program.cs:
 ```
 using D20Tek.Samples.Common.Commands;
 using D20Tek.Spectre.Console.Extensions;
@@ -50,7 +50,7 @@ namespace DependencyInjection.Cli
 }
 ```
 
-With the following Startup.cs file:
+And, you will need to create the following Startup.cs file:
 ```
 using D20Tek.Samples.Common.Commands;
 using D20Tek.Samples.Common.Services;
@@ -84,7 +84,8 @@ namespace DependencyInjection.Cli
 ```
 
 ### With Custom Code in Program
-You do not need to use the CommandAppBuilder. It is still possible to customn code your Main method. And that can be simpler for small console applications. 
+You do not need to use the CommandAppBuilder. It is still possible to write custom code your Program.Main method. And that can be simpler for small console applications. 
+
 To add dependency injection this way, you can do the following:
 ```
 using D20Tek.Samples.Common.Commands;
@@ -127,10 +128,12 @@ namespace D20Tek.CountryService.Cli
 }
 ```
 
+Note: these code snippets assume using the Microsoft.Extensions.DependencyInjection framework. But similar sample code also exists for the other DI frameworks.
+
 ### Samples:
 For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, please review the following samples:
 
-* [Basic Cli with DI](samples/Basic.Cli) - full listing for code in the Usage section above.
+* [Basic Cli with DI](samples/Basic.Cli) - full listing for code in the Usage - Custom Code section above.
 * [DependencyInjection.Cli](samples/DependencyInjection.Cli) - More elaborate use of Microsoft.Extensions.DependencyInjection registrar and resolver. Along with using the CommandAppBuilder to remove some of the creation complexity.
 * [Ninject.Cli](samples/Ninject.Cli) - Use the Ninject DI framework to build type registrar and resolver.
 * [SimpleInjector.Cli](samples/SimpleInjector.Cli) - Use the SimpleInjector DI framework to build type registrar and resolver.
