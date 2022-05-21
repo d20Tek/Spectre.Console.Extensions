@@ -13,7 +13,8 @@ namespace Ninject.Cli
             return await new CommandAppBuilder()
                              .WithNinjectContainer()
                              .WithStartup<Startup>()
-                             .Build<DefaultCommand>()
+                             .WithDefaultCommand<DefaultCommand>()
+                             .Build()
                              .RunAsync(args);
         }
     }

@@ -13,7 +13,8 @@ namespace SimpleInjector.Cli
             return await new CommandAppBuilder()
                              .WithSimpleInjectorContainer()
                              .WithStartup<Startup>()
-                             .Build<DefaultCommand>()
+                             .WithDefaultCommand<DefaultCommand>()
+                             .Build()
                              .RunAsync(args);
         }
     }

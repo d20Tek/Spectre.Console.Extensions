@@ -14,7 +14,7 @@ namespace NoDI.Cli
             AnsiConsole.WriteLine($"=> MyCommand: Executing command - {context.Name}.");
 
             AnsiConsole.WriteLine();
-            AnsiConsole.WriteLine($"[green]Command completed successfully![/]");
+            AnsiConsole.MarkupLine($"[green]Command completed successfully![/]");
 
             return 0; 
         }

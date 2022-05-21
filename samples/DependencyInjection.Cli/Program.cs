@@ -13,7 +13,8 @@ namespace DependencyInjection.Cli
             return await new CommandAppBuilder()
                              .WithDIContainer()
                              .WithStartup<Startup>()
-                             .Build<DefaultCommand>()
+                             .WithDefaultCommand<DefaultCommand>()
+                             .Build()
                              .RunAsync(args);
         }
     }

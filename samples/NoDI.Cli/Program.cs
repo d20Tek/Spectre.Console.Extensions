@@ -11,7 +11,8 @@ namespace NoDI.Cli
         {
             return await new CommandAppBuilder()
                              .WithStartup<Startup>()
-                             .Build<MyCommand>()
+                             .WithDefaultCommand<MyCommand>()
+                             .Build()
                              .RunAsync(args);
         }
     }
