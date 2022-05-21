@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Ninject.Cli": {
+    "SimpleInjector.Cli": {
       "commandName": "Project",
       "commandLineArgs": ""
     }

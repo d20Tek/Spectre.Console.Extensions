@@ -6,7 +6,7 @@ using D20Tek.Samples.Common.Services;
 using D20Tek.Spectre.Console.Extensions;
 using Spectre.Console.Cli;
 
-namespace Ninject.Cli
+namespace SimpleInjector.Cli
 {
     internal class Startup : StartupBase
     {
@@ -19,7 +19,7 @@ namespace Ninject.Cli
         public override IConfigurator ConfigureCommands(IConfigurator config)
         {
             config.CaseSensitivity(CaseSensitivity.None);
-            config.SetApplicationName("Ninject.Cli");
+            config.SetApplicationName("SimpleInjector.Cli");
             config.ValidateExamples();
 
             config.AddCommand<DefaultCommand>("default")

@@ -2,7 +2,7 @@
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using D20Tek.Samples.Common.Commands;
-using D20Tek.Spectre.Console.Extensions.Injection;
+using D20Tek.Spectre.Console.Extensions;
 
 namespace Ninject.Cli
 {
@@ -10,8 +10,12 @@ namespace Ninject.Cli
     {
         public static async Task<int> Main(string[] args)
         {
-            var app = NinjectFactory.CreateCommandApp<Startup, DefaultCommand>();
-            return await app.RunAsync(args);
+            return await new CommandAppBuilder()
+                             .WithNinjectContainer()
+                             .WithStartup<Startup>()
+                             .WithDefaultCommand<DefaultCommand>()
+                             .Build()
+                             .RunAsync(args);
         }
     }
 }

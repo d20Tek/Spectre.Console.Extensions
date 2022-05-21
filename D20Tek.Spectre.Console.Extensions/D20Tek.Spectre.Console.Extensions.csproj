@@ -8,12 +8,13 @@
     <Authors>d20Tek</Authors>
     <Copyright>Copyright (c) d20Tek.</Copyright>
     <Description>Extensions for common code and patterns when using Spectre.Console CLI app framework. 
-Includes dependency injection services for the Microsoft.Extensions.DependencyInjection and Ninject frameworks.</Description>
+The current releases contain implementations of ITypeRegistrar and ITypeResolver to integrate the Microsoft.Extensions.DependencyInjection, Ninject, and SimpleInjector frameworks with Spectre.Console.
+We also support the CommandAppBuilder for easily creating and running your instance of Spectre.Console.CommandApp.</Description>
     <PackageProjectUrl>https://github.com/d20Tek/Spectre.Console.Extensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/d20Tek/Spectre.Console.Extensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Spectre; Spectre.Console; CLI; dependency injection;</PackageTags>
-    <PackageReleaseNotes>Release 1.0.2 - Support for type registrars and resolvers for Microsoft.Extensions.DependencyInjection and Ninject frameworks.
+    <PackageReleaseNotes>Release 1.0.3 - Added support for type registrars and resolvers for SimpleInjector framework. Replace DI factories with CommandAppBuilder.
 For full release notes, please read: https://github.com/d20Tek/Spectre.Console.Extensions/blob/main/ReleaseNotes.md</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <AnalysisLevel>latest</AnalysisLevel>
@@ -33,6 +34,7 @@ For full release notes, please read: https://github.com/d20Tek/Spectre.Console.E
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Ninject" Version="3.3.5" />
+    <PackageReference Include="SimpleInjector" Version="5.3.3" />
     <PackageReference Include="Spectre.Console" Version="0.44.0" />
   </ItemGroup>
 

@@ -7,7 +7,7 @@ using D20Tek.Spectre.Console.Extensions.Injection;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 
-namespace D20Tek.CountryService.Cli
+namespace Basic.Cli
 {
     public class Program
     {

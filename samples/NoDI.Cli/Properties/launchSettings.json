@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Ninject.Cli": {
+    "NoDI.Cli": {
       "commandName": "Project",
       "commandLineArgs": ""
     }

@@ -19,6 +19,7 @@ namespace D20Tek.Samples.Common.Commands
         public override int Execute([NotNull] CommandContext context, [NotNull] BaseSettings settings)
         {
             _displayWriter.Verbosity = settings.Verbose;
+            _displayWriter.WriteSummary($"CommandApp running {this.GetType().Assembly.FullName}");
             _displayWriter.WriteSummary($"=> Executing command - {context.Name}.");
             _displayWriter.WriteIntermediate($"   Args: Verbose={Enum.GetName<VerbosityLevel>(settings.Verbose)}");
 
