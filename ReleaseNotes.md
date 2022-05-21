@@ -1,5 +1,11 @@
 # Release Notes
 
+## Release v1.0.4
+* Implemented Autofac type registrar and resolver with unit tests.
+* Implement CommandAppBuilder extension method for Autofac.
+* Extension method unit tests.
+* Sample project for Autofac integration.
+
 ## Release v1.0.3
 * Implemented SimpleInjector type registrar and resolver with unit tests.
 * Created sample console project for SimpleInjector integration.

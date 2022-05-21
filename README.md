@@ -7,7 +7,11 @@
 This package provides extensions for common code and patterns when using Spectre.Console CLI app framework.
 [SpectreConsole](https://github.com/spectreconsole/spectre.console)
 
-The current releases contain implementations of ITypeRegistrar and ITypeResolver to integrate the Microsoft.Extensions.DependencyInjection, Ninject, and SimpleInjector frameworks with Spectre.Console.
+The current releases contain implementations of ITypeRegistrar and ITypeResolver for the following DI frameworks:
+- Microsoft.Extensions.DependencyInjection
+- Autofac
+- Ninject
+- SimpleInjector
 
 We also support the CommandAppBuilder to easily create, configure, and run your instance of Spectre.Console.CommandApp.
 
@@ -16,7 +20,7 @@ For future releases, I will continue to investigate integration with other DI fr
 ## Installation
 This library is a NuGet package so it is easy to add to your project. To install this package into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
-PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.0.3
+PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.0.4
 ``` 
 
 To install in the Visual Studio UI, go to the Tools menu > "Manage NuGet Packages". Then search for D20Tek.Spectre.Console.Extensions and install it from there.
@@ -135,6 +139,7 @@ For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, plea
 
 * [Basic Cli with DI](samples/Basic.Cli) - full listing for code in the Usage - Custom Code section above.
 * [DependencyInjection.Cli](samples/DependencyInjection.Cli) - More elaborate use of Microsoft.Extensions.DependencyInjection registrar and resolver. Along with using the CommandAppBuilder to remove some of the creation complexity.
+* [Autofac.Cli](samples/Autofac.Cli) - Use the Autofac DI framework to build type registrar and resolver.
 * [Ninject.Cli](samples/Ninject.Cli) - Use the Ninject DI framework to build type registrar and resolver.
 * [SimpleInjector.Cli](samples/SimpleInjector.Cli) - Use the SimpleInjector DI framework to build type registrar and resolver.
 * [NoDI.Cli](samples/NoDI.Cli) - Use the CommandAppBuilder to configure a console app that does not use a DI framework.
