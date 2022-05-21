@@ -11,7 +11,8 @@ namespace D20Tek.Spectre.Console.Extensions
     public class CommandAppBuilder
     {
         private CommandApp? _app = null;
-        private Action? _setDefaultCommand = null;
+        
+        internal Action? SetDefaultCommand { get; set; }
 
         internal ITypeRegistrar? Registrar { get; set; }
 
@@ -40,7 +41,13 @@ namespace D20Tek.Spectre.Console.Extensions
         public CommandAppBuilder WithDefaultCommand<TDefault>()
             where TDefault : class, ICommand
         {
-            _setDefaultCommand = () => { _app?.SetDefaultCommand<TDefault>(); };
+            SetDefaultCommand = () => {
+                if (_app != null)
+                {
+                    _app.SetDefaultCommand<TDefault>();
+                }
+            };
+            
             return this;
         }
 
@@ -64,7 +71,7 @@ namespace D20Tek.Spectre.Console.Extensions
             _app = new CommandApp(Registrar);
 
             // If a default command was specifie, then add it to the CommandApp now.
-            _setDefaultCommand?.Invoke();
+            SetDefaultCommand?.Invoke();
 
             // Configure any commands in the application.
             _app.Configure(config => Startup.ConfigureCommands(config));

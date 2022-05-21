@@ -5,16 +5,11 @@ using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks
 {
-    internal class MockStartup : StartupBase
+    internal class MockCommand : Command
     {
-        public override void ConfigureServices(ITypeRegistrar registrar)
+        public override int Execute(CommandContext context)
         {
-            registrar.Register(typeof(IMockService), typeof(MockService));
-        }
-
-        public override IConfigurator ConfigureCommands(IConfigurator config)
-        {
-            return config;
+            return 0;
         }
     }
 }

@@ -1,20 +1,21 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using Spectre.Console.Cli;
+
+using System.Diagnostics.CodeAnalysis;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks
 {
-    internal class MockStartup : StartupBase
+    internal interface IMockService
     {
-        public override void ConfigureServices(ITypeRegistrar registrar)
-        {
-            registrar.Register(typeof(IMockService), typeof(MockService));
-        }
+        public void Print();
+    }
 
-        public override IConfigurator ConfigureCommands(IConfigurator config)
+    [ExcludeFromCodeCoverage]
+    internal class MockService : IMockService
+    {
+        public void Print()
         {
-            return config;
         }
     }
 }
