@@ -2,7 +2,7 @@
   "profiles": {
     "SimpleInjector.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "-h"
+      "commandLineArgs": ""
     }
   }
 }

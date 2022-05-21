@@ -8,13 +8,17 @@ namespace D20Tek.Spectre.Console.Extensions
     /// <summary>
     /// Abstract base class for defining a startup class to configure services and commands.
     /// </summary>
-    public abstract class StartupBase
+    /// <typeparam name="TRegister">
+    /// The type of the service registration list to use in configuration
+    /// </typeparam>
+    public abstract class StartupBase<TRegister>
     {
         /// <summary>
-        /// Override this method to configure app services in the type registrar. 
+        /// Override this method to configure app services and create the type registrar. 
         /// </summary>
-        /// <param name="registrar">Type registrar to use.</param>
-        public abstract void ConfigureServices(ITypeRegistrar registrar);
+        /// <param name="services">Service collection to use.</param>
+        /// <returns>Type registrar for this application.</returns>
+        public abstract ITypeRegistrar ConfigureServices(TRegister services);
 
         /// <summary>
         /// Override this method to configure console commands for this application.

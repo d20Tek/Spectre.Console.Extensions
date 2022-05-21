@@ -10,8 +10,11 @@ namespace Ninject.Cli
     {
         public static async Task<int> Main(string[] args)
         {
-            var app = NinjectFactory.CreateCommandApp<Startup, DefaultCommand>();
-            return await app.RunAsync(args);
+            return await new CommandAppBuilder()
+                             .WithNinjectContainer()
+                             .WithStartup<Startup>()
+                             .Build<DefaultCommand>()
+                             .RunAsync(args);
         }
     }
 }

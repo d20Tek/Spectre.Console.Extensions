@@ -4,23 +4,16 @@
 using D20Tek.Samples.Common.Commands;
 using D20Tek.Samples.Common.Services;
 using D20Tek.Spectre.Console.Extensions;
-using D20Tek.Spectre.Console.Extensions.Injection;
-using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 
 namespace DependencyInjection.Cli
 {
-    internal class Startup : StartupBase<IServiceCollection>
+    internal class Startup : StartupBase
     {
-        public override ITypeRegistrar ConfigureServices(IServiceCollection services)
+        public override void ConfigureServices(ITypeRegistrar registrar)
         {
-            // Create a type registrar and register any dependencies.
-            // A type registrar is an adapter for a DI framework.
-
             // register services here...
-            services.AddSingleton<IDisplayWriter, ConsoleDisplayWriter>();
-
-            return new DependencyInjectionTypeRegistrar(services);
+            registrar.Register(typeof(IDisplayWriter), typeof(ConsoleDisplayWriter));
         }
 
         public override IConfigurator ConfigureCommands(IConfigurator config)

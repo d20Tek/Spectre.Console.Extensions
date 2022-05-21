@@ -10,8 +10,11 @@ namespace DependencyInjection.Cli
     {
         public static async Task<int> Main(string[] args)
         {
-            var app = DependencyInjectionFactory.CreateCommandApp<Startup, DefaultCommand>();
-            return await app.RunAsync(args);
+            return await new CommandAppBuilder()
+                             .WithDIContainer()
+                             .WithStartup<Startup>()
+                             .Build<DefaultCommand>()
+                             .RunAsync(args);
         }
     }
 }
