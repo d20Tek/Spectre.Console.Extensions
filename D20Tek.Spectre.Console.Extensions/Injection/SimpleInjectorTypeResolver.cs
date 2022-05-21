@@ -20,7 +20,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         public SimpleInjectorTypeResolver(Container container)
         {
             ArgumentNullException.ThrowIfNull(container, nameof(container));
-            this._container = container;
+            _container = container;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
 
             try
             {
-                return this._container.GetInstance(type);
+                return _container.GetInstance(type);
             }
             catch (ActivationException)
             {
@@ -53,7 +53,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         {
             GC.SuppressFinalize(this);
 
-            if (this._container is IDisposable disposable)
+            if (_container is IDisposable disposable)
             {
                 disposable.Dispose();
             }

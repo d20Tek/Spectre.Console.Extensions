@@ -21,8 +21,9 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         public SimpleInjectorTypeRegistrar(Container container)
         {
             ArgumentNullException.ThrowIfNull(container, nameof(container));
-            this._container = container;
-            this._container.Options.AllowOverridingRegistrations = true;
+
+            _container = container;
+            _container.Options.AllowOverridingRegistrations = true;
         }
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// <returns>A type resolver.</returns>
         public ITypeResolver Build()
         {
-            return new SimpleInjectorTypeResolver(this._container);
+            return new SimpleInjectorTypeResolver(_container);
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(implementation, nameof(implementation));
 
-            this._container.Register(service, implementation);
+            _container.Register(service, implementation);
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(implementation, nameof(implementation));
 
-            this._container.RegisterInstance(service, implementation);
+            _container.RegisterInstance(service, implementation);
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(factoryMethod, nameof(factoryMethod));
 
-            this._container.Register(service, factoryMethod, Lifestyle.Singleton);
+            _container.Register(service, factoryMethod, Lifestyle.Singleton);
         }
     }
 }

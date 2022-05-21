@@ -11,9 +11,11 @@ namespace D20Tek.Spectre.Console.Extensions
     public class CommandAppBuilder
     {
         private CommandApp? _app;
-        private StartupBase? _startup;
 
-        internal ITypeRegistrar? Registrar { get; set; }
+        internal ITypeRegistrar? Registrar { get; set; } = null;
+
+        internal StartupBase? Startup { get; set; }
+
 
         /// <summary>
         /// Sets up the Startup class to use in this builder.
@@ -25,7 +27,7 @@ namespace D20Tek.Spectre.Console.Extensions
             where TStartup : StartupBase, new()
         {
             // Create the startup class instance from the app project.
-            _startup = new TStartup();
+            Startup = new TStartup();
             return this;
         }
 
@@ -37,23 +39,19 @@ namespace D20Tek.Spectre.Console.Extensions
         /// <returns>Returns the CommandAppBuilder.</returns>
         public CommandAppBuilder Build()
         {
-            ArgumentNullException.ThrowIfNull(_startup, nameof(_startup));
+            ArgumentNullException.ThrowIfNull(Startup, nameof(Startup));
 
             if (Registrar != null)
             {
                 // Configure all services with this DI framework.
-                _startup.ConfigureServices(Registrar);
+                Startup.ConfigureServices(Registrar);
+            }
 
-                // Create the CommandApp with the type registrar.
-                _app = new CommandApp(Registrar);
-            }
-            else
-            {
-                _app = new CommandApp();
-            }
+            // Create the CommandApp with the type registrar.
+            _app = new CommandApp(Registrar);
 
             // Configure any commands in the application.
-            _app.Configure(config => _startup.ConfigureCommands(config));
+            _app.Configure(config => Startup.ConfigureCommands(config));
 
             return this;
         }
@@ -68,24 +66,20 @@ namespace D20Tek.Spectre.Console.Extensions
         public CommandAppBuilder Build<TDefault>()
             where TDefault : class, ICommand
         {
-            ArgumentNullException.ThrowIfNull(_startup, nameof(_startup));
+            ArgumentNullException.ThrowIfNull(Startup, nameof(Startup));
 
             if (Registrar != null)
             {
                 // Configure all services with this DI framework.
-                _startup.ConfigureServices(Registrar);
+                Startup.ConfigureServices(Registrar);
+            }
 
-                // Create the CommandApp with the type registrar.
-                _app = new CommandApp(Registrar);
-                _app.SetDefaultCommand<TDefault>();
-            }
-            else
-            {
-                _app = new CommandApp();
-                _app.SetDefaultCommand<TDefault>();
-            }
+            // Create the CommandApp with the type registrar.
+            _app = new CommandApp(Registrar);
+            _app.SetDefaultCommand<TDefault>();
+
             // Configure any commands in the application.
-            _app.Configure(config => _startup.ConfigureCommands(config));
+            _app.Configure(config => Startup.ConfigureCommands(config));
 
             return this;
         }

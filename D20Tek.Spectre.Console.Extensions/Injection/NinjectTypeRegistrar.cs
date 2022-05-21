@@ -20,7 +20,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// <param name="kernel">Service builder to use for registering types.</param>
         public NinjectTypeRegistrar(StandardKernel kernel)
         {
-            this._kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
+            _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(implementation, nameof(implementation));
 
-            this._kernel.Bind(service).To(implementation);
+            _kernel.Bind(service).To(implementation);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(implementation, nameof(implementation));
 
-            this._kernel.Bind(service).ToConstant(implementation);
+            _kernel.Bind(service).ToConstant(implementation);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(factoryMethod, nameof(factoryMethod));
 
-            this._kernel.Bind(service).ToMethod((context) => factoryMethod());
+            _kernel.Bind(service).ToMethod((context) => factoryMethod());
         }
     }
 }
