@@ -174,5 +174,22 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests
             // assert
             Assert.AreEqual(0, result);
         }
+
+        [TestMethod]
+        public void Run_AutofacRegistrar()
+        {
+            // arrange
+            var builder = new CommandAppBuilder()
+                              .WithAutofacContainer()
+                              .WithStartup<MockStartup>()
+                              .WithDefaultCommand<MockCommand>()
+                              .Build();
+
+            // act
+            var result = builder.Run(Array.Empty<string>());
+
+            // assert
+            Assert.AreEqual(0, result);
+        }
     }
 }
