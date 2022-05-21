@@ -29,7 +29,7 @@ If you would like basic information about how to build Spectre.Console CommandAp
 
 ### With CommandAppBuilder [recommended]
 To add dependency injection into a CommandApp using the CommandAppBuilder, you can do the following in Program.cs:
-```
+```csharp
 using D20Tek.Samples.Common.Commands;
 using D20Tek.Spectre.Console.Extensions;
 
@@ -51,7 +51,7 @@ namespace DependencyInjection.Cli
 ```
 
 And, you will need to create the following Startup.cs file:
-```
+```csharp
 using D20Tek.Samples.Common.Commands;
 using D20Tek.Samples.Common.Services;
 using D20Tek.Spectre.Console.Extensions;
@@ -87,7 +87,7 @@ namespace DependencyInjection.Cli
 You do not need to use the CommandAppBuilder. It is still possible to write custom code your Program.Main method. And that can be simpler for small console applications. 
 
 To add dependency injection this way, you can do the following:
-```
+```csharp
 using D20Tek.Samples.Common.Commands;
 using D20Tek.Samples.Common.Services;
 using D20Tek.Spectre.Console.Extensions.Injection;
