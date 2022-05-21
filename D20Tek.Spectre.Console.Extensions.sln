@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ninject.Cli", "samples\Ninj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleInjector.Cli", "samples\SimpleInjector.Cli\SimpleInjector.Cli.csproj", "{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoDI.Cli", "samples\NoDI.Cli\NoDI.Cli.csproj", "{6F93BC4C-A839-4543-AC83-74D4D2C9F636}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F93BC4C-A839-4543-AC83-74D4D2C9F636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F93BC4C-A839-4543-AC83-74D4D2C9F636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F93BC4C-A839-4543-AC83-74D4D2C9F636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F93BC4C-A839-4543-AC83-74D4D2C9F636}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{C81FA14F-FBB2-4152-A25C-A106464AD0A0} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{F2F6F3DC-61CF-4AEC-B210-07E2E5A6BFA3} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
+		{6F93BC4C-A839-4543-AC83-74D4D2C9F636} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7D1641E6-17C4-4467-946F-C057C45F4A62}

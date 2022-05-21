@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NoDI.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "-h"
+    }
+  }
+}

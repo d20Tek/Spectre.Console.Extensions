@@ -51,14 +51,19 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         public CommandAppBuilder Build()
         {
             ArgumentNullException.ThrowIfNull(this._startup, nameof(this._startup));
-            _ = this.Registrar ?? throw new ArgumentNullException(
-                nameof(this.Registrar), "Container was not initialize by WithContainer call.");
 
-            // Configure all services with this DI framework.
-            this._startup.ConfigureServices(this.Registrar);
+            if (this.Registrar != null)
+            {
+                // Configure all services with this DI framework.
+                this._startup.ConfigureServices(this.Registrar);
 
-            // Create the CommandApp with the type registrar.
-            this._app = new CommandApp(this.Registrar);
+                // Create the CommandApp with the type registrar.
+                this._app = new CommandApp(this.Registrar);
+            }
+            else
+            {
+                this._app = new CommandApp();
+            }
 
             // Configure any commands in the application.
             this._app.Configure(config => this._startup.ConfigureCommands(config));
@@ -77,16 +82,21 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             where TDefault : class, ICommand
         {
             ArgumentNullException.ThrowIfNull(this._startup, nameof(this._startup));
-            _ = this.Registrar ?? throw new ArgumentNullException(
-                nameof(this.Registrar), "Container was not initialize by WithContainer call.");
 
-            // Configure all services with this DI framework.
-            this._startup.ConfigureServices(this.Registrar);
+            if (this.Registrar != null)
+            {
+                // Configure all services with this DI framework.
+                this._startup.ConfigureServices(this.Registrar);
 
-            // Create the CommandApp with the type registrar.
-            this._app = new CommandApp(this.Registrar);
-            this._app.SetDefaultCommand<TDefault>();
-
+                // Create the CommandApp with the type registrar.
+                this._app = new CommandApp(this.Registrar);
+                this._app.SetDefaultCommand<TDefault>();
+            }
+            else
+            {
+                this._app = new CommandApp();
+                this._app.SetDefaultCommand<TDefault>();
+            }
             // Configure any commands in the application.
             this._app.Configure(config => this._startup.ConfigureCommands(config));
 
