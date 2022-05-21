@@ -1,7 +1,7 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using D20Tek.Spectre.Console.Extensions.Injection;
+using D20Tek.Spectre.Console.Extensions;
 
 namespace NoDI.Cli
 {

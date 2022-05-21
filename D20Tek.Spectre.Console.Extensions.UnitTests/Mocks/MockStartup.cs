@@ -1,17 +1,14 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using Moq;
-using Ninject;
 using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks
 {
-    internal class MockNinjectStartup : StartupBase<StandardKernel>
+    internal class MockStartup : StartupBase
     {
-        public override ITypeRegistrar ConfigureServices(StandardKernel kernel)
+        public override void ConfigureServices(ITypeRegistrar registrar)
         {
-            return new Mock<ITypeRegistrar>().Object;
         }
 
         public override IConfigurator ConfigureCommands(IConfigurator config)

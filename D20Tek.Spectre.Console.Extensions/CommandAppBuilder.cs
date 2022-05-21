@@ -1,10 +1,9 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 
-namespace D20Tek.Spectre.Console.Extensions.Injection
+namespace D20Tek.Spectre.Console.Extensions
 {
     /// <summary>
     /// 
@@ -17,18 +16,6 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         internal ITypeRegistrar? Registrar { get; set; }
 
         /// <summary>
-        /// Creates the type registrar based on the DependencyInjector ServiceCollection
-        /// and sets it in the CommandAppBuilder.
-        /// </summary>
-        /// <returns>Returns the CommandAppBuilder.</returns>
-        public CommandAppBuilder WithDIContainer()
-        {
-            var container = new ServiceCollection();
-            this.Registrar = new DependencyInjectionTypeRegistrar(container);
-            return this;
-        }
-
-        /// <summary>
         /// Sets up the Startup class to use in this builder.
         /// </summary>
         /// <typeparam name="TStartup">Type of the Startup class in this project,
@@ -38,7 +25,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             where TStartup : StartupBase, new()
         {
             // Create the startup class instance from the app project.
-            this._startup = new TStartup();
+            _startup = new TStartup();
             return this;
         }
 
@@ -50,23 +37,23 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// <returns>Returns the CommandAppBuilder.</returns>
         public CommandAppBuilder Build()
         {
-            ArgumentNullException.ThrowIfNull(this._startup, nameof(this._startup));
+            ArgumentNullException.ThrowIfNull(_startup, nameof(_startup));
 
-            if (this.Registrar != null)
+            if (Registrar != null)
             {
                 // Configure all services with this DI framework.
-                this._startup.ConfigureServices(this.Registrar);
+                _startup.ConfigureServices(Registrar);
 
                 // Create the CommandApp with the type registrar.
-                this._app = new CommandApp(this.Registrar);
+                _app = new CommandApp(Registrar);
             }
             else
             {
-                this._app = new CommandApp();
+                _app = new CommandApp();
             }
 
             // Configure any commands in the application.
-            this._app.Configure(config => this._startup.ConfigureCommands(config));
+            _app.Configure(config => _startup.ConfigureCommands(config));
 
             return this;
         }
@@ -81,24 +68,24 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         public CommandAppBuilder Build<TDefault>()
             where TDefault : class, ICommand
         {
-            ArgumentNullException.ThrowIfNull(this._startup, nameof(this._startup));
+            ArgumentNullException.ThrowIfNull(_startup, nameof(_startup));
 
-            if (this.Registrar != null)
+            if (Registrar != null)
             {
                 // Configure all services with this DI framework.
-                this._startup.ConfigureServices(this.Registrar);
+                _startup.ConfigureServices(Registrar);
 
                 // Create the CommandApp with the type registrar.
-                this._app = new CommandApp(this.Registrar);
-                this._app.SetDefaultCommand<TDefault>();
+                _app = new CommandApp(Registrar);
+                _app.SetDefaultCommand<TDefault>();
             }
             else
             {
-                this._app = new CommandApp();
-                this._app.SetDefaultCommand<TDefault>();
+                _app = new CommandApp();
+                _app.SetDefaultCommand<TDefault>();
             }
             // Configure any commands in the application.
-            this._app.Configure(config => this._startup.ConfigureCommands(config));
+            _app.Configure(config => _startup.ConfigureCommands(config));
 
             return this;
         }
@@ -110,10 +97,10 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// <returns>Return value from the application.</returns>
         public async Task<int> RunAsync(string[] args)
         {
-            _ = this._app ?? throw new ArgumentNullException(
-                nameof(this._app), "Build was not called prior to calling RunAsync.");
+            _ = _app ?? throw new ArgumentNullException(
+                nameof(_app), "Build was not called prior to calling RunAsync.");
 
-            return await this._app.RunAsync(args);
+            return await _app.RunAsync(args);
         }
 
         /// <summary>
@@ -123,10 +110,10 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// <returns>Return value from the application.</returns>
         public int Run(string[] args)
         {
-            _ = this._app ?? throw new ArgumentNullException(
-                nameof(this._app), "Build was not called prior to calling Run.");
+            _ = _app ?? throw new ArgumentNullException(
+                nameof(_app), "Build was not called prior to calling Run.");
 
-            return this._app.Run(args);
+            return _app.Run(args);
         }
     }
 }
