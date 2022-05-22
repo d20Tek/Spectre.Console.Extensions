@@ -43,7 +43,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
             using var resolver = new SimpleInjectorTypeResolver(services);
 
             // act
-            var service = resolver.Resolve(typeof(NinjectTypeResolver));
+            var service = resolver.Resolve(typeof(SimpleInjectorTypeResolver));
 
             // assert
             Assert.IsNull(service);
@@ -92,7 +92,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
 
             // act
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _ = new NinjectTypeResolver(null);
+            _ = new SimpleInjectorTypeResolver(null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
     }

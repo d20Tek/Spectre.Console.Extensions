@@ -33,6 +33,7 @@ For full release notes, please read: https://github.com/d20Tek/Spectre.Console.E
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="LightInject" Version="6.4.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Ninject" Version="3.3.5" />
     <PackageReference Include="SimpleInjector" Version="5.3.3" />
