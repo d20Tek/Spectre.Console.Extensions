@@ -31,9 +31,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".workflows", ".workflows", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ninject.Cli", "samples\Ninject.Cli\Ninject.Cli.csproj", "{F2F6F3DC-61CF-4AEC-B210-07E2E5A6BFA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleInjector.Cli", "samples\SimpleInjector.Cli\SimpleInjector.Cli.csproj", "{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleInjector.Cli", "samples\SimpleInjector.Cli\SimpleInjector.Cli.csproj", "{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoDI.Cli", "samples\NoDI.Cli\NoDI.Cli.csproj", "{6F93BC4C-A839-4543-AC83-74D4D2C9F636}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoDI.Cli", "samples\NoDI.Cli\NoDI.Cli.csproj", "{6F93BC4C-A839-4543-AC83-74D4D2C9F636}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Cli", "samples\Autofac.Cli\Autofac.Cli.csproj", "{EEE91EC4-C1BE-41C2-BC5C-5613A988616B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightInject.Cli", "samples\LightInject.Cli\LightInject.Cli.csproj", "{379F0F43-AFAB-4DDB-9A7C-5385441BD3B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,14 @@ Global
 		{6F93BC4C-A839-4543-AC83-74D4D2C9F636}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F93BC4C-A839-4543-AC83-74D4D2C9F636}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F93BC4C-A839-4543-AC83-74D4D2C9F636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE91EC4-C1BE-41C2-BC5C-5613A988616B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE91EC4-C1BE-41C2-BC5C-5613A988616B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE91EC4-C1BE-41C2-BC5C-5613A988616B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE91EC4-C1BE-41C2-BC5C-5613A988616B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{379F0F43-AFAB-4DDB-9A7C-5385441BD3B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{379F0F43-AFAB-4DDB-9A7C-5385441BD3B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{379F0F43-AFAB-4DDB-9A7C-5385441BD3B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{379F0F43-AFAB-4DDB-9A7C-5385441BD3B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,15 +92,19 @@ Global
 		{F2F6F3DC-61CF-4AEC-B210-07E2E5A6BFA3} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{6F93BC4C-A839-4543-AC83-74D4D2C9F636} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
+		{EEE91EC4-C1BE-41C2-BC5C-5613A988616B} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
+		{379F0F43-AFAB-4DDB-9A7C-5385441BD3B3} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7D1641E6-17C4-4467-946F-C057C45F4A62}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{379f0f43-afab-4ddb-9a7c-5385441bd3b3}*SharedItemsImports = 5
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{4f5494aa-3286-4e53-986d-a638d2bb2ccc}*SharedItemsImports = 13
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{c81fa14f-fbb2-4152-a25c-a106464ad0a0}*SharedItemsImports = 5
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{d2fb28c1-2127-4c07-93d7-9edcd2f6770d}*SharedItemsImports = 5
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{db25f4aa-2913-4396-9fd0-d674b75a5543}*SharedItemsImports = 5
+		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{eee91ec4-c1be-41c2-bc5c-5613a988616b}*SharedItemsImports = 5
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{f2f6f3dc-61cf-4aec-b210-07e2e5a6bfa3}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

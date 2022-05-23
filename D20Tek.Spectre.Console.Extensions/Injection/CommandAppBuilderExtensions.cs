@@ -1,7 +1,9 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
+using Autofac;
 using D20Tek.Spectre.Console.Extensions.Injection;
+using LightInject;
 using Microsoft.Extensions.DependencyInjection;
 using Ninject;
 using SimpleInjector;
@@ -48,6 +50,33 @@ namespace D20Tek.Spectre.Console.Extensions
         {
             var container = new Container();
             builder.Registrar = new SimpleInjectorTypeRegistrar(container);
+            return builder;
+        }
+
+        /// <summary>
+        /// Creates the type registrar based on the Autofac ContainerBuilder
+        /// and sets it in the CommandAppBuilder.
+        /// </summary>
+        /// <param name="builder">Builder instance to extend.</param>
+        /// <returns>Returns the CommandAppBuilder.</returns>
+        public static CommandAppBuilder WithAutofacContainer(this CommandAppBuilder builder)
+        {
+            var container = new ContainerBuilder();
+            builder.Registrar = new AutofacTypeRegistrar(container);
+            return builder;
+        }
+
+
+        /// <summary>
+        /// Creates the type registrar based on the LightInject ServiceContainer
+        /// and sets it in the CommandAppBuilder.
+        /// </summary>
+        /// <param name="builder">Builder instance to extend.</param>
+        /// <returns>Returns the CommandAppBuilder.</returns>
+        public static CommandAppBuilder WithLightInjectContainer(this CommandAppBuilder builder)
+        {
+            var container = new ServiceContainer();
+            builder.Registrar = new LightInjectTypeRegistrar(container);
             return builder;
         }
     }

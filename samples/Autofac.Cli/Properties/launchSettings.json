@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Autofac.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "-h"
+    }
+  }
+}

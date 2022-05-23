@@ -1,16 +1,16 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
+using Autofac;
 using D20Tek.Spectre.Console.Extensions.Injection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SimpleInjector;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
 {
     [TestClass]
-    public class SimpleInjectorTypeResolverTests
+    public class AutofacTypeResolverTests
     {
         public interface ITestService { };
 
@@ -20,8 +20,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
         public void Resolve_WithTypes()
         {
             // arrange
-            var services = new Container();
-            var registrar = new SimpleInjectorTypeRegistrar(services);
+            var services = new ContainerBuilder();
+            var registrar = new AutofacTypeRegistrar(services);
 
             registrar.Register(typeof(ITestService), typeof(TestService));
             var resolver = registrar.Build();
@@ -39,11 +39,11 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
         public void Resolve_WithUnregisteredType()
         {
             // arrange
-            var services = new Container();
-            using var resolver = new SimpleInjectorTypeResolver(services);
+            var services = new ContainerBuilder();
+            using var resolver = new AutofacTypeResolver(services.Build());
 
             // act
-            var service = resolver.Resolve(typeof(SimpleInjectorTypeResolver));
+            var service = resolver.Resolve(typeof(NinjectTypeResolver));
 
             // assert
             Assert.IsNull(service);
@@ -53,8 +53,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
         public void Resolve_WithNullType()
         {
             // arrange
-            var services = new Container();
-            using var resolver = new SimpleInjectorTypeResolver(services);
+            var services = new ContainerBuilder();
+            using var resolver = new AutofacTypeResolver(services.Build());
 
             // act
             var service = resolver.Resolve(null);
@@ -66,8 +66,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
         [TestMethod]
         public void Resolve_WithFactory()
         {
-            var services = new Container();
-            var registrar = new SimpleInjectorTypeRegistrar(services);
+            var services = new ContainerBuilder();
+            var registrar = new AutofacTypeRegistrar(services);
 
             registrar.RegisterLazy(typeof(ITestService), FactoryMethod);
             var resolver = registrar.Build();
@@ -92,7 +92,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
 
             // act
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _ = new SimpleInjectorTypeResolver(null);
+            _ = new AutofacTypeResolver(null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
     }
