@@ -142,6 +142,7 @@ For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, plea
 * [Basic Cli with DI](samples/Basic.Cli) - full listing for code in the Usage - Custom Code section above.
 * [DependencyInjection.Cli](samples/DependencyInjection.Cli) - More elaborate use of Microsoft.Extensions.DependencyInjection registrar and resolver. Along with using the CommandAppBuilder to remove some of the creation complexity.
 * [Autofac.Cli](samples/Autofac.Cli) - Use the Autofac DI framework to build type registrar and resolver.
+* [Lamar.Cli](samples/Lamar.Cli) - Use the Lamar DI framework to build type registrar and resolver.
 * [LightInject.Cli](samples/LightInject.Cli) - Use the LightInject DI framework to build type registrar and resolver.
 * [Ninject.Cli](samples/Ninject.Cli) - Use the Ninject DI framework to build type registrar and resolver.
 * [SimpleInjector.Cli](samples/SimpleInjector.Cli) - Use the SimpleInjector DI framework to build type registrar and resolver.
