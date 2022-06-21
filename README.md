@@ -10,6 +10,7 @@ This package provides extensions for common code and patterns when using Spectre
 The current releases contain implementations of ITypeRegistrar and ITypeResolver for the following DI frameworks:
 - Microsoft.Extensions.DependencyInjection
 - Autofac
+- Lamar
 - LightInject
 - Ninject
 - SimpleInjector

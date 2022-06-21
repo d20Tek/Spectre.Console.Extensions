@@ -9,14 +9,14 @@
     <Copyright>Copyright (c) d20Tek.</Copyright>
     <Description>Extensions for common code and patterns when using Spectre.Console CLI app framework. 
 
-The current releases contain implementations of ITypeRegistrar and ITypeResolver to integrate the Microsoft.Extensions.DependencyInjection, Autofac, LightInject, Ninject, and SimpleInjector frameworks with Spectre.Console.
+The current releases contain implementations of ITypeRegistrar and ITypeResolver to integrate the Microsoft.Extensions.DependencyInjection, Autofac, Lamar, LightInject, Ninject, and SimpleInjector frameworks with Spectre.Console.
 
 We also support the CommandAppBuilder for easily creating and running your instance of Spectre.Console.CommandApp.</Description>
     <PackageProjectUrl>https://github.com/d20Tek/Spectre.Console.Extensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/d20Tek/Spectre.Console.Extensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Spectre; Spectre.Console; CLI; dependency injection;</PackageTags>
-    <PackageReleaseNotes>Release 1.0.3 - Added support for type registrars and resolvers for SimpleInjector framework. Replace DI factories with CommandAppBuilder.
+    <PackageReleaseNotes>Release 1.0.5 - Added support for type registrars and resolvers for Lamar DI framework.
 For full release notes, please read: https://github.com/d20Tek/Spectre.Console.Extensions/blob/main/ReleaseNotes.md</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <AnalysisLevel>latest</AnalysisLevel>
