@@ -28,6 +28,19 @@ namespace D20Tek.Spectre.Console.Extensions
         }
 
         /// <summary>
+        /// Creates the type registrar based on the DependencyInjector ServiceCollection with
+        /// pre-registered services
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="services"></param>
+        /// <returns>Returns the CommandAppBuilder</returns>
+        public static CommandAppBuilder WithDIContainerServices(this CommandAppBuilder builder, IServiceCollection services)
+        {
+            builder.Registrar = new DependencyInjectionTypeRegistrar(services);
+            return builder;
+        }
+
+        /// <summary>
         /// Creates the type registrar based on the Ninject StandardKernel
         /// and sets it in the CommandAppBuilder.
         /// </summary>
