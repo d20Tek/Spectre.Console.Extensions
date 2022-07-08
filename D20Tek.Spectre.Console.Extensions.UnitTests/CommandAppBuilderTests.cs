@@ -192,13 +192,29 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests
             Assert.AreEqual(0, result);
         }
 
-
         [TestMethod]
         public void Run_LightInjectRegistrar()
         {
             // arrange
             var builder = new CommandAppBuilder()
                               .WithLightInjectContainer()
+                              .WithStartup<MockStartup>()
+                              .WithDefaultCommand<MockCommand>()
+                              .Build();
+
+            // act
+            var result = builder.Run(Array.Empty<string>());
+
+            // assert
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void Run_LamarRegistrar()
+        {
+            // arrange
+            var builder = new CommandAppBuilder()
+                              .WithLamarContainer()
                               .WithStartup<MockStartup>()
                               .WithDefaultCommand<MockCommand>()
                               .Build();

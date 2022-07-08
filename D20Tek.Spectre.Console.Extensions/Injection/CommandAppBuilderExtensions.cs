@@ -3,10 +3,10 @@
 //---------------------------------------------------------------------------------------------------------------------
 using Autofac;
 using D20Tek.Spectre.Console.Extensions.Injection;
+using Lamar;
 using LightInject;
 using Microsoft.Extensions.DependencyInjection;
 using Ninject;
-using SimpleInjector;
 
 namespace D20Tek.Spectre.Console.Extensions
 {
@@ -48,7 +48,7 @@ namespace D20Tek.Spectre.Console.Extensions
         /// <returns>Returns the CommandAppBuilder.</returns>
         public static CommandAppBuilder WithSimpleInjectorContainer(this CommandAppBuilder builder)
         {
-            var container = new Container();
+            var container = new SimpleInjector.Container();
             builder.Registrar = new SimpleInjectorTypeRegistrar(container);
             return builder;
         }
@@ -66,7 +66,6 @@ namespace D20Tek.Spectre.Console.Extensions
             return builder;
         }
 
-
         /// <summary>
         /// Creates the type registrar based on the LightInject ServiceContainer
         /// and sets it in the CommandAppBuilder.
@@ -77,6 +76,19 @@ namespace D20Tek.Spectre.Console.Extensions
         {
             var container = new ServiceContainer();
             builder.Registrar = new LightInjectTypeRegistrar(container);
+            return builder;
+        }
+
+        /// <summary>
+        /// Creates the type registrar based on the Lamar ServiceRegistry
+        /// and sets it in the CommandAppBuilder.
+        /// </summary>
+        /// <param name="builder">Builder instance to extend.</param>
+        /// <returns>Returns the CommandAppBuilder.</returns>
+        public static CommandAppBuilder WithLamarContainer(this CommandAppBuilder builder)
+        {
+            var registry = new ServiceRegistry();
+            builder.Registrar = new LamarTypeRegistrar(registry);
             return builder;
         }
     }

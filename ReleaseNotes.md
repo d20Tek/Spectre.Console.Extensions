@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release v1.0.5
+* Implemented Lamar type registrar and resolver with unit tests.
+* Implement CommandAppBuilder extension method for Lamar container with unit test.
+* Sample project for Lamar DI integration.
+
 ## Release v1.0.4
 * Implemented Autofac type registrar and resolver with unit tests.
 * Implement CommandAppBuilder extension method for Autofac.

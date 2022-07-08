@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Lamar.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "-h"
+    }
+  }
+}
