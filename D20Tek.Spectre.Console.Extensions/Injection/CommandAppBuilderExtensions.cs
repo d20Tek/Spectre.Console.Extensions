@@ -16,79 +16,122 @@ namespace D20Tek.Spectre.Console.Extensions
     public static class CommandAppBuilderExtensions
     {
         /// <summary>
-        /// Creates the type registrar based on the DependencyInjector ServiceCollection
-        /// and sets it in the CommandAppBuilder.
+        /// Creates the type registrar based on the DependencyInjection ServiceCollection in CommandAppBuilder
+        /// with optional pre-registered services.
         /// </summary>
-        /// <returns>Returns the CommandAppBuilder.</returns>
-        public static CommandAppBuilder WithDIContainer(this CommandAppBuilder builder)
+        /// <param name="builder">CommandAppBuilder to extend.</param>
+        /// <param name="services">
+        ///     [Optional] Provide pre-registered services, or create new instance when null.
+        /// </param>
+        /// <returns>Returns the CommandAppBuilder</returns>
+        public static CommandAppBuilder WithDIContainer(
+            this CommandAppBuilder builder,
+            IServiceCollection? services = null)
         {
-            var container = new ServiceCollection();
-            builder.Registrar = new DependencyInjectionTypeRegistrar(container);
+            // if no pre-registerd IServiceCollecion specified, create a new empty instance.
+            services ??= new ServiceCollection();
+
+            builder.Registrar = new DependencyInjectionTypeRegistrar(services);
             return builder;
         }
 
         /// <summary>
-        /// Creates the type registrar based on the Ninject StandardKernel
-        /// and sets it in the CommandAppBuilder.
+        /// Creates the type registrar based on the Ninject Standard Kernel in CommandAppBuilder
+        /// with optional pre-registered container.
         /// </summary>
-        /// <param name="builder">Builder instance to extend.</param>
-        /// <returns>Returns the CommandAppBuilder.</returns>
-        public static CommandAppBuilder WithNinjectContainer(this CommandAppBuilder builder)
+        /// <param name="builder">CommandAppBuilder to extend.</param>
+        /// <param name="container">
+        ///     [Optional] Provide pre-registered services kernel. Creates new instance when not specified.
+        /// </param>
+        /// <returns>Returns the CommandAppBuilder</returns>
+        public static CommandAppBuilder WithNinjectContainer(
+            this CommandAppBuilder builder,
+            StandardKernel? container = null)
         {
-            var container = new StandardKernel();
+            // if no pre-registerd StandardKernel specified, create a new empty instance.
+            container ??= new StandardKernel();
+
             builder.Registrar = new NinjectTypeRegistrar(container);
             return builder;
         }
 
         /// <summary>
-        /// Creates the type registrar based on the SimpleInjector Container
-        /// and sets it in the CommandAppBuilder.
+        /// Creates the type registrar based on the SimpleInjector Container in CommandAppBuilder
+        /// with optional pre-registered container.
         /// </summary>
-        /// <param name="builder">Builder instance to extend.</param>
-        /// <returns>Returns the CommandAppBuilder.</returns>
-        public static CommandAppBuilder WithSimpleInjectorContainer(this CommandAppBuilder builder)
+        /// <param name="builder">CommandAppBuilder to extend.</param>
+        /// <param name="container">
+        ///     [Optional] Provide pre-registered services container. Creates new instance when not specified.
+        /// </param>
+        /// <returns>Returns the CommandAppBuilder</returns>
+        public static CommandAppBuilder WithSimpleInjectorContainer(
+            this CommandAppBuilder builder,
+            SimpleInjector.Container? container = null)
         {
-            var container = new SimpleInjector.Container();
+            // if no pre-registerd Container specified, create a new empty instance.
+            container ??= new SimpleInjector.Container();
+
             builder.Registrar = new SimpleInjectorTypeRegistrar(container);
             return builder;
         }
 
         /// <summary>
-        /// Creates the type registrar based on the Autofac ContainerBuilder
-        /// and sets it in the CommandAppBuilder.
+        /// Creates the type registrar based on the AutoFac ContainerBuilder in CommandAppBuilder
+        /// with optional pre-registered container.
         /// </summary>
-        /// <param name="builder">Builder instance to extend.</param>
-        /// <returns>Returns the CommandAppBuilder.</returns>
-        public static CommandAppBuilder WithAutofacContainer(this CommandAppBuilder builder)
+        /// <param name="builder">CommandAppBuilder to extend.</param>
+        /// <param name="container">
+        ///     [Optional] Provide pre-registered services container. Creates new instance when not specified.
+        /// </param>
+        /// <returns>Returns the CommandAppBuilder</returns>
+        public static CommandAppBuilder WithAutofacContainer(
+            this CommandAppBuilder builder,
+            ContainerBuilder? container = null)
         {
-            var container = new ContainerBuilder();
+            // if no pre-registerd ContainerBuilder specified, create a new empty instance.
+            container ??= new ContainerBuilder();
+
             builder.Registrar = new AutofacTypeRegistrar(container);
             return builder;
         }
 
         /// <summary>
-        /// Creates the type registrar based on the LightInject ServiceContainer
-        /// and sets it in the CommandAppBuilder.
+        /// Creates the type registrar based on the LightInject ServiceContainer in CommandAppBuilder
+        /// with optional pre-registered container.
         /// </summary>
-        /// <param name="builder">Builder instance to extend.</param>
-        /// <returns>Returns the CommandAppBuilder.</returns>
-        public static CommandAppBuilder WithLightInjectContainer(this CommandAppBuilder builder)
+        /// <param name="builder">CommandAppBuilder to extend.</param>
+        /// <param name="container">
+        ///     [Optional] Provide pre-registered services container. Creates new instance when not specified.
+        /// </param>
+        /// <returns>Returns the CommandAppBuilder</returns>
+        public static CommandAppBuilder WithLightInjectContainer(
+            this CommandAppBuilder builder,
+            ServiceContainer? container = null)
         {
-            var container = new ServiceContainer();
+            // if no pre-registerd ServiceContainer specified, create a new empty instance.
+            container ??= new ServiceContainer();
+
             builder.Registrar = new LightInjectTypeRegistrar(container);
             return builder;
         }
 
         /// <summary>
-        /// Creates the type registrar based on the Lamar ServiceRegistry
-        /// and sets it in the CommandAppBuilder.
+        /// Creates the type registrar based on the Lamar ServiceRegistry in CommandAppBuilder
+        /// with optional pre-registered service registry.
         /// </summary>
-        /// <param name="builder">Builder instance to extend.</param>
-        /// <returns>Returns the CommandAppBuilder.</returns>
-        public static CommandAppBuilder WithLamarContainer(this CommandAppBuilder builder)
+        /// <param name="builder">CommandAppBuilder to extend.</param>
+        /// <param name="serviceRegistry">
+        ///     [Optional] Provide pre-registered services registry. Creates new instance when not specified.
+        /// </param>
+        /// <returns>Returns the CommandAppBuilder</returns>
+        public static CommandAppBuilder WithLamarContainer(
+            this CommandAppBuilder builder,
+            ServiceRegistry? serviceRegistry = null)
         {
-            var registry = new ServiceRegistry();
-            builder.Registrar = new LamarTypeRegistrar(registry);
+            // if no pre-registerd ServiceRegistry specified, create a new empty instance.
+            serviceRegistry ??= new ServiceRegistry();
+
+            builder.Registrar = new LamarTypeRegistrar(serviceRegistry);
             return builder;
         }
     }
