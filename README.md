@@ -17,12 +17,12 @@ The current releases contain implementations of ITypeRegistrar and ITypeResolver
 
 We also support the CommandAppBuilder to easily create, configure, and run your instance of Spectre.Console.CommandApp.
 
-For future releases, I will continue to investigate integration with other DI frameworks.
+For future releases, I will continue to investigate integration with other DI frameworks and logging integrations.
 
 ## Installation
 This library is a NuGet package so it is easy to add to your project. To install this package into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
-PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.0.4
+PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.0.6
 ``` 
 
 To install in the Visual Studio UI, go to the Tools menu > "Manage NuGet Packages". Then search for D20Tek.Spectre.Console.Extensions and install it from there.

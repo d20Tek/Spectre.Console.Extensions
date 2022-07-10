@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release v1.0.6
+* Added optional parameter to all With*Container extension methods to allow container to be passed to CommandAppBuilder.
+* If no optional container passed, we still create a new instance of the appropriate container.
+* New unit tests to validate providing optional containers.
+
 ## Release v1.0.5
 * Implemented Lamar type registrar and resolver with unit tests.
 * Implement CommandAppBuilder extension method for Lamar container with unit test.
