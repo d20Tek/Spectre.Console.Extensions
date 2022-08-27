@@ -9,30 +9,18 @@ using Spectre.Console.Cli;
 namespace D20Tek.Spectre.Console.Extensions.Testing
 {
     /// <summary>
-    /// An appropriate TestContext for testing CommandApp configuration, startup, and type registration.
-    /// These services can be configured with Mock or test classes. Then, specific commands can be
-    /// run to test their behavior.
+    /// A TestContext for setting up the test environment to run CommandApp commands
+    /// to validate their behavior.
     /// </summary>
     public class CommandAppTestContext
     {
         private Action<IConfigurator>? _configureAction;
         private TestCommandInterceptor _commandIntercept;
 
-
         /// <summary>
         /// Gets the TypeRegistrar for this test context.
         /// </summary>
         public ITypeRegistrar Registrar { get; }
-
-        /// <summary>
-        /// Gets the TypeResolver for this test context.
-        /// </summary>
-        public ITypeResolver Resolver => Registrar.Build();
-
-        /// <summary>
-        /// Gets the command configurator for this test context.
-        /// </summary>
-        public ITestConfigurator Configurator { get; }
 
         /// <summary>
         /// Gets the console for this test context.
@@ -46,7 +34,6 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         public CommandAppTestContext()
         {
             Registrar = new DependencyInjectionTypeRegistrar(new ServiceCollection());
-            Configurator = new FakeConfigurator(Registrar);
             Console = new TestConsole();
             _commandIntercept = new TestCommandInterceptor();
         }
@@ -106,7 +93,7 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         public CommandAppResult RunWithException<T>(string[] args)
             where T : Exception
         {
-            var app = CreateConfiguredApp();
+            var app = CreateConfiguredApp(true);
 
             try
             {
@@ -140,6 +127,7 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             builder.WithTestConfiguration(c => {
                 c.ConfigureConsole(Console);
                 c.SetInterceptor(_commandIntercept);
+                c.PropagateExceptions();
             });
 
             try
@@ -162,7 +150,7 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             throw new InvalidOperationException("Exception expected, but command ran without error.");
         }
 
-        private CommandApp CreateConfiguredApp()
+        private CommandApp CreateConfiguredApp(bool propagateExceptions = false)
         {
             var app = new CommandApp(Registrar);
 
@@ -175,6 +163,10 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             {
                 c.ConfigureConsole(Console);
                 c.SetInterceptor(_commandIntercept);
+                if (propagateExceptions)
+                {
+                    c.PropagateExceptions();
+                }
             });
 
             return app;
