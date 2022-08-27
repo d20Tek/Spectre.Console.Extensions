@@ -1,24 +1,16 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using Spectre.Console;
 using Spectre.Console.Cli;
+using System;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks
 {
-    internal class MockCommand : Command
+    internal class MockCommandWithException : Command
     {
-        private readonly IAnsiConsole _writer;
-
-        public MockCommand(IAnsiConsole console)
-        {
-            _writer = console;
-        }
-
         public override int Execute(CommandContext context)
         {
-            _writer.WriteLine("Success!");
-            return 0;
+            throw new ArgumentOutOfRangeException(nameof(context));
         }
     }
 }

@@ -2,33 +2,42 @@
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 
+using Spectre.Console.Cli;
+
 namespace D20Tek.Spectre.Console.Extensions.Testing
 {
     /// <summary>
-    /// The basic test result returned from running command app tests.
+    /// App result with basic data and additional context and settings for the 
+    /// command that was run
     /// </summary>
-    public class CommandAppBasicResult
+    public class CommandAppResult : CommandAppBasicResult
     {
         /// <summary>
-        /// Gets the exit code returned by the command app.
+        /// Gets the command context for this execution result.
         /// </summary>
-        public int ExitCode { get; }
+        public CommandContext? Context { get; }
 
         /// <summary>
-        /// Gets the output text from the command app. This text contains the console
-        /// output produced by the command app.
+        /// Gets the command settings for this execution result.
         /// </summary>
-        public string Output { get; }
+        public CommandSettings? Settings { get; }
 
         /// <summary>
-        /// Constructor for basic result.
+        /// Constructor.
         /// </summary>
-        /// <param name="exitCode">Initial command app exit code.</param>
-        /// <param name="output">Initial command app output text.</param>
-        public CommandAppBasicResult(int exitCode, string output)
+        /// <param name="exitCode">Exit code.</param>
+        /// <param name="output">Console output text.</param>
+        /// <param name="context">Command context.</param>
+        /// <param name="settings">Command settings</param>
+        public CommandAppResult(
+            int exitCode,
+            string output,
+            CommandContext? context,
+            CommandSettings? settings)
+            : base (exitCode, output)
         {
-            ExitCode = exitCode;
-            Output = output ?? string.Empty;
+            Context = context;
+            Settings = settings;
         }
     }
 }
