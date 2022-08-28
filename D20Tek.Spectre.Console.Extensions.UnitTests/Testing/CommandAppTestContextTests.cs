@@ -4,6 +4,7 @@
 using D20Tek.Spectre.Console.Extensions.Testing;
 using D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Spectre.Console.Cli;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
@@ -30,6 +31,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             Assert.IsNotNull(result);
             Assert.AreEqual(0, result.ExitCode);
             StringAssert.Contains(result.Output, "Success");
+            Assert.AreEqual("test", result.Context.Name);
+            Assert.IsInstanceOfType(result.Settings, typeof(EmptyCommandSettings));
         }
 
         [TestMethod]
@@ -134,6 +137,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             Assert.IsNotNull(result);
             Assert.AreEqual(0, result.ExitCode);
             StringAssert.Contains(result.Output, "Success");
+            Assert.AreEqual("mock", result.Context.Name);
+            Assert.IsInstanceOfType(result.Settings, typeof(EmptyCommandSettings));
         }
 
         [TestMethod]

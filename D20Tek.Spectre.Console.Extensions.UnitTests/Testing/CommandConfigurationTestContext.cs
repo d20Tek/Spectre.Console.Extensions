@@ -62,5 +62,51 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             Assert.AreEqual(1, context.Configurator.Commands.First().Examples.Count);
             Assert.AreEqual(0, context.Configurator.Examples.Count());
         }
+
+        [TestMethod]
+        public void Configurator_WithFullMetadata()
+        {
+            // arrange
+            var context = new CommandConfigurationTestContext();
+
+            // act
+            context.Configurator.AddCommand<MockCommand>("test")
+                                .WithAlias("1")
+                                .WithData("data")
+                                .WithExample(new string[] { "test" })
+                                .WithDescription("description");
+
+            // assert
+            Assert.AreEqual(1, context.Configurator.Commands.Count());
+            var command = context.Configurator.Commands.First();
+            Assert.AreEqual("test", command.Name);
+            Assert.AreEqual("description", command.Description);
+            Assert.AreEqual("data", command.Data);
+            Assert.AreEqual(1, command.Aliases.Count);
+            Assert.AreEqual(1, command.Examples.Count);
+            Assert.AreEqual(typeof(MockCommand), command.CommandType);
+            Assert.AreEqual(typeof(EmptyCommandSettings), command.SettingsType);
+            Assert.IsFalse(command.IsHidden);
+            Assert.IsFalse(command.IsDefaultCommand);
+            Assert.IsNull(command.Delegate);
+        }
+
+        [TestMethod]
+        public void Configurator_WithBranch()
+        {
+            // arrange
+            var context = new CommandConfigurationTestContext();
+
+            // act
+            context.Configurator.AddBranch<EmptyCommandSettings>("branch1", c => c.AddCommand<MockCommand>("test"));
+
+            // assert
+            Assert.AreEqual(1, context.Configurator.Commands.Count());
+            Assert.AreEqual("branch1", context.Configurator.Commands.First().Name);
+            Assert.AreEqual(0, context.Configurator.Commands.First().Aliases.Count);
+            Assert.AreEqual(0, context.Configurator.Commands.First().Examples.Count);
+            Assert.AreEqual(0, context.Configurator.Examples.Count());
+            Assert.AreEqual("test", context.Configurator.Commands.First().Children.First().Name);
+        }
     }
 }

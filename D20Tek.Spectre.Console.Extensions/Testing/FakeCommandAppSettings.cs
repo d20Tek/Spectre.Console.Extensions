@@ -33,24 +33,5 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             Registrar = new FrontendTypeRegistrar(registrar);
             CaseSensitivity = CaseSensitivity.All;
         }
-
-        public bool IsTrue(Func<ICommandAppSettings, bool> func, string environmentVariableName)
-        {
-            if (func(this))
-            {
-                return true;
-            }
-
-            var environmentVariable = Environment.GetEnvironmentVariable(environmentVariableName);
-            if (!string.IsNullOrWhiteSpace(environmentVariable))
-            {
-                if (environmentVariable.Equals("True", StringComparison.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 }
