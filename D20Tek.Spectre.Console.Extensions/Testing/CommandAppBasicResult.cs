@@ -25,7 +25,7 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         /// </summary>
         /// <param name="exitCode">Initial command app exit code.</param>
         /// <param name="output">Initial command app output text.</param>
-        public CommandAppBasicResult(int exitCode, string output)
+        public CommandAppBasicResult(int exitCode, string? output)
         {
             ExitCode = exitCode;
             Output = output ?? string.Empty;
