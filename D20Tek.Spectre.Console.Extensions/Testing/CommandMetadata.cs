@@ -40,7 +40,7 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         /// <summary>
         /// Gets the settings Type for this command.
         /// </summary>
-        public Type SettingsType { get; }
+        public Type? SettingsType { get; }
 
         /// <summary>
         /// Gets the delegate for this command, if one exists.
@@ -79,7 +79,7 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         private CommandMetadata(
             string name,
             Type? commandType,
-            Type settingsType,
+            Type? settingsType,
             Func<CommandContext, CommandSettings, int>? @delegate,
             bool isDefaultCommand)
         {
@@ -128,11 +128,6 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             where TCommand : class, ICommand
         {
             var settingsType = GetSettingsType(typeof(TCommand));
-            if (settingsType == null)
-            {
-                throw new InvalidOperationException();
-            }
-
             return new CommandMetadata(name, typeof(TCommand), settingsType, null, isDefaultCommand);
         }
 

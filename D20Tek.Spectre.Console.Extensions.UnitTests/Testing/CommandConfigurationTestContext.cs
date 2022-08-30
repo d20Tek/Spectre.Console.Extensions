@@ -5,6 +5,8 @@ using D20Tek.Spectre.Console.Extensions.Testing;
 using D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Spectre.Console.Cli;
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
@@ -92,6 +94,53 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
         }
 
         [TestMethod]
+        public void Configurator_WithHiddenCommand()
+        {
+            // arrange
+            var context = new CommandConfigurationTestContext();
+
+            // act
+            context.Configurator.AddCommand<MockCommand>("test")
+                                .IsHidden();
+
+            // assert
+            Assert.AreEqual(1, context.Configurator.Commands.Count());
+            var command = context.Configurator.Commands.First();
+            Assert.AreEqual("test", command.Name);
+            Assert.IsTrue(command.IsHidden);
+        }
+
+        [TestMethod]
+        public void Configurator_AddExample()
+        {
+            // arrange
+            var context = new CommandConfigurationTestContext();
+
+            // act
+            context.Configurator.AddExample(new string[] { "test" });
+
+            // assert
+            Assert.AreEqual(1, context.Configurator.Examples.Count);
+        }
+
+        [TestMethod]
+        public void Configurator_SetDefaultCommand()
+        {
+            // arrange
+            var context = new CommandConfigurationTestContext();
+            FakeConfigurator config = (FakeConfigurator)context.Configurator;
+
+            // act
+            config.SetDefaultCommand<MockCommand>();
+
+            // assert
+            var result = context.Configurator.DefaultCommand;
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.IsDefaultCommand);
+            Assert.AreEqual("__default_command", result.Name);
+        }
+
+        [TestMethod]
         public void Configurator_WithBranch()
         {
             // arrange
@@ -108,5 +157,76 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             Assert.AreEqual(0, context.Configurator.Examples.Count());
             Assert.AreEqual("test", context.Configurator.Commands.First().Children.First().Name);
         }
+
+
+        [TestMethod]
+        public void Configurator_WithBranch2()
+        {
+            // arrange
+            var context = new CommandConfigurationTestContext();
+
+            // act
+            context.Configurator.AddBranch("branch1", c => c.AddCommand<MockCommand>("test"));
+
+            // assert
+            Assert.AreEqual(1, context.Configurator.Commands.Count());
+            Assert.AreEqual("branch1", context.Configurator.Commands.First().Name);
+            Assert.AreEqual(0, context.Configurator.Commands.First().Aliases.Count);
+            Assert.AreEqual(0, context.Configurator.Commands.First().Examples.Count);
+            Assert.AreEqual(0, context.Configurator.Examples.Count());
+            Assert.AreEqual("test", context.Configurator.Commands.First().Children.First().Name);
+        }
+
+        [TestMethod]
+        public void Configurator_WithDelegate()
+        {
+            // arrange
+            var context = new CommandConfigurationTestContext();
+
+            // act
+            context.Configurator.AddDelegate<EmptyCommandSettings>("test-delegate", DelegateCall);
+
+            // assert
+            Assert.AreEqual(1, context.Configurator.Commands.Count());
+            Assert.AreEqual("test-delegate", context.Configurator.Commands.First().Name);
+        }
+
+        [ExcludeFromCodeCoverage]
+        private int DelegateCall(CommandContext context, EmptyCommandSettings settings) => 0;
+
+        [TestMethod]
+        public void Configurator_WithCommandAppSettings()
+        {
+            // arrange
+            var context = new CommandConfigurationTestContext();
+            var console = new TestConsole();
+            var interceptor = new TestCommandInterceptor();
+
+            // act
+            context.Configurator.Settings.ApplicationName = "test-app";
+            context.Configurator.Settings.ApplicationVersion = "1.0.0";
+            context.Configurator.Settings.Console = console;
+            context.Configurator.Settings.Interceptor = interceptor;
+            context.Configurator.Settings.StrictParsing = true;
+            context.Configurator.Settings.CaseSensitivity = CaseSensitivity.None;
+            context.Configurator.Settings.PropagateExceptions = true;
+            context.Configurator.Settings.ValidateExamples = true;
+            context.Configurator.Settings.ExceptionHandler = HandlerMethod;
+
+            // assert
+            Assert.AreEqual("test-app", context.Configurator.Settings.ApplicationName);
+            Assert.AreEqual("1.0.0", context.Configurator.Settings.ApplicationVersion);
+            Assert.AreEqual(console, context.Configurator.Settings.Console);
+            Assert.AreEqual(interceptor, context.Configurator.Settings.Interceptor);
+            Assert.AreEqual(CaseSensitivity.None, context.Configurator.Settings.CaseSensitivity);
+            Assert.IsTrue(context.Configurator.Settings.StrictParsing);
+            Assert.IsTrue(context.Configurator.Settings.PropagateExceptions);
+            Assert.IsTrue(context.Configurator.Settings.ValidateExamples);
+            Assert.IsNotNull(context.Configurator.Settings.ExceptionHandler);
+            Assert.IsNotNull(context.Configurator.Settings.Registrar);
+        }
+
+        [ExcludeFromCodeCoverage]
+        private int HandlerMethod(Exception ex) => 0;
     }
 }
