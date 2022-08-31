@@ -40,18 +40,8 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         /// </summary>
         /// <param name="args">Command line arguments represented as list of split strings.</param>
         /// <returns>Returns CommandAppBasicResult with information about the run command.</returns>
-        public CommandAppResult Run(string[] args)
-        {
-            Builder.WithTestConfiguration(c => {
-                c.ConfigureConsole(Console);
-                c.SetInterceptor(_commandIntercept);
-            });
-
-            var exitCode = Builder.Build().Run(args);
-
-            return new CommandAppResult(
-                exitCode, Console.Output, _commandIntercept.Context, _commandIntercept.Settings);
-        }
+        public CommandAppResult Run(string[] args) =>
+            RunAsync(args).GetAwaiter().GetResult();
 
         /// <summary>
         /// Runs the command app asychronously and returns the results from the specified program.
@@ -77,33 +67,8 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         /// <param name="args">Command line arguments represented as list of split strings.</param>
         /// <returns>Returns CommandAppBasicResult with information about the run command.</returns>
         public CommandAppResult RunWithException<T>(string[] args)
-            where T : Exception
-        {
-            Builder.WithTestConfiguration(c => {
-                c.ConfigureConsole(Console);
-                c.SetInterceptor(_commandIntercept);
-                c.PropagateExceptions();
-            });
-
-            try
-            {
-                var exitCode = Builder.Build().Run(args);
-            }
-            catch (T ex)
-            {
-                Console.WriteLine(ex.Message);
-                return new CommandAppResult(
-                    -1, Console.Output, _commandIntercept.Context, _commandIntercept.Settings);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException(
-                    $"Expected an exception of type '{typeof(T).FullName}' to be thrown, " +
-                    $"but instead {ex.GetType().FullName} exception was thrown.");
-            }
-
-            throw new InvalidOperationException("Exception expected, but command ran without error.");
-        }
+            where T : Exception =>
+            RunWithExceptionAsync<T>(args).GetAwaiter().GetResult();
 
         /// <summary>
         /// Runs the command app asychronously and returns the results from the specified program.
