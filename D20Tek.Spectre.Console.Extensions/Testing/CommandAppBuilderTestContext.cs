@@ -1,26 +1,18 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using D20Tek.Spectre.Console.Extensions.Injection;
-using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console;
 using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions.Testing
 {
     /// <summary>
-    /// A TestContext for setting up the test environment to run CommandApp commands
-    /// to validate their behavior.
+    /// A TestContext for setting up the test environment that uses the CommandAppBuilder pattern
+    /// and validates the resulting CommandApp behavior.
     /// </summary>
-    public class CommandAppTestContext
+    public class CommandAppBuilderTestContext
     {
-        private Action<IConfigurator>? _configureAction;
         private TestCommandInterceptor _commandIntercept;
-
-        /// <summary>
-        /// Gets the TypeRegistrar for this test context.
-        /// </summary>
-        public ITypeRegistrar Registrar { get; }
 
         /// <summary>
         /// Gets the console for this test context.
@@ -28,28 +20,19 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         public TestConsole Console { get; }
 
         /// <summary>
+        /// Gets the command app builder in this test context.
+        /// </summary>
+        public CommandAppBuilder Builder { get; }
+
+        /// <summary>
         /// Default constructor that initialize this TestContext with a default TypeRegistrar
         /// and a fake IConfigurator implemenation for testing and validation purposed.
         /// </summary>
-        public CommandAppTestContext()
+        public CommandAppBuilderTestContext()
         {
-            Registrar = new DependencyInjectionTypeRegistrar(new ServiceCollection());
+            Builder = new CommandAppBuilder();
             Console = new TestConsole();
             _commandIntercept = new TestCommandInterceptor();
-        }
-
-        /// <summary>
-        /// Configures the command app
-        /// </summary>
-        /// <param name="action">Configuration action</param>
-        public void Configure(Action<IConfigurator> action)
-        {
-            if (_configureAction != null)
-            {
-                throw new InvalidOperationException("Command app has already been configured.");
-            }
-
-            _configureAction = action;
         }
 
         /// <summary>
@@ -59,8 +42,12 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         /// <returns>Returns CommandAppBasicResult with information about the run command.</returns>
         public CommandAppResult Run(string[] args)
         {
-            var app = CreateConfiguredApp();
-            var exitCode = app.Run(args);
+            Builder.WithTestConfiguration(c => {
+                c.ConfigureConsole(Console);
+                c.SetInterceptor(_commandIntercept);
+            });
+
+            var exitCode = Builder.Build().Run(args);
 
             return new CommandAppResult(
                 exitCode, Console.Output, _commandIntercept.Context, _commandIntercept.Settings);
@@ -74,11 +61,15 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         public CommandAppResult RunWithException<T>(string[] args)
             where T : Exception
         {
-            var app = CreateConfiguredApp(true);
+            Builder.WithTestConfiguration(c => {
+                c.ConfigureConsole(Console);
+                c.SetInterceptor(_commandIntercept);
+                c.PropagateExceptions();
+            });
 
             try
             {
-                var exitCode = app.Run(args);
+                var exitCode = Builder.Build().Run(args);
             }
             catch (T ex)
             {
@@ -89,33 +80,11 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             catch (Exception ex)
             {
                 throw new InvalidOperationException(
-                    $"Expected an exception of type '{typeof(T).FullName}' to be thrown, " + 
+                    $"Expected an exception of type '{typeof(T).FullName}' to be thrown, " +
                     $"but instead {ex.GetType().FullName} exception was thrown.");
             }
 
             throw new InvalidOperationException("Exception expected, but command ran without error.");
-        }
-
-        private CommandApp CreateConfiguredApp(bool propagateExceptions = false)
-        {
-            var app = new CommandApp(Registrar);
-
-            if (_configureAction != null)
-            {
-                app.Configure(_configureAction);
-            }
-
-            app.Configure(c =>
-            {
-                c.ConfigureConsole(Console);
-                c.SetInterceptor(_commandIntercept);
-                if (propagateExceptions)
-                {
-                    c.PropagateExceptions();
-                }
-            });
-
-            return app;
         }
     }
 }
