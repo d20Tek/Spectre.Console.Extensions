@@ -7,7 +7,6 @@ using D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Spectre.Console.Cli;
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 

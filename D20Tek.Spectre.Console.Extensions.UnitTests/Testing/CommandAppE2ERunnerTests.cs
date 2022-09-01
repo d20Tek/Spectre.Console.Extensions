@@ -2,12 +2,9 @@
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using D20Tek.Spectre.Console.Extensions.Testing;
-using D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
 using DependencyInjection.Cli;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Spectre.Console.Cli;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing

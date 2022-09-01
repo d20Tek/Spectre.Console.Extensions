@@ -87,6 +87,7 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             if (isDisposed == false)
             {
                 _writer.Dispose();
+                isDisposed = true;
             }
         }
 

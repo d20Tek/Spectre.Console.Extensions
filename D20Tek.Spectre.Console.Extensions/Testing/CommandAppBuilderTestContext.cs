@@ -39,7 +39,7 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         /// Runs the command app sychronously and returns the results from the specified program.
         /// </summary>
         /// <param name="args">Command line arguments represented as list of split strings.</param>
-        /// <returns>Returns CommandAppBasicResult with information about the run command.</returns>
+        /// <returns>Returns CommandAppResult with information about the run command.</returns>
         public CommandAppResult Run(string[] args) =>
             RunAsync(args).GetAwaiter().GetResult();
 
@@ -47,7 +47,7 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         /// Runs the command app asychronously and returns the results from the specified program.
         /// </summary>
         /// <param name="args">Command line arguments represented as list of split strings.</param>
-        /// <returns>Returns CommandAppBasicResult with information about the run command.</returns>
+        /// <returns>Returns CommandAppResult with information about the run command.</returns>
         public async Task<CommandAppResult> RunAsync(string[] args)
         {
             Builder.WithTestConfiguration(c => {
@@ -65,7 +65,7 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         /// Runs the command app sychronously and returns the results from the specified program.
         /// </summary>
         /// <param name="args">Command line arguments represented as list of split strings.</param>
-        /// <returns>Returns CommandAppBasicResult with information about the run command.</returns>
+        /// <returns>Returns CommandAppResult with information about the run command.</returns>
         public CommandAppResult RunWithException<T>(string[] args)
             where T : Exception =>
             RunWithExceptionAsync<T>(args).GetAwaiter().GetResult();
@@ -74,7 +74,7 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         /// Runs the command app asychronously and returns the results from the specified program.
         /// </summary>
         /// <param name="args">Command line arguments represented as list of split strings.</param>
-        /// <returns>Returns CommandAppBasicResult with information about the run command.</returns>
+        /// <returns>Returns CommandAppResult with information about the run command.</returns>
         public async Task<CommandAppResult> RunWithExceptionAsync<T>(string[] args)
             where T : Exception
         {
