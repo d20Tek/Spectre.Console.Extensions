@@ -17,6 +17,8 @@ The current releases contain implementations of ITypeRegistrar and ITypeResolver
 
 We also support the CommandAppBuilder to easily create, configure, and run your instance of Spectre.Console.CommandApp.
 
+The new Spectre.Console.Extensions.Testing namespace supports test infrastructure classes to easily test commands, configuration, and end-to-end functionaly runs. There are various CommandAppTextContext classes and helpers that simplify unit test boilerplate code.
+
 For future releases, I will continue to investigate integration with other DI frameworks and logging integrations.
 
 ## Installation
