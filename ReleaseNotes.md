@@ -1,5 +1,12 @@
 # Release Notes
 
+## Release v1.0.7
+* Implemented CommandAppTestContext to simplify running individual commands within the CommandApp infrastructure.
+* Implemented CommandAppBuilderTestContext to simplify running commands for apps that are based on the CommandAppBuilder pattern.
+* Implemented CommandConfigurationTestContext to validate your CommandApp's configuration matches what you expect.
+* Implemented CommandAppE2ERunner to run the Main method of any command-line app with specified arguments.
+* Several helper classes (TestConsole, CommandMetadata, FakeCommandConfigurator, etc) to assist in testing and validation.
+
 ## Release v1.0.6
 * Added optional parameter to all With*Container extension methods to allow container to be passed to CommandAppBuilder.
 * If no optional container passed, we still create a new instance of the appropriate container.

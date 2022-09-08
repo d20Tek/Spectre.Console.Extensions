@@ -10,13 +10,13 @@
     <Description>Extensions for common code and patterns when using Spectre.Console CLI app framework. 
 
 The current releases contain implementations of ITypeRegistrar and ITypeResolver to integrate the Microsoft.Extensions.DependencyInjection, Autofac, Lamar, LightInject, Ninject, and SimpleInjector frameworks with Spectre.Console.
-
-We also support the CommandAppBuilder for easily creating and running your instance of Spectre.Console.CommandApp.</Description>
+We also support the CommandAppBuilder for easily creating and running your instance of Spectre.Console.CommandApp.
+The new Extensions.Testing namespace support test infrastructure classes to easily test commands, configuration, and end-to-end test runs. There are various CommandAppTextContext classes and helpers that simplify unit test boilerplate code.</Description>
     <PackageProjectUrl>https://github.com/d20Tek/Spectre.Console.Extensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/d20Tek/Spectre.Console.Extensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>Spectre; Spectre.Console; CLI; dependency injection;</PackageTags>
-    <PackageReleaseNotes>Release 1.0.6 - Added optional parameter to all With*Container extension methods to allow container to be passed to CommandAppBuilder.
+    <PackageTags>Spectre; Spectre.Console; CLI; dependency injection; testing; unit test; test infrastructure;</PackageTags>
+    <PackageReleaseNotes>Release 1.0.7 - Added test infrastructure classes and helpers to assist in writing unit tests for CommandApps, configuration, and individual commands.
 For full release notes, please read: https://github.com/d20Tek/Spectre.Console.Extensions/blob/main/ReleaseNotes.md</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <AnalysisLevel>latest</AnalysisLevel>
