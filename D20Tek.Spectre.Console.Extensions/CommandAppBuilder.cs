@@ -10,7 +10,7 @@ namespace D20Tek.Spectre.Console.Extensions
     /// </summary>
     public class CommandAppBuilder
     {
-        private CommandApp? _app = null;
+        internal CommandApp? App { get; set; } = null;
         
         internal Action? SetDefaultCommand { get; set; }
 
@@ -18,6 +18,7 @@ namespace D20Tek.Spectre.Console.Extensions
 
         internal StartupBase? Startup { get; set; }
 
+        internal Action? SetCustomConfig { get; set; }
 
         /// <summary>
         /// Sets up the Startup class to use in this builder.
@@ -42,9 +43,9 @@ namespace D20Tek.Spectre.Console.Extensions
             where TDefault : class, ICommand
         {
             SetDefaultCommand = () => {
-                if (_app != null)
+                if (App != null)
                 {
-                    _app.SetDefaultCommand<TDefault>();
+                    App.SetDefaultCommand<TDefault>();
                 }
             };
             
@@ -68,13 +69,16 @@ namespace D20Tek.Spectre.Console.Extensions
             }
 
             // Create the CommandApp with the type registrar.
-            _app = new CommandApp(Registrar);
+            App = new CommandApp(Registrar);
 
-            // If a default command was specifie, then add it to the CommandApp now.
+            // If a default command was specified, then add it to the CommandApp now.
             SetDefaultCommand?.Invoke();
 
             // Configure any commands in the application.
-            _app.Configure(config => Startup.ConfigureCommands(config));
+            App.Configure(config => Startup.ConfigureCommands(config));
+
+            // Configure any custom set configuration if it's available.
+            SetCustomConfig?.Invoke();
 
             return this;
         }
@@ -86,10 +90,10 @@ namespace D20Tek.Spectre.Console.Extensions
         /// <returns>Return value from the application.</returns>
         public async Task<int> RunAsync(string[] args)
         {
-            _ = _app ?? throw new ArgumentNullException(
-                nameof(_app), "Build was not called prior to calling RunAsync.");
+            _ = App ?? throw new ArgumentNullException(
+                nameof(App), "Build was not called prior to calling RunAsync.");
 
-            return await _app.RunAsync(args);
+            return await App.RunAsync(args);
         }
 
         /// <summary>
@@ -99,10 +103,10 @@ namespace D20Tek.Spectre.Console.Extensions
         /// <returns>Return value from the application.</returns>
         public int Run(string[] args)
         {
-            _ = _app ?? throw new ArgumentNullException(
-                nameof(_app), "Build was not called prior to calling Run.");
+            _ = App ?? throw new ArgumentNullException(
+                nameof(App), "Build was not called prior to calling Run.");
 
-            return _app.Run(args);
+            return App.Run(args);
         }
     }
 }

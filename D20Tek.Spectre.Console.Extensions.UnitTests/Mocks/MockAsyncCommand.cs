@@ -3,22 +3,23 @@
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console;
 using Spectre.Console.Cli;
+using System.Threading.Tasks;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks
 {
-    internal class MockCommand : Command
+    internal class MockAsyncCommand : AsyncCommand
     {
         private readonly IAnsiConsole _writer;
 
-        public MockCommand(IAnsiConsole console)
+        public MockAsyncCommand(IAnsiConsole console)
         {
             _writer = console;
         }
 
-        public override int Execute(CommandContext context)
+        public override Task<int> ExecuteAsync(CommandContext context)
         {
             _writer.WriteLine("Success!");
-            return 0;
+            return Task.FromResult(0);
         }
     }
 }

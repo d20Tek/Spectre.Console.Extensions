@@ -148,5 +148,50 @@ For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, plea
 * [SimpleInjector.Cli](samples/SimpleInjector.Cli) - Use the SimpleInjector DI framework to build type registrar and resolver.
 * [NoDI.Cli](samples/NoDI.Cli) - Use the CommandAppBuilder to configure a console app that does not use a DI framework.
 
+### Testing Infrastructure
+This library also provides testing classes that help in building your CommandApp unit tests. Using the CommandAppTestContext allows you to easily configure and run commands in isolation.
+Here is an example of a simple command unit test written in VSTest (though these test contexts will work in any test framework):
+```csharp
+//---------------------------------------------------------------------------------------------------------------------
+// Copyright (c) d20Tek.  All rights reserved.
+//---------------------------------------------------------------------------------------------------------------------
+using D20Tek.Spectre.Console.Extensions.Testing;
+using D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Spectre.Console.Cli;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
+
+namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
+{
+    [TestClass]
+    public class CommandAppTestContextTests
+    {
+        [TestMethod]
+        public void Run()
+        {
+            // arrange
+            var context = new CommandAppTestContext();
+            context.Configure(config =>
+            {
+                config.Settings.ApplicationName = "Run Test 1";
+                config.AddCommand<MockCommand>("test");
+            });
+
+            // act
+            var result = context.Run(new string[] { "test" });
+
+            // assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(0, result.ExitCode);
+            StringAssert.Contains(result.Output, "Success");
+            Assert.AreEqual("test", result.Context.Name);
+            Assert.IsInstanceOfType(result.Settings, typeof(EmptyCommandSettings));
+        }
+    }
+}
+```
+
 ## Feedback
 If you use these libraries and have any feedback, bugs, or suggestions, please file them in the Issues section of this repository.
