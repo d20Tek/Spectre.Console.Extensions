@@ -15,7 +15,7 @@ namespace D20Tek.Spectre.Console.Extensions.Settings
         /// Verbosity level for this command
         /// </summary>
         [CommandOption("-v|--verbosity <VERBOSITY-LEVEL>")]
-        [Description("The verbosity level for this operation (q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]).")]
+        [Description("The verbosity level for this operation: q(uiet), m(inimal), n(ormal), d(etailed), and diag(nostic).")]
         [DefaultValue(VerbosityLevel.Normal)]
         public VerbosityLevel Verbosity { get; set; } = VerbosityLevel.Normal;
     }
