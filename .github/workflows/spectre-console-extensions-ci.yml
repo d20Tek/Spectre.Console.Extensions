@@ -2,7 +2,7 @@ name: ci-build
 
 on:
   push:
-    branches: [ feature/* ]
+    branches: [ feature/*, bug-fix/* ]
   pull_request:
     branches: [ main ]
 
