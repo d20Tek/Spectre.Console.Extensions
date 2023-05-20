@@ -2,6 +2,7 @@
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console.Cli;
+using System.Xml.Linq;
 
 namespace D20Tek.Spectre.Console.Extensions.Testing
 {
@@ -62,6 +63,22 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             action(new FakeConfigurator<TDerivedSettings>(command, _registrar));
 
             _command.Children.Add(command);
+        }
+
+        void IConfigurator<TSettings>.SetDefaultCommand<TDefaultCommand>()
+        {
+            var command = CommandMetadata.FromType<TDefaultCommand>("__default_command", true);
+            _command.Children.Add(command);
+        }
+
+        IBranchConfigurator IConfigurator<TSettings>.AddBranch<TDerivedSettings>(string name, Action<IConfigurator<TDerivedSettings>> action)
+        {
+            var command = CommandMetadata.FromBranch<TDerivedSettings>(name);
+            action(new FakeConfigurator<TDerivedSettings>(command, _registrar));
+
+            _command.Children.Add(command);
+
+            return new FakeBranchConfigurator();
         }
     }
 }

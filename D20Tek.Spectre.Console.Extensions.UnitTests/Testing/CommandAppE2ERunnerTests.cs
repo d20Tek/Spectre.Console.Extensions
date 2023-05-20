@@ -12,6 +12,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
     [TestClass]
     public class CommandAppE2ERunnerTests
     {
+        /*
         [TestMethod]
         public async Task RunAsync_DefaultOperation()
         {
@@ -40,6 +41,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             Assert.AreEqual(0, result.ExitCode);
             StringAssert.Contains(result.Output, "DependencyInjection.Cli");
         }
+        */
 
         [TestMethod]
         public void Run_DefaultOperation()

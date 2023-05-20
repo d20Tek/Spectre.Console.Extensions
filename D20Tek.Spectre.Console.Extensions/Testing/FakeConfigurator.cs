@@ -69,5 +69,15 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
 
             Commands.Add(command);
         }
+
+        IBranchConfigurator IConfigurator.AddBranch<TSettings>(string name, Action<IConfigurator<TSettings>> action)
+        {
+            var command = CommandMetadata.FromBranch<TSettings>(name);
+            action(new FakeConfigurator<TSettings>(command, _registrar));
+
+            Commands.Add(command);
+
+            return new FakeBranchConfigurator();
+        }
     }
 }
