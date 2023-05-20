@@ -28,6 +28,12 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
 
         public Func<Exception, int>? ExceptionHandler { get; set; }
 
+        public bool ShowOptionDefaultValues { get; set; }
+        
+        public bool TrimTrailingPeriod { get; set; }
+        
+        public bool ConvertFlagsToRemainingArguments { get; set; }
+
         public FakeCommandAppSettings(ITypeRegistrar registrar)
         {
             Registrar = new FrontendTypeRegistrar(registrar);
