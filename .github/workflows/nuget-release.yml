@@ -30,6 +30,12 @@ jobs:
       run: dotnet test --configuration Release /p:Version=${VERSION} --no-build
     - name: Pack
       run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output .
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v3
+      with:
+        name: package-artifact
+        path: D20Tek.Spectre.Console.Extensions.${VERSION}.nupkg
+        retention-days: 5
     - name: Publish Spectre.Console.Extensions
       run: dotnet nuget push D20Tek.Spectre.Console.Extensions.${VERSION}.nupkg --source https://nuget.pkg.github.com/d20Tek/index.json --api-key ${GITHUB_TOKEN}
       env:
