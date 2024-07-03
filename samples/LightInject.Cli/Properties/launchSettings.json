@@ -2,7 +2,7 @@
   "profiles": {
     "LightInject.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "-h"
+      "commandLineArgs": ""
     }
   }
 }

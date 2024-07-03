@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "SimpleInjector.Cli": {
-      "commandName": "Project",
-      "commandLineArgs": ""
-    }
-  }
-}

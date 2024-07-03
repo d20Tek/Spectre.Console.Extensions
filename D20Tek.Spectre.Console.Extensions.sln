@@ -31,15 +31,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".workflows", ".workflows", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ninject.Cli", "samples\Ninject.Cli\Ninject.Cli.csproj", "{F2F6F3DC-61CF-4AEC-B210-07E2E5A6BFA3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleInjector.Cli", "samples\SimpleInjector.Cli\SimpleInjector.Cli.csproj", "{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoDI.Cli", "samples\NoDI.Cli\NoDI.Cli.csproj", "{6F93BC4C-A839-4543-AC83-74D4D2C9F636}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Cli", "samples\Autofac.Cli\Autofac.Cli.csproj", "{EEE91EC4-C1BE-41C2-BC5C-5613A988616B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightInject.Cli", "samples\LightInject.Cli\LightInject.Cli.csproj", "{379F0F43-AFAB-4DDB-9A7C-5385441BD3B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamar.Cli", "samples\Lamar.Cli\Lamar.Cli.csproj", "{55CFC515-C6AB-4BCF-8558-F226FF5CC8C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lamar.Cli", "samples\Lamar.Cli\Lamar.Cli.csproj", "{55CFC515-C6AB-4BCF-8558-F226FF5CC8C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +65,6 @@ Global
 		{F2F6F3DC-61CF-4AEC-B210-07E2E5A6BFA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2F6F3DC-61CF-4AEC-B210-07E2E5A6BFA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2F6F3DC-61CF-4AEC-B210-07E2E5A6BFA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F93BC4C-A839-4543-AC83-74D4D2C9F636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6F93BC4C-A839-4543-AC83-74D4D2C9F636}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F93BC4C-A839-4543-AC83-74D4D2C9F636}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -96,7 +90,6 @@ Global
 		{4F5494AA-3286-4E53-986D-A638D2BB2CCC} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{C81FA14F-FBB2-4152-A25C-A106464AD0A0} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{F2F6F3DC-61CF-4AEC-B210-07E2E5A6BFA3} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
-		{D2FB28C1-2127-4C07-93D7-9EDCD2F6770D} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{6F93BC4C-A839-4543-AC83-74D4D2C9F636} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{EEE91EC4-C1BE-41C2-BC5C-5613A988616B} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{379F0F43-AFAB-4DDB-9A7C-5385441BD3B3} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
@@ -110,7 +103,6 @@ Global
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{4f5494aa-3286-4e53-986d-a638d2bb2ccc}*SharedItemsImports = 13
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{55cfc515-c6ab-4bcf-8558-f226ff5cc8c2}*SharedItemsImports = 5
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{c81fa14f-fbb2-4152-a25c-a106464ad0a0}*SharedItemsImports = 5
-		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{d2fb28c1-2127-4c07-93d7-9edcd2f6770d}*SharedItemsImports = 5
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{db25f4aa-2913-4396-9fd0-d674b75a5543}*SharedItemsImports = 5
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{eee91ec4-c1be-41c2-bc5c-5613a988616b}*SharedItemsImports = 5
 		samples\D20Tek.Samples.Common\D20Tek.Samples.Common.projitems*{f2f6f3dc-61cf-4aec-b210-07e2e5a6bfa3}*SharedItemsImports = 5
