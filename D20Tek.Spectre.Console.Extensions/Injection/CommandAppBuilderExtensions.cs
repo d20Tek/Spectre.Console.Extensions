@@ -56,26 +56,6 @@ namespace D20Tek.Spectre.Console.Extensions
         }
 
         /// <summary>
-        /// Creates the type registrar based on the SimpleInjector Container in CommandAppBuilder
-        /// with optional pre-registered container.
-        /// </summary>
-        /// <param name="builder">CommandAppBuilder to extend.</param>
-        /// <param name="container">
-        ///     [Optional] Provide pre-registered services container. Creates new instance when not specified.
-        /// </param>
-        /// <returns>Returns the CommandAppBuilder</returns>
-        public static CommandAppBuilder WithSimpleInjectorContainer(
-            this CommandAppBuilder builder,
-            SimpleInjector.Container? container = null)
-        {
-            // if no pre-registerd Container specified, create a new empty instance.
-            container ??= new SimpleInjector.Container();
-
-            builder.Registrar = new SimpleInjectorTypeRegistrar(container);
-            return builder;
-        }
-
-        /// <summary>
         /// Creates the type registrar based on the AutoFac ContainerBuilder in CommandAppBuilder
         /// with optional pre-registered container.
         /// </summary>

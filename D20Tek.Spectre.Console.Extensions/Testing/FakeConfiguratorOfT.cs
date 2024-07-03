@@ -80,5 +80,10 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
 
             return new FakeBranchConfigurator();
         }
+
+        public ICommandConfigurator AddAsyncDelegate<TDerivedSettings>(string name, Func<CommandContext, TDerivedSettings, Task<int>> func) where TDerivedSettings : TSettings
+        {
+            throw new NotImplementedException();
+        }
     }
 }

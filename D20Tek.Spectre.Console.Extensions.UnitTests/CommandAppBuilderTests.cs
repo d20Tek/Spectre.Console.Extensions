@@ -159,23 +159,6 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests
         }
 
         [TestMethod]
-        public void Run_SimpleInjectorRegistrar()
-        {
-            // arrange
-            var builder = new CommandAppBuilder()
-                              .WithSimpleInjectorContainer()
-                              .WithStartup<MockStartup>()
-                              .WithDefaultCommand<MockCommand>()
-                              .Build();
-
-            // act
-            var result = builder.Run(Array.Empty<string>());
-
-            // assert
-            Assert.AreEqual(0, result);
-        }
-
-        [TestMethod]
         public void Run_AutofacRegistrar()
         {
             // arrange

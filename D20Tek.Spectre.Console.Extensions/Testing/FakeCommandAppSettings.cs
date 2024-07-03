@@ -3,6 +3,8 @@
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console;
 using Spectre.Console.Cli;
+using Spectre.Console.Cli.Help;
+using System.Globalization;
 
 namespace D20Tek.Spectre.Console.Extensions.Testing
 {
@@ -33,6 +35,14 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         public bool TrimTrailingPeriod { get; set; }
         
         public bool ConvertFlagsToRemainingArguments { get; set; }
+
+        public CultureInfo? Culture { get; set; }
+        
+        public int MaximumIndirectExamples { get; set; }
+        
+        public HelpProviderStyle? HelpProviderStyles { get; set; }
+        
+        Func<Exception, ITypeResolver?, int>? ICommandAppSettings.ExceptionHandler { get; set; }
 
         public FakeCommandAppSettings(ITypeRegistrar registrar)
         {

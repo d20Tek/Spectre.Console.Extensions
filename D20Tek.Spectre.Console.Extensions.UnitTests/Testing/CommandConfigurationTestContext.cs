@@ -206,7 +206,6 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             context.Configurator.Settings.ApplicationName = "test-app";
             context.Configurator.Settings.ApplicationVersion = "1.0.0";
             context.Configurator.Settings.Console = console;
-            context.Configurator.Settings.Interceptor = interceptor;
             context.Configurator.Settings.StrictParsing = true;
             context.Configurator.Settings.CaseSensitivity = CaseSensitivity.None;
             context.Configurator.Settings.PropagateExceptions = true;
@@ -217,7 +216,6 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             Assert.AreEqual("test-app", context.Configurator.Settings.ApplicationName);
             Assert.AreEqual("1.0.0", context.Configurator.Settings.ApplicationVersion);
             Assert.AreEqual(console, context.Configurator.Settings.Console);
-            Assert.AreEqual(interceptor, context.Configurator.Settings.Interceptor);
             Assert.AreEqual(CaseSensitivity.None, context.Configurator.Settings.CaseSensitivity);
             Assert.IsTrue(context.Configurator.Settings.StrictParsing);
             Assert.IsTrue(context.Configurator.Settings.PropagateExceptions);
@@ -227,6 +225,6 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
         }
 
         [ExcludeFromCodeCoverage]
-        private int HandlerMethod(Exception ex) => 0;
+        private int HandlerMethod(Exception ex, ITypeResolver resolver) => 0;
     }
 }

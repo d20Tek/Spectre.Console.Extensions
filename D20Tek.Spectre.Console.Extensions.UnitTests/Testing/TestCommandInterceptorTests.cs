@@ -19,7 +19,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
         public TestCommandInterceptorTests()
         {
             var remaining = new Mock<IRemainingArguments>().Object;
-            _context = new CommandContext(remaining, "test", null);
+            _context = new CommandContext([], remaining, "test", null);
             _settings = new EmptyCommandSettings();
         }
 
