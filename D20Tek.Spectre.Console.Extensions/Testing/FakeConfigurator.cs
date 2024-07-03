@@ -2,6 +2,7 @@
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console.Cli;
+using Spectre.Console.Cli.Help;
 
 namespace D20Tek.Spectre.Console.Extensions.Testing
 {
@@ -78,6 +79,20 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             Commands.Add(command);
 
             return new FakeBranchConfigurator();
+        }
+
+        public void SetHelpProvider(IHelpProvider helpProvider)
+        {
+        }
+
+        public void SetHelpProvider<T>() where T : IHelpProvider
+        {
+        }
+
+        public ICommandConfigurator AddAsyncDelegate<TSettings>(string name, Func<CommandContext, TSettings, Task<int>> func)
+            where TSettings : CommandSettings
+        {
+            throw new NotImplementedException();
         }
     }
 }
