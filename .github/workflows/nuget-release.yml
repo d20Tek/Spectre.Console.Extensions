@@ -23,20 +23,30 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x
+
     - name: Build
       run: dotnet build --configuration Release /p:Version=${VERSION}
+
     - name: Test
       run: dotnet test --configuration Release /p:Version=${VERSION} --no-build
+
     - name: Pack
       run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output .
+
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v3
       with:
         name: package-artifact
         path: D20Tek.Spectre.Console.Extensions.${VERSION}.nupkg
         retention-days: 5
-    - name: Publish Spectre.Console.Extensions
+
+    - name: Publish Spectre.Console.Extensions (local)
       run: dotnet nuget push D20Tek.Spectre.Console.Extensions.${VERSION}.nupkg --source https://nuget.pkg.github.com/d20Tek/index.json --api-key ${GITHUB_TOKEN}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish Spectre.Console.Extensions (nuget.org)
+      run: dotnet nuget push D20Tek.Spectre.Console.Extensions.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_API_KEY}
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
