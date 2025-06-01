@@ -4,6 +4,7 @@ on:
   push:
     tags:
     - "v[0-9]+.[0-9]+.[0-9]+*"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,13 +14,17 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
+
     - name: Verify commit exists in origin/main
       run: git branch --remote --contains | grep origin/main
+
     - name: Extract release notes
       run: |
         git log --pretty=format:'%d %s' ${GITHUB_REF} | perl -pe 's| \(.*tag: v(\d+.\d+.\d+(-preview\d{3})?)(, .*?)*\)|\n## \1\n|g' > RELEASE-NOTES
+
     - name: Set VERSION variable from tag
       run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -33,13 +38,6 @@ jobs:
 
     - name: Pack
       run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output .
-
-    - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v3
-      with:
-        name: package-artifact
-        path: D20Tek.Spectre.Console.Extensions.${VERSION}.nupkg
-        retention-days: 5
 
     - name: Publish Spectre.Console.Extensions (local)
       run: dotnet nuget push D20Tek.Spectre.Console.Extensions.${VERSION}.nupkg --source https://nuget.pkg.github.com/d20Tek/index.json --api-key ${GITHUB_TOKEN}
