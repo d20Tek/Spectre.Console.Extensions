@@ -4,8 +4,7 @@
 [![NuGet Release](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/nuget-release.yml/badge.svg)](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/nuget-release.yml)
 
 ## Introduction
-This package provides extensions for common code and patterns when using Spectre.Console CLI app framework.
-[SpectreConsole](https://github.com/spectreconsole/spectre.console)
+This package provides extensions for common code and patterns when using Spectre.Console CLI app framework [SpectreConsole](https://github.com/spectreconsole/spectre.console).
 
 The current releases contain implementations of ITypeRegistrar and ITypeResolver for the following DI frameworks:
 - Microsoft.Extensions.DependencyInjection
@@ -19,12 +18,15 @@ We also support the CommandAppBuilder to easily create, configure, and run your 
 
 The new Spectre.Console.Extensions.Testing namespace supports test infrastructure classes to easily test commands, configuration, and end-to-end functionaly runs. There are various CommandAppTextContext classes and helpers that simplify unit test boilerplate code.
 
+Note: Only Microsoft.Extensions.DependencyInjection is implemented in the core extensions package (D20Tek.Spectre.Console.Extensions). The other DI containers have been repackaged into D20Tek.Spectre.Console.Extensions.MoreContainers, so that we could minimize the dependencies of the core package, and only add those dependencies for users that want to use one of those other frameworks. And, our TypeRegistrars continue to work for those different frameworks.
+
 For future releases, I will continue to investigate integration with other DI frameworks and logging integrations.
 
 ## Installation
-This library is a NuGet package so it is easy to add to your project. To install this package into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
+This libraries are NuGet packages so they are easy to add to your project. To install these packages into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
-PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.0.6
+PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.50.1
+PM > Install-Package D20Tek.Spectre.Console.Extensions.MoreContainers -Version 1.50.1
 ``` 
 
 To install in the Visual Studio UI, go to the Tools menu > "Manage NuGet Packages". Then search for D20Tek.Spectre.Console.Extensions and install it from there.

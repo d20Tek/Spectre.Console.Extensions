@@ -1,5 +1,25 @@
 # Release Notes
 
+## Release v1.50.1
+* Split off non-Microsoft.Extensions.DependencyInjection frameworks to a separate package: D20Tek.Spectre.Console.Extensions.MoreContainers.
+* Minimize the dependencies on the core package: D20Tek.Spectre.Console, so other DI frameworks are not included unnecessarily.
+* Changing versioning to match Spectre.Console more clearly.
+
+## Release v1.2.10
+* Updated to target .NET 9.
+* Updated Spectre.Console dependencies to 0.50.0.
+* Updated all other dependent packages to their latest versions.
+
+## Release v1.2.1
+* Updated to target .NET 8.
+* Updated all dependencies for projects.
+* Fixed breaking changes in Spectre.Console.Cli.
+* Deprecated SimpleInjector type registrar.
+
+## Release v1.1.3
+* Upgraded projects to .NET 7
+* Upgraded to latest Spectre.Console
+
 ## Release v1.0.7
 * Implemented CommandAppTestContext to simplify running individual commands within the CommandApp infrastructure.
 * Implemented CommandAppBuilderTestContext to simplify running commands for apps that are based on the CommandAppBuilder pattern.
