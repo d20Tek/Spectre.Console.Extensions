@@ -20,8 +20,8 @@ namespace NoDI.Cli
             config.ValidateExamples();
 
             config.AddCommand<MyCommand>("mine")
-                .WithDescription("Default command that displays some text.")
-                .WithExample(new[] { "mine" });
+                  .WithDescription("Default command that displays some text.")
+                  .WithExample(["mine"]);
 
             return config;
         }

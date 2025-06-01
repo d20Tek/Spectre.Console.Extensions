@@ -32,7 +32,7 @@ namespace Basic.Cli
 
                 config.AddCommand<DefaultCommand>("default")
                     .WithDescription("Default command that displays some text.")
-                    .WithExample(new[] { "default", "--verbose", "high" });
+                    .WithExample(["default", "--verbose", "high"]);
             });
 
             return await app.RunAsync(args);

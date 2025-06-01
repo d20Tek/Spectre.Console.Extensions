@@ -23,8 +23,8 @@ namespace Ninject.Cli
             config.ValidateExamples();
 
             config.AddCommand<DefaultCommand>("default")
-                .WithDescription("Default command that displays some text.")
-                .WithExample(new[] { "default", "--verbose", "high" });
+                  .WithDescription("Default command that displays some text.")
+                  .WithExample(["default", "--verbose", "high"]);
 
             return config;
         }
