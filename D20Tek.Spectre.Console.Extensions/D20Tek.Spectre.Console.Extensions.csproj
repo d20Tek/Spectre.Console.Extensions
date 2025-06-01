@@ -36,12 +36,7 @@ For full release notes, please read: https://github.com/d20Tek/Spectre.Console.E
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="8.3.0" />
-    <PackageReference Include="Lamar" Version="15.0.0" />
-    <PackageReference Include="LightInject" Version="7.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
-    <PackageReference Include="Ninject" Version="3.3.6" />
-    <PackageReference Include="SimpleInjector" Version="5.5.0" />
     <PackageReference Include="Spectre.Console" Version="0.50.0" />
     <PackageReference Include="Spectre.Console.Cli" Version="0.50.0" />
   </ItemGroup>

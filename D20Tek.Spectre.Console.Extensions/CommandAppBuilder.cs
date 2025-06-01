@@ -35,6 +35,18 @@ namespace D20Tek.Spectre.Console.Extensions
         }
 
         /// <summary>
+        /// Allows extension methods to set different registrars based on configuration.
+        /// </summary>
+        /// <param name="registrar">Registrar to set before building.</param>
+        /// <returns>Returns the CommandAppBuilder.</returns>
+        public CommandAppBuilder SetRegistrar(ITypeRegistrar registrar)
+        {
+            ArgumentNullException.ThrowIfNull(registrar, nameof(registrar));
+            Registrar = registrar;
+            return this;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <typeparam name="TDefault"></typeparam>

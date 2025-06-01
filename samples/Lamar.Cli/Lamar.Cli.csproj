@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\D20Tek.Spectre.Console.Extensions.MoreContainers\D20Tek.Spectre.Console.Extensions.MoreContainers.csproj" />
     <ProjectReference Include="..\..\D20Tek.Spectre.Console.Extensions\D20Tek.Spectre.Console.Extensions.csproj" />
   </ItemGroup>
 
