@@ -30,11 +30,6 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             Examples = new List<string[]>();
         }
 
-        public void AddExample(string[] args)
-        {
-            Examples.Add(args);
-        }
-
         public void SetDefaultCommand<TDefaultCommand>()
             where TDefaultCommand : class, ICommand
         {
@@ -81,18 +76,26 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             return new FakeBranchConfigurator();
         }
 
-        public void SetHelpProvider(IHelpProvider helpProvider)
-        {
-        }
-
-        public void SetHelpProvider<T>() where T : IHelpProvider
-        {
-        }
-
         public ICommandConfigurator AddAsyncDelegate<TSettings>(string name, Func<CommandContext, TSettings, Task<int>> func)
             where TSettings : CommandSettings
         {
             throw new NotImplementedException();
+        }
+
+        public IConfigurator SetHelpProvider(IHelpProvider helpProvider)
+        {
+            return this;
+        }
+
+        public IConfigurator SetHelpProvider<T>() where T : IHelpProvider
+        {
+            return this;
+        }
+
+        public IConfigurator AddExample(params string[] args)
+        {
+            Examples.Add(args);
+            return this;
         }
     }
 }
