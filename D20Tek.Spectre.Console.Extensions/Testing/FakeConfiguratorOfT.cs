@@ -78,7 +78,12 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             Func<CommandContext, TDerivedSettings, Task<int>> func)
             where TDerivedSettings : TSettings
         {
-            throw new NotImplementedException();
+            var command = CommandMetadata.FromAsyncDelegate<TSettings>(
+                name,
+                (context, settings) => func(context, (TDerivedSettings)settings));
+            _command.Children.Add(command);
+
+            return new FakeCommandConfigurator(command);
         }
     }
 }

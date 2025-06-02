@@ -2,11 +2,13 @@
 using D20Tek.Spectre.Console.Extensions.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Spectre.Console.Cli;
 using Spectre.Console.Cli.Help;
 using Spectre.Console.Rendering;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing;
 
@@ -42,6 +44,21 @@ public class FakeConfiguratorTests
         Assert.IsNotNull(config.HelperProvider);
     }
 
+    [TestMethod]
+    public void AddAsyncDelegate()
+    {
+        // arrange
+        var config = CreateConfigurator();
+
+        // act
+        var result = config.AddAsyncDelegate<EmptyCommandSettings>("test-async-delegate", TestAsyncDelegate);
+
+        // assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(1, config.Commands.Count);
+        Assert.AreEqual("test-async-delegate", config.Commands.First().Name);
+    }
+
     private FakeConfigurator CreateConfigurator()
     {
         var registrar = new DependencyInjectionTypeRegistrar(new ServiceCollection());
@@ -54,4 +71,7 @@ public class FakeConfiguratorTests
         public IEnumerable<IRenderable> Write(ICommandModel model, ICommandInfo command) => 
             Enumerable.Empty<IRenderable>();
     }
+
+    [ExcludeFromCodeCoverage]
+    private Task<int> TestAsyncDelegate(CommandContext arg1, EmptyCommandSettings arg2) => Task.FromResult(0);
 }

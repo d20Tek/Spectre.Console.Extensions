@@ -49,6 +49,12 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         public Func<CommandContext, CommandSettings, int>? Delegate { get; }
 
         /// <summary>
+        /// Gets the async delegate for this command, if one exists.
+        /// Only available for async delegate commands.
+        /// </summary>
+        public Func<CommandContext, CommandSettings, Task<int>>? AsyncDelegate { get; }
+
+        /// <summary>
         /// Gets whether or not this command is the default command for the console app.
         /// </summary>
         public bool IsDefaultCommand { get; }
@@ -90,8 +96,29 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             Delegate = @delegate;
             IsDefaultCommand = isDefaultCommand;
 
-            Children = new List<CommandMetadata>();
-            Examples = new List<string[]>();
+            Children = [];
+            Examples = [];
+        }
+
+        /// <summary>
+        /// Constuctor that builds the CommandMetadata with appropriate initial values.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="settingsType"></param>
+        /// <param name="delegate"></param>
+        private CommandMetadata(
+            string name,
+            Type? settingsType,
+            Func<CommandContext, CommandSettings, Task<int>>? @delegate)
+        {
+            Name = name;
+            Aliases = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            SettingsType = settingsType;
+            AsyncDelegate = @delegate;
+            IsDefaultCommand = false;
+
+            Children = [];
+            Examples = [];
         }
 
         /// <summary>
@@ -143,6 +170,20 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
                 where TSettings : CommandSettings
         {
             return new CommandMetadata(name, null, typeof(TSettings), @delegate, false);
+        }
+
+        /// <summary>
+        /// Creates the command metadata from command that uses an async delegate.
+        /// </summary>
+        /// <typeparam name="TSettings">Command settings type.</typeparam>
+        /// <param name="name">Command name.</param>
+        /// <param name="asyncDelegate">Delegate method.</param>
+        /// <returns>Newly created command metadata.</returns>
+        public static CommandMetadata FromAsyncDelegate<TSettings>(
+            string name, Func<CommandContext, CommandSettings, Task<int>>? asyncDelegate = null)
+                where TSettings : CommandSettings
+        {
+            return new CommandMetadata(name, typeof(TSettings), asyncDelegate);
         }
 
         private static Type? GetSettingsType(Type commandType)

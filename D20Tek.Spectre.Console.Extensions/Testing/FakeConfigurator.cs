@@ -73,7 +73,12 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         public ICommandConfigurator AddAsyncDelegate<TSettings>(string name, Func<CommandContext, TSettings, Task<int>> func)
             where TSettings : CommandSettings
         {
-            throw new NotImplementedException();
+            var command = CommandMetadata.FromAsyncDelegate<TSettings>(
+                name,
+                (context, settings) => func(context, (TSettings)settings));
+            Commands.Add(command);
+
+            return new FakeCommandConfigurator(command);
         }
 
         public IConfigurator SetHelpProvider(IHelpProvider helpProvider)

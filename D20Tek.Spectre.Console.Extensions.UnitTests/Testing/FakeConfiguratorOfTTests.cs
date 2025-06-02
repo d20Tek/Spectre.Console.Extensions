@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Spectre.Console.Cli;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
 {
@@ -90,8 +91,43 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             Assert.AreEqual("test-delegate", command.Children.First().Name);
         }
 
+        [TestMethod]
+        public void AddAsyncDelegate()
+        {
+            // arrange
+            var (command, config) = CreateConfigurator();
+
+            // act
+            var result = config.AddAsyncDelegate<EmptyCommandSettings>("test-async-delegate", TestAsyncDelegate);
+
+            // assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, command.Children.Count);
+            Assert.AreEqual("test-async-delegate", command.Children.First().Name);
+        }
+
+        [TestMethod]
+        public async Task CallAddedAsyncDelegate()
+        {
+            // arrange
+            var (command, config) = CreateConfigurator();
+
+            // act
+            var result = config.AddAsyncDelegate<EmptyCommandSettings>("test-async-delegate", TestAsyncDelegate);
+
+            // assert
+            var configurator = result as FakeCommandConfigurator;
+            Assert.IsNotNull(configurator);
+            Assert.IsNotNull(configurator.Command.AsyncDelegate);
+            CommandContext context = new([], NullRemainingArguments.Instance, "test", null);
+            Assert.AreEqual(0, await configurator.Command.AsyncDelegate(context, new EmptyCommandSettings()));
+        }
+
         [ExcludeFromCodeCoverage]
         private int TestDelegate(CommandContext arg1, EmptyCommandSettings arg2) => 0;
+
+        [ExcludeFromCodeCoverage]
+        private Task<int> TestAsyncDelegate(CommandContext arg1, EmptyCommandSettings arg2) => Task.FromResult(0);
 
         [ExcludeFromCodeCoverage]
         private void TestBranchAction(IConfigurator<EmptyCommandSettings> obj) { }

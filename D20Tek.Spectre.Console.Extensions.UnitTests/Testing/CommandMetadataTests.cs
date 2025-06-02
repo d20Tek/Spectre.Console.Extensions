@@ -26,6 +26,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             // assert
             Assert.AreEqual("test-untyped", m.Name);
             Assert.AreEqual(typeof(EmptyCommandSettings), m.SettingsType);
+            Assert.IsNull(m.AsyncDelegate);
         }
 
         [TestMethod]
