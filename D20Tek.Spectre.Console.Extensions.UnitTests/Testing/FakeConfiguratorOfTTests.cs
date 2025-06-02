@@ -92,6 +92,23 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
         }
 
         [TestMethod]
+        public void CallAddedDelegate()
+        {
+            // arrange
+            var (command, config) = CreateConfigurator();
+
+            // act
+            var result = config.AddDelegate<EmptyCommandSettings>("test-delegate", TestDelegate);
+
+            // assert
+            var configurator = result as FakeCommandConfigurator;
+            Assert.IsNotNull(configurator);
+            Assert.IsNotNull(configurator.Command.Delegate);
+            CommandContext context = new([], NullRemainingArguments.Instance, "test", null);
+            Assert.AreEqual(0, configurator.Command.Delegate(context, new EmptyCommandSettings()));
+        }
+
+        [TestMethod]
         public void AddAsyncDelegate()
         {
             // arrange
