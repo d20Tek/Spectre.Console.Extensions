@@ -1,4 +1,5 @@
 ﻿using Spectre.Console.Cli;
+using System.Diagnostics.CodeAnalysis;
 
 namespace D20Tek.Spectre.Console.Extensions.Testing;
 
@@ -9,7 +10,9 @@ internal class NullRemainingArguments : IRemainingArguments
 
     public NullRemainingArguments()
     {
-        _parsed = new List<KeyValuePair<string, string?>>().ToLookup(kvp => kvp.Key, kvp => kvp.Value);
+        _parsed = new List<KeyValuePair<string, string?>>().ToLookup(
+            [ExcludeFromCodeCoverage] (kvp) => kvp.Key,
+            [ExcludeFromCodeCoverage] (kvp) => kvp.Value);
     }
 
     public ILookup<string, string?> Parsed => _parsed;
