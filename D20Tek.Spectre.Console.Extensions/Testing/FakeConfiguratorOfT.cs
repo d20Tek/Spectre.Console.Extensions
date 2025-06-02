@@ -2,7 +2,6 @@
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console.Cli;
-using System.Xml.Linq;
 
 namespace D20Tek.Spectre.Console.Extensions.Testing
 {
@@ -55,23 +54,16 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             return new FakeCommandConfigurator(command);
         }
 
-        public void AddBranch<TDerivedSettings>(
-            string name, Action<IConfigurator<TDerivedSettings>> action)
-            where TDerivedSettings : TSettings
-        {
-            var command = CommandMetadata.FromBranch<TDerivedSettings>(name);
-            action(new FakeConfigurator<TDerivedSettings>(command, _registrar));
-
-            _command.Children.Add(command);
-        }
-
         void IConfigurator<TSettings>.SetDefaultCommand<TDefaultCommand>()
         {
             var command = CommandMetadata.FromType<TDefaultCommand>("__default_command", true);
             _command.Children.Add(command);
         }
 
-        IBranchConfigurator IConfigurator<TSettings>.AddBranch<TDerivedSettings>(string name, Action<IConfigurator<TDerivedSettings>> action)
+        public IBranchConfigurator AddBranch<TDerivedSettings>(
+            string name,
+            Action<IConfigurator<TDerivedSettings>> action)
+            where TDerivedSettings : TSettings
         {
             var command = CommandMetadata.FromBranch<TDerivedSettings>(name);
             action(new FakeConfigurator<TDerivedSettings>(command, _registrar));
@@ -81,7 +73,10 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             return new FakeBranchConfigurator();
         }
 
-        public ICommandConfigurator AddAsyncDelegate<TDerivedSettings>(string name, Func<CommandContext, TDerivedSettings, Task<int>> func) where TDerivedSettings : TSettings
+        public ICommandConfigurator AddAsyncDelegate<TDerivedSettings>(
+            string name,
+            Func<CommandContext, TDerivedSettings, Task<int>> func)
+            where TDerivedSettings : TSettings
         {
             throw new NotImplementedException();
         }

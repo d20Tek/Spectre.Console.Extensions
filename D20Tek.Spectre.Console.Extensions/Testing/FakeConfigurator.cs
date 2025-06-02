@@ -19,6 +19,8 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
         
         public IList<string[]> Examples { get; }
 
+        public IHelpProvider? HelperProvider { get; private set; } = null;
+
         ICommandAppSettings IConfigurator.Settings => Settings;
 
         public FakeConfigurator(ITypeRegistrar registrar)
@@ -57,16 +59,8 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             return new FakeCommandConfigurator(command);
         }
 
-        public void AddBranch<TSettings>(string name, Action<IConfigurator<TSettings>> action)
+        public IBranchConfigurator AddBranch<TSettings>(string name, Action<IConfigurator<TSettings>> action)
             where TSettings : CommandSettings
-        {
-            var command = CommandMetadata.FromBranch<TSettings>(name);
-            action(new FakeConfigurator<TSettings>(command, _registrar));
-
-            Commands.Add(command);
-        }
-
-        IBranchConfigurator IConfigurator.AddBranch<TSettings>(string name, Action<IConfigurator<TSettings>> action)
         {
             var command = CommandMetadata.FromBranch<TSettings>(name);
             action(new FakeConfigurator<TSettings>(command, _registrar));
@@ -84,11 +78,13 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
 
         public IConfigurator SetHelpProvider(IHelpProvider helpProvider)
         {
+            HelperProvider = helpProvider;
             return this;
         }
 
         public IConfigurator SetHelpProvider<T>() where T : IHelpProvider
         {
+            HelperProvider = Activator.CreateInstance<T>();
             return this;
         }
 

@@ -108,12 +108,10 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             {
                 foreach (var segment in renderable.GetSegments(this))
                 {
-                    if (segment.IsControlCode)
+                    if (segment.IsControlCode is false)
                     {
-                        continue;
+                        Profile.Out.Writer.Write(segment.Text);
                     }
-
-                    Profile.Out.Writer.Write(segment.Text);
                 }
             }
         }

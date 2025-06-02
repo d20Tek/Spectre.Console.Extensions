@@ -48,6 +48,20 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
         }
 
         [TestMethod]
+        public void SetDefaultCommand()
+        {
+            // arrange
+            var (command, config) = CreateConfigurator();
+
+            // act
+            config.SetDefaultCommand<MockCommand>();
+
+            // assert
+            Assert.AreEqual(1, command.Children.Count);
+            Assert.AreEqual("__default_command", command.Children.First().Name);
+        }
+
+        [TestMethod]
         public void AddChildBranch()
         {
             // arrange
