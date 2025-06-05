@@ -4,7 +4,10 @@
 * Split off non-Microsoft.Extensions.DependencyInjection frameworks to a separate package: D20Tek.Spectre.Console.Extensions.MoreContainers.
 * Minimize the dependencies on the core package: D20Tek.Spectre.Console, so other DI frameworks are not included unnecessarily.
 * Changing versioning to match Spectre.Console more clearly.
-
+* Added unit tests for this change and remaining untested areas.
+* Added NullRemainingArguments class to help in testing commands when user doesn't care about arguments.
+* Added support to test fakes for async delegate methods.
+ 
 ## Release v1.2.10
 * Updated to target .NET 9.
 * Updated Spectre.Console dependencies to 0.50.0.
