@@ -1,5 +1,11 @@
 # Release Notes
 
+## Release v1.50.1.1
+* Added ISupportLifetimes and ITypeRegistrar extension method WithLifetimes to incorporate strongly-typed registration extension methods.
+* Implemented ISupportLifetimes on DependencyInjectionTypeRegistrar.
+* Implemented LifetimeExtenion generic methods RegisterSingleton, RegisterScoped, and Register Transient to allows services to be added with different ServiceLifetimes.
+* Added unit tests for new functions.
+
 ## Release v1.50.1
 * Split off non-Microsoft.Extensions.DependencyInjection frameworks to a separate package: D20Tek.Spectre.Console.Extensions.MoreContainers.
 * Minimize the dependencies on the core package: D20Tek.Spectre.Console, so other DI frameworks are not included unnecessarily.

@@ -75,6 +75,8 @@ namespace DependencyInjection.Cli
         {
             // register services here...
             registrar.Register(typeof(IDisplayWriter), typeof(ConsoleDisplayWriter));
+            // or use registration extensions on WithLifetimes() to specify the container's ServiceLifetime.
+            // registrar.WithLifetimes().RegisterSingleton<IDisplayWriter, ConsoleDisplayWriter>();
         }
 
         public override IConfigurator ConfigureCommands(IConfigurator config)
