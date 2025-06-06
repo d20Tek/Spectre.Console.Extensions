@@ -12,6 +12,8 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
     /// </summary>
     public sealed class DependencyInjectionTypeRegistrar : ITypeRegistrar, ISupportLifetimes
     {
+        private readonly ServiceLifetime _defaultLifetime;
+
         /// <inheritdoc />
         public IServiceCollection Services { get; }
 
@@ -19,10 +21,14 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// Constructor that takes a service collection instance.
         /// </summary>
         /// <param name="builder">Service collection builder to use for registering types.</param>
-        public DependencyInjectionTypeRegistrar(IServiceCollection builder)
+        /// <param name="lifetime">Default lifetime to use in all Register functions. Singleton if unspecified.</param>
+        public DependencyInjectionTypeRegistrar(
+            IServiceCollection builder,
+            ServiceLifetime lifetime = ServiceLifetime.Singleton)
         {
             ArgumentNullException.ThrowIfNull(builder, nameof(builder));
             Services = builder;
+            _defaultLifetime = lifetime;
         }
 
         /// <summary>
@@ -46,7 +52,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(implementation, nameof(implementation));
 
-            Services.AddSingleton(service, implementation);
+            Services.Add(new ServiceDescriptor(service, implementation, _defaultLifetime));
         }
 
         /// <summary>
@@ -72,7 +78,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(factoryMethod, nameof(factoryMethod));
 
-            Services.AddSingleton(service, (provider) => factoryMethod());
+            Services.Add(new ServiceDescriptor(service, (provider) => factoryMethod(), _defaultLifetime));
         }
     }
 }

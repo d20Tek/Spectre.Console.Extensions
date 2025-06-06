@@ -29,6 +29,24 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
 
             // assert
             Assert.AreEqual(1, services.Count());
+            Assert.IsTrue(services.Any(x => x.Lifetime == ServiceLifetime.Singleton));
+            Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
+            Assert.IsTrue(services.Any(x => x.ImplementationType == typeof(TestService)));
+        }
+
+        [TestMethod]
+        public void Register_AsTransient()
+        {
+            // arrange
+            var services = new ServiceCollection();
+            var registrar = new DependencyInjectionTypeRegistrar(services, ServiceLifetime.Transient);
+
+            // act
+            registrar.Register(typeof(ITestService), typeof(TestService));
+
+            // assert
+            Assert.AreEqual(1, services.Count());
+            Assert.IsTrue(services.Any(x => x.Lifetime == ServiceLifetime.Transient));
             Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
             Assert.IsTrue(services.Any(x => x.ImplementationType == typeof(TestService)));
         }
@@ -46,6 +64,25 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
 
             // assert
             Assert.AreEqual(1, services.Count());
+            Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
+            Assert.IsFalse(services.Any(x => x.ImplementationType == typeof(TestService)));
+            Assert.IsTrue(services.Any(x => x.ImplementationInstance == instance));
+        }
+
+        [TestMethod]
+        public void RegisterInstance_AsTransient_StillRegistersAsSingleton()
+        {
+            // arrange
+            var services = new ServiceCollection();
+            var registrar = new DependencyInjectionTypeRegistrar(services, ServiceLifetime.Transient);
+            var instance = new TestService();
+
+            // act
+            registrar.RegisterInstance(typeof(ITestService), instance);
+
+            // assert
+            Assert.AreEqual(1, services.Count());
+            Assert.IsTrue(services.Any(x => x.Lifetime == ServiceLifetime.Singleton));
             Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
             Assert.IsFalse(services.Any(x => x.ImplementationType == typeof(TestService)));
             Assert.IsTrue(services.Any(x => x.ImplementationInstance == instance));

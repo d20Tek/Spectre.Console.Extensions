@@ -19,15 +19,17 @@ namespace D20Tek.Spectre.Console.Extensions
         /// <param name="services">
         ///     [Optional] Provide pre-registered services, or create new instance when null.
         /// </param>
+        /// <param name="lifetime">ServiceLifetime to use for all Register calls, defaults to Singleton</param>
         /// <returns>Returns the CommandAppBuilder</returns>
         public static CommandAppBuilder WithDIContainer(
             this CommandAppBuilder builder,
-            IServiceCollection? services = null)
+            IServiceCollection? services = null,
+            ServiceLifetime lifetime = ServiceLifetime.Singleton)
         {
             // if no pre-registerd IServiceCollecion specified, create a new empty instance.
             services ??= new ServiceCollection();
 
-            builder.SetRegistrar(new DependencyInjectionTypeRegistrar(services));
+            builder.SetRegistrar(new DependencyInjectionTypeRegistrar(services, lifetime));
             return builder;
         }
     }
