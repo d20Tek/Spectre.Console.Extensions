@@ -10,9 +10,10 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
     /// Type registry for Spectre.Console that uses the Microsoft.Extensions.DependencyInjection
     /// framework to register types with the DI engine.
     /// </summary>
-    public sealed class DependencyInjectionTypeRegistrar : ITypeRegistrar
+    public sealed class DependencyInjectionTypeRegistrar : ITypeRegistrar, ISupportLifetimes
     {
-        private readonly IServiceCollection _builder;
+        /// <inheritdoc />
+        public IServiceCollection Services { get; }
 
         /// <summary>
         /// Constructor that takes a service collection instance.
@@ -21,7 +22,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         public DependencyInjectionTypeRegistrar(IServiceCollection builder)
         {
             ArgumentNullException.ThrowIfNull(builder, nameof(builder));
-            _builder = builder;
+            Services = builder;
         }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// <returns>A type resolver.</returns>
         public ITypeResolver Build()
         {
-            var provider = _builder.BuildServiceProvider();
+            var provider = Services.BuildServiceProvider();
             return new DependencyInjectionTypeResolver(provider);
         }
 
@@ -45,7 +46,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(implementation, nameof(implementation));
 
-            _builder.AddSingleton(service, implementation);
+            Services.AddSingleton(service, implementation);
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(implementation, nameof(implementation));
 
-            _builder.AddSingleton(service, implementation);
+            Services.AddSingleton(service, implementation);
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(factoryMethod, nameof(factoryMethod));
 
-            _builder.AddSingleton(service, (provider) => factoryMethod());
+            Services.AddSingleton(service, (provider) => factoryMethod());
         }
     }
 }
