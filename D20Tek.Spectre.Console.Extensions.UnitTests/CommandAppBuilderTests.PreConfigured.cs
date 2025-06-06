@@ -34,6 +34,24 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests
         }
 
         [TestMethod]
+        public void Run_DIRegistrar_WithTransient()
+        {
+            // arrange
+            var services = new ServiceCollection();
+            var builder = new CommandAppBuilder()
+                              .WithDIContainer(services, ServiceLifetime.Transient)
+                              .WithStartup<MockStartup>()
+                              .WithDefaultCommand<MockCommand>()
+                              .Build();
+
+            // act
+            var result = builder.Run(Array.Empty<string>());
+
+            // assert
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
         public void Run_NinjectRegistrar()
         {
             // arrange
@@ -94,6 +112,24 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests
             var registry = new ServiceRegistry();
             var builder = new CommandAppBuilder()
                               .WithLamarContainer(registry)
+                              .WithStartup<MockStartup>()
+                              .WithDefaultCommand<MockCommand>()
+                              .Build();
+
+            // act
+            var result = builder.Run(Array.Empty<string>());
+
+            // assert
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void Run_LamarRegistrar_WithTransient()
+        {
+            // arrange
+            var registry = new ServiceRegistry();
+            var builder = new CommandAppBuilder()
+                              .WithLamarContainer(registry, ServiceLifetime.Transient)
                               .WithStartup<MockStartup>()
                               .WithDefaultCommand<MockCommand>()
                               .Build();

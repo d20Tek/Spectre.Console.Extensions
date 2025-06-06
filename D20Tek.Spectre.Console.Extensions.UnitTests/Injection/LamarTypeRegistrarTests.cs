@@ -33,6 +33,22 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
         }
 
         [TestMethod]
+        public void Register_AsTransient()
+        {
+            // arrange
+            var services = new ServiceRegistry();
+            var registrar = new LamarTypeRegistrar(services, ServiceLifetime.Transient);
+
+            // act
+            registrar.Register(typeof(ITestService), typeof(TestService));
+
+            // assert
+            Assert.IsTrue(services.Any(x => x.Lifetime == ServiceLifetime.Transient));
+            Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
+            Assert.IsTrue(services.Any(x => x.ImplementationType == typeof(TestService)));
+        }
+
+        [TestMethod]
         public void RegisterInstance()
         {
             // arrange

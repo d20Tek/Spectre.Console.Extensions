@@ -5,6 +5,7 @@ using Autofac;
 using D20Tek.Spectre.Console.Extensions.Injection;
 using Lamar;
 using LightInject;
+using Microsoft.Extensions.DependencyInjection;
 using Ninject;
 
 namespace D20Tek.Spectre.Console.Extensions
@@ -85,12 +86,13 @@ namespace D20Tek.Spectre.Console.Extensions
         /// <returns>Returns the CommandAppBuilder</returns>
         public static CommandAppBuilder WithLamarContainer(
             this CommandAppBuilder builder,
-            ServiceRegistry? serviceRegistry = null)
+            ServiceRegistry? serviceRegistry = null,
+            ServiceLifetime lifetime = ServiceLifetime.Singleton)
         {
             // if no pre-registerd ServiceRegistry specified, create a new empty instance.
             serviceRegistry ??= new ServiceRegistry();
 
-            builder.SetRegistrar(new LamarTypeRegistrar(serviceRegistry));
+            builder.SetRegistrar(new LamarTypeRegistrar(serviceRegistry, lifetime));
             return builder;
         }
     }

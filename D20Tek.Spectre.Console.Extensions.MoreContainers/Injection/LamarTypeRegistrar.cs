@@ -13,6 +13,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
     /// </summary>
     public sealed class LamarTypeRegistrar : ITypeRegistrar, ISupportLifetimes
     {
+        private readonly ServiceLifetime _defaultLifetime;
         private readonly ServiceRegistry _registry;
 
         public IServiceCollection Services => _registry;
@@ -21,11 +22,13 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// Constructor that takes a service registry instance.
         /// </summary>
         /// <param name="registry">Service registry to use for registering types.</param>
-        public LamarTypeRegistrar(ServiceRegistry registry)
+        /// <param name="lifetime">ServiceLifetime for all Register methods, defaults to Singleton.</param>
+        public LamarTypeRegistrar(ServiceRegistry registry, ServiceLifetime lifetime = ServiceLifetime.Singleton)
         {
             ArgumentNullException.ThrowIfNull(registry, nameof(registry));
 
             _registry = registry;
+            _defaultLifetime = lifetime;
         }
 
         /// <summary>
@@ -49,7 +52,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(implementation, nameof(implementation));
 
-            _registry.AddSingleton(service, implementation);
+            _registry.Add(new ServiceDescriptor(service, implementation, _defaultLifetime));
         }
 
         /// <summary>
@@ -75,7 +78,7 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
             ArgumentNullException.ThrowIfNull(service, nameof(service));
             ArgumentNullException.ThrowIfNull(factoryMethod, nameof(factoryMethod));
 
-            _registry.AddSingleton(service, (provider) => factoryMethod());
+            Services.Add(new ServiceDescriptor(service, (provider) => factoryMethod(), _defaultLifetime));
         }
     }
 }
