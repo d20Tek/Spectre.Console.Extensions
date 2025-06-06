@@ -2,7 +2,6 @@
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using Autofac;
-using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions.Injection

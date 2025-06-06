@@ -3,6 +3,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 using D20Tek.Spectre.Console.Extensions.Injection;
 using Lamar;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -76,6 +77,22 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
 
             // assert
             Assert.IsNotNull(resolver);
+        }
+
+        [TestMethod]
+        public void RegisterScoped()
+        {
+            // arrange
+            var services = new ServiceRegistry();
+            var registrar = new LamarTypeRegistrar(services);
+
+            // act
+            registrar.WithLifetimes().RegisterScoped<ITestService, TestService>();
+
+            // assert
+            Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
+            Assert.IsTrue(services.Any(x => x.Lifetime == ServiceLifetime.Scoped));
+            Assert.IsTrue(services.Any(x => x.ImplementationType == typeof(TestService)));
         }
 
         [ExcludeFromCodeCoverage]

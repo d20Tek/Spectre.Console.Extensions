@@ -11,9 +11,11 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
     /// Type registry for Spectre.Console that uses the Lamar DI
     /// framework to register types with the DI engine.
     /// </summary>
-    public sealed class LamarTypeRegistrar : ITypeRegistrar
+    public sealed class LamarTypeRegistrar : ITypeRegistrar, ISupportLifetimes
     {
         private readonly ServiceRegistry _registry;
+
+        public IServiceCollection Services => _registry;
 
         /// <summary>
         /// Constructor that takes a service registry instance.

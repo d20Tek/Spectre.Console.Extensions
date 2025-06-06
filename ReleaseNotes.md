@@ -1,8 +1,8 @@
 # Release Notes
 
-## Release v1.50.1.1
+## Release v1.50.1.2
 * Added ISupportLifetimes and ITypeRegistrar extension method WithLifetimes to incorporate strongly-typed registration extension methods.
-* Implemented ISupportLifetimes on DependencyInjectionTypeRegistrar.
+* Implemented ISupportLifetimes on DependencyInjectionTypeRegistrar and LamarTypeRegistrar.
 * Implemented LifetimeExtenion generic methods RegisterSingleton, RegisterScoped, and Register Transient to allows services to be added with different ServiceLifetimes.
 * Added unit tests for new functions.
 
