@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection;
 
@@ -29,9 +28,7 @@ public class TypeRegistrarExtensionsTests
         // arrange
         var registrar = new LightInjectTypeRegistrar(new LightInject.ServiceContainer());
 
-        // act
-        Assert.Throws<InvalidOperationException>([ExcludeFromCodeCoverage]() => registrar.WithLifetimes());
-
-        // assert
+        // act - assert
+        Assert.Throws<InvalidOperationException>(registrar.WithLifetimes);
     }
 }
