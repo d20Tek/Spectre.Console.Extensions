@@ -12,7 +12,6 @@ The current releases contain implementations of ITypeRegistrar and ITypeResolver
 - Lamar
 - LightInject
 - Ninject
-- SimpleInjector
 
 We also support the CommandAppBuilder to easily create, configure, and run your instance of Spectre.Console.CommandApp.
 
