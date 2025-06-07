@@ -106,6 +106,42 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests
         }
 
         [TestMethod]
+        public void Run_LightInjectRegistrar_WithTransient()
+        {
+            // arrange
+            var container = new ServiceContainer();
+            var builder = new CommandAppBuilder()
+                              .WithLightInjectContainer(container, ServiceLifetime.Transient)
+                              .WithStartup<MockStartup>()
+                              .WithDefaultCommand<MockCommand>()
+                              .Build();
+
+            // act
+            var result = builder.Run(Array.Empty<string>());
+
+            // assert
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void Run_LightInjectRegistrar_WithScoped()
+        {
+            // arrange
+            var container = new ServiceContainer();
+            var builder = new CommandAppBuilder()
+                              .WithLightInjectContainer(container, ServiceLifetime.Scoped)
+                              .WithStartup<MockStartup>()
+                              .WithDefaultCommand<MockCommand>()
+                              .Build();
+
+            // act
+            var result = builder.Run(Array.Empty<string>());
+
+            // assert
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
         public void Run_LamarRegistrar()
         {
             // arrange

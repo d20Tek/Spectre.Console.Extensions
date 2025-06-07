@@ -66,13 +66,29 @@ namespace D20Tek.Spectre.Console.Extensions
         /// <returns>Returns the CommandAppBuilder</returns>
         public static CommandAppBuilder WithLightInjectContainer(
             this CommandAppBuilder builder,
-            ServiceContainer? container = null)
+            ServiceContainer? container = null,
+            ServiceLifetime lifetime = ServiceLifetime.Singleton)
         {
             // if no pre-registerd ServiceContainer specified, create a new empty instance.
             container ??= new ServiceContainer();
+            container.SetDefaultLifetime(lifetime);
 
             builder.SetRegistrar(new LightInjectTypeRegistrar(container));
             return builder;
+        }
+
+        private static IServiceRegistry SetDefaultLifetime(this ServiceContainer container, ServiceLifetime lifetime) =>
+            lifetime switch
+            {
+                ServiceLifetime.Transient => container.SetDefaultLifetime<PerRequestLifeTime>(),
+                ServiceLifetime.Scoped => container.SetLightInjectScoped(),
+                _ => container.SetDefaultLifetime<PerContainerLifetime>(),
+            };
+
+        private static IServiceRegistry SetLightInjectScoped(this ServiceContainer container)
+        {
+            container.BeginScope();
+            return container.SetDefaultLifetime<PerContainerLifetime>();
         }
 
         /// <summary>

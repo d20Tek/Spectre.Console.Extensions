@@ -4,7 +4,7 @@
 * Added ISupportLifetimes and ITypeRegistrar extension method WithLifetimes to incorporate strongly-typed registration extension methods.
 * Implemented ISupportLifetimes on DependencyInjectionTypeRegistrar and LamarTypeRegistrar.
 * Implemented LifetimeExtenion generic methods RegisterSingleton, RegisterScoped, and Register Transient to allows services to be added with different ServiceLifetimes.
-* Added ability to set default ServiceLifetime for containers that support lifetimes: DITypeRegistrar and LamarTypeRegistrar.
+* Added ability to set default ServiceLifetime for containers that support lifetimes: DITypeRegistrar, LamarTypeRegistrar, and LightInject.
 * Added unit tests for new functions.
 
 ## Release v1.50.1
