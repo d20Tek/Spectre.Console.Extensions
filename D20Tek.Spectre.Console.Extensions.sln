@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lamar.Cli", "samples\Lamar.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D20Tek.Spectre.Console.Extensions.MoreContainers", "D20Tek.Spectre.Console.Extensions.MoreContainers\D20Tek.Spectre.Console.Extensions.MoreContainers.csproj", "{0FB8FC0F-B6F1-40E4-9C47-D43CCC6F6746}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractivePrompt.Cli", "samples\InteractivePrompt.Cli\InteractivePrompt.Cli.csproj", "{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{0FB8FC0F-B6F1-40E4-9C47-D43CCC6F6746}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FB8FC0F-B6F1-40E4-9C47-D43CCC6F6746}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FB8FC0F-B6F1-40E4-9C47-D43CCC6F6746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +106,7 @@ Global
 		{EEE91EC4-C1BE-41C2-BC5C-5613A988616B} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{379F0F43-AFAB-4DDB-9A7C-5385441BD3B3} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{55CFC515-C6AB-4BCF-8558-F226FF5CC8C2} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
+		{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7D1641E6-17C4-4467-946F-C057C45F4A62}
