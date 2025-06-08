@@ -35,7 +35,13 @@ public abstract class InteractiveCommandBase : AsyncCommand
             var commandText = _console.Prompt(new TextPrompt<string>(GetAppPromptPrefix()));
 
             if (IsExitCommand(commandText))
+            {
+                ShowExitMessage(_console);
                 return Constants.S_OK;
+            }
+
+            if (commandText.Equals(Constants.StartCommand, StringComparison.OrdinalIgnoreCase))
+                continue;
 
             var args = CliParser.SplitCommandLine(commandText);
             var result = await _commandApp.RunAsync(args);
@@ -70,15 +76,19 @@ public abstract class InteractiveCommandBase : AsyncCommand
         commandText.Equals(Constants.ExitCommandAbbr, StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
+    /// Shows a message when the application exits successfully.
+    /// </summary>
+    /// <param name="console">IAnsiConsole to use for output.</param>
+    protected virtual void ShowExitMessage(IAnsiConsole console) { }
+
+    /// <summary>
     /// Called after processing a Command, it uses the result value to decide whether the
-    /// interactive prompt is allowed to contine. Defaults to continue only when the result
-    /// from the previously run command was 0 (no errors).
+    /// interactive prompt is allowed to contine. Defaults to always continue.
     /// </summary>
     /// <param name="result">Result from command run.</param>
     /// <returns>
     ///     True means continue in the interactive prompt; false means exit immediately 
     ///     with the error result code.
     /// </returns>
-    protected virtual bool CanContinue(int result) => result == Constants.S_OK;
-
+    protected virtual bool CanContinue(int result) => true;
 }

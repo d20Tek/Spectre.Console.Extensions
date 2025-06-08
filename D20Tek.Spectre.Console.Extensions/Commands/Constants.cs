@@ -13,4 +13,6 @@ internal static class Constants
     public const string ExitCommand = "exit";
 
     public const string ExitCommandAbbr = "x";
+
+    public const string StartCommand = "start";
 }

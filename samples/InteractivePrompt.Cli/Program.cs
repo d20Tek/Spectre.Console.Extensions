@@ -1,9 +1,8 @@
-﻿namespace InteractivePrompt.Cli;
+﻿using D20Tek.Spectre.Console.Extensions;
+using InteractivePrompt.Cli;
 
-internal class Program
-{
-    static void Main(string[] args)
-    {
-        Console.WriteLine("Hello, World!");
-    }
-}
+return await new CommandAppBuilder().WithDIContainer()
+                                    .WithStartup<Startup>()
+                                    .WithDefaultCommand<InteractiveCommand>()
+                                    .Build()
+                                    .RunAsync(args);
