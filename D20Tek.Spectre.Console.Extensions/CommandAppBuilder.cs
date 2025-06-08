@@ -1,6 +1,7 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
+using D20Tek.Spectre.Console.Extensions.Injection;
 using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions
@@ -82,6 +83,7 @@ namespace D20Tek.Spectre.Console.Extensions
 
             // Create the CommandApp with the type registrar.
             App = new CommandApp(Registrar);
+            Registrar?.RegisterInstance(typeof(ICommandApp), App);
 
             // If a default command was specified, then add it to the CommandApp now.
             SetDefaultCommand?.Invoke();
