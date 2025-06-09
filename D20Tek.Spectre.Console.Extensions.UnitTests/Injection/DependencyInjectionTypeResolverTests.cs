@@ -10,7 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
 {
     [TestClass]
-    public class DependencyInjectionTypeResolverTests
+    public class TypeResolverExtensionsTests
     {
         public interface ITestService { };
 
