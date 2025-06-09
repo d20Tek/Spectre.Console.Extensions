@@ -3,6 +3,7 @@
 ## Release v1.50.1.3
 * Implemented InteractiveCommandBase to build an interactive command prompt that parses input string and runs other registered commands.
 * Added sample to show how to build an interactive prompt.
+* Added TypeResolverExtensions methods (GetService&lt;T&gt; and GetRequiredService&lt;T&gt;) to simplify resolution and align it with IServiceProvider extensions.
 * Added unit tests for new functionality.
 
 ## Release v1.50.1.2
