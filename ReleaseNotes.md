@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release v1.50.1.3
+* Implemented InteractiveCommandBase to build an interactive command prompt that parses input string and runs other registered commands.
+* Added sample to show how to build an interactive prompt.
+* Added unit tests for new functionality.
+
 ## Release v1.50.1.2
 * Added ISupportLifetimes and ITypeRegistrar extension method WithLifetimes to incorporate strongly-typed registration extension methods.
 * Implemented ISupportLifetimes on DependencyInjectionTypeRegistrar and LamarTypeRegistrar.
