@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release v1.50.1.4
+* Implemented ApplyConfiguration pattern to make it easier to build large CommandApps with many defined commands.
+* ICommandConfiguration allows you do define groups of commands that are configured more cleanly together.
+* The ApplyConfiguration extension method lets to run each ICommandConfiguration implementation.
+
 ## Release v1.50.1.3
 * Implemented InteractiveCommandBase to build an interactive command prompt that parses input string and runs other registered commands.
 * Added sample to show how to build an interactive prompt.
