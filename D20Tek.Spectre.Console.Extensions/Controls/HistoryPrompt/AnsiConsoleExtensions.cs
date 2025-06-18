@@ -6,16 +6,61 @@ namespace D20Tek.Spectre.Console.Extensions.Controls.HistoryPrompt;
 
 internal static class AnsiConsoleExtensions
 {
-    internal static async Task<string> ReadLine(this IAnsiConsole console, Style? style, bool secret, char? mask, IEnumerable<string>? items = null, IEnumerable<string>? history = null, CancellationToken cancellationToken = default)
+    private static readonly List<IInputStateHandler> _handlers =
+    [
+        new EnterHandler(),
+        new AutoCompleteHandler(),
+        new BackspaceHandler(),
+        new InsertHandler(),
+        new LeftArrowHandler(),
+        new RightArrowHandler(),
+        new UpArrowHandler(),
+        new DownArrowHandler(),
+        new DefaultInputHandler(),
+    ];
+
+    internal static async Task<string> ReadLineNew(
+        this IAnsiConsole console,
+        ReadLineRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(console);
+        var state = InputState.Initialize(request);
+
+        while (!state.Done)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var rawKey = await console.Input.ReadKeyAsync(true, cancellationToken).ConfigureAwait(false);
+            if (rawKey == null) continue;
+
+            var key = rawKey.Value;
+            foreach (var handler in _handlers)
+            {
+                state = handler.Handle(key, state);
+                if (state.Handled || state.Done) break;
+            }
+        }
+
+        return state.Buffer.ToString();
+    }
+
+    internal static async Task<string> ReadLine(
+        this IAnsiConsole console,
+        Style style,
+        bool secret,
+        char? mask,
+        IEnumerable<string> items,
+        IEnumerable<string> history,
+        CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(console);
 
-        style ??= Style.Plain;
         StringBuilder buffer = new();
         var cursorIndex = 0;
         var insertMode = false;
 
-        var autocomplete = new List<string>(items ?? []);
+        var autocomplete = new List<string>(items);
         var historyIndex = -1;
         string? prehistorySaved = null;
 
@@ -109,7 +154,7 @@ internal static class AnsiConsoleExtensions
                 continue;
             }
 
-            var historyCount = history?.Count() ?? 0;
+            var historyCount = history.Count();
             if (key.Key == ConsoleKey.UpArrow && historyCount > 0 && historyIndex < historyCount)
             {
                 // Erase what is there

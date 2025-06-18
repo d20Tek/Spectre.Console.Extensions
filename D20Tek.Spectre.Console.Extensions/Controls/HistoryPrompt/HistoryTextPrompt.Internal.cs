@@ -25,7 +25,7 @@ public sealed partial class HistoryTextPrompt<T>
                     PromptStyle ?? Style.Plain,
                     IsSecret,
                     Mask,
-                    Choices.Select(choice => SafeConverter(choice)).ToList(),
+                    [.. Choices.Select(choice => SafeConverter(choice))],
                     History,
                     cancellationToken).ConfigureAwait(false);
 
