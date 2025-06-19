@@ -31,14 +31,6 @@ public sealed partial class HistoryTextPrompt<T>
                         History),
                     cancellationToken).ConfigureAwait(false);
 
-                //var input = await console.ReadLine(
-                //    PromptStyle ?? Style.Plain,
-                //    IsSecret,
-                //    Mask,
-                //    [.. Choices.Select(choice => SafeConverter(choice))],
-                //    History,
-                //    cancellationToken).ConfigureAwait(false);
-
                 // Nothing entered?
                 if (string.IsNullOrWhiteSpace(input))
                 {

@@ -1,9 +1,11 @@
 ﻿using D20Tek.Spectre.Console.Extensions.Controls;
-using D20Tek.Spectre.Console.Extensions.Controls.HistoryPrompt;
 using D20Tek.Spectre.Console.Extensions.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Spectre.Console;
 using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Controls;
@@ -139,5 +141,55 @@ public class HistoryTextPromptTests
 
         // assert
         Assert.AreEqual("new style", result);
+    }
+
+    [TestMethod]
+    public void ShowPrompt_WithCustomValidationBool_ShowsErrorMessage()
+    {
+        // arrange
+        var console = new TestConsole();
+        console.TestInput.PushTextWithEnter("10");
+        console.TestInput.PushTextWithEnter("42");
+
+        // act
+        var result = console.Prompt(
+            new HistoryTextPrompt<int>("enter:")
+                .ValidationErrorMessage("test error")
+                .Validate(x => x >= 18 && x < 100));
+
+        // assert
+        StringAssert.Contains(console.Output, "test error");
+    }
+
+    [TestMethod]
+    public void ShowPrompt_WithCustomValidationSuccess_ReturnsValue()
+    {
+        // arrange
+        var console = new TestConsole();
+        console.TestInput.PushTextWithEnter("42");
+
+        // act
+        var result = console.Prompt(
+            new HistoryTextPrompt<int>("enter:")
+                .ValidationErrorMessage("test error")
+                .Validate([ExcludeFromCodeCoverage] (x) => x >= 18 && x < 100));
+
+        // assert
+        Assert.AreEqual(42, result);
+    }
+
+    [TestMethod]
+    public void ShowPrompt_EnterNotAllowedAsksAgain_ReturnsValue()
+    {
+        // arrange
+        var console = new TestConsole();
+        console.TestInput.PushKey(ConsoleKey.Enter);
+        console.TestInput.PushTextWithEnter("42");
+
+        // act
+        var result = console.Prompt(new HistoryTextPrompt<int>("enter:"));
+
+        // assert
+        Assert.AreEqual(42, result);
     }
 }

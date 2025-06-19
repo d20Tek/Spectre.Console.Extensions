@@ -1,9 +1,10 @@
 ﻿using D20Tek.Spectre.Console.Extensions.Controls;
-using D20Tek.Spectre.Console.Extensions.Controls.HistoryPrompt;
 using D20Tek.Spectre.Console.Extensions.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Spectre.Console;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Controls;
 
@@ -58,7 +59,8 @@ public class HistoryTextPromptChoiceTests
         var result = console.Prompt(
             new HistoryTextPrompt<string>("enter choice:")
                 .AddChoices(choices)
-                .HideChoices());
+                .HideChoices()
+                .HideDefaultValue());
 
         // assert
         Assert.IsFalse(console.Output.Contains("First/Second/Third"));
@@ -171,7 +173,8 @@ public class HistoryTextPromptChoiceTests
         // act
         var result = console.Prompt(
             new HistoryTextPrompt<string>("enter choice:")
-                .AddChoices(choices));
+                .AddChoices(choices)
+                .ChoicesStyle(new Style(Color.Green)));
 
         // assert
         Assert.AreEqual("Second", result);
@@ -189,7 +192,8 @@ public class HistoryTextPromptChoiceTests
         var result = console.Prompt(
             new HistoryTextPrompt<string>("enter choice:")
                 .AddChoices(choices)
-                .DefaultValue("Third"));
+                .DefaultValue("Third")
+                .DefaultValueStyle(new Style(Color.Yellow)));
 
         // assert
         Assert.AreEqual("Third", result);
@@ -208,9 +212,51 @@ public class HistoryTextPromptChoiceTests
         // act
         var result = console.Prompt(
             new HistoryTextPrompt<string>("enter choice:")
-                .AddChoices(choices));
+                .AddChoices(choices)
+                .ChoicesStyle(new Style(Color.Green)));
 
         // assert
         Assert.AreEqual("First", result);
+    }
+
+    [TestMethod]
+    public void ShowPrompt_WithCustomValidation_ShowsErrorMessage()
+    {
+        // arrange
+        var console = new TestConsole();
+        string[] choices = ["First", "Second", "Third"];
+        console.TestInput.PushTextWithEnter("bogus");
+        console.TestInput.PushTextWithEnter("First");
+
+        // act
+        var result = console.Prompt(
+            new HistoryTextPrompt<string>("enter choice:")
+                .AddChoices(choices)
+                .InvalidChoiceMessage("test invalid choice")
+                .Validate([ExcludeFromCodeCoverage] (x) => 
+                    choices.Contains(x) ? ValidationResult.Success() : ValidationResult.Error()));
+
+        // assert
+        StringAssert.Contains(console.Output, "test invalid choice");
+    }
+
+    [TestMethod]
+    public void ShowPrompt_WithCustomConverter_ReturnsValue()
+    {
+        // arrange
+        var console = new TestConsole();
+        console.TestInput.PushTextWithEnter("x=42");
+
+        // act
+        var result = console.Prompt(
+            new HistoryTextPrompt<int>("enter choice:")
+                .AddChoice(1)
+                .AddChoice(10)
+                .AddChoice(42)
+                .AddChoice(100)
+                .WithDisplayConverter(x => $"x={x}"));
+
+        // assert
+        Assert.AreEqual(42, result);
     }
 }

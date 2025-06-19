@@ -215,7 +215,7 @@ public static class HistoryTextPromptExtensions
     /// <param name="obj">The prompt.</param>
     /// <param name="displaySelector">The function to get a display string for a given choice.</param>
     /// <returns>The same instance so that multiple calls can be chained.</returns>
-    public static HistoryTextPrompt<T> WithConverter<T>(this HistoryTextPrompt<T> obj, Func<T, string> displaySelector)
+    public static HistoryTextPrompt<T> WithDisplayConverter<T>(this HistoryTextPrompt<T> obj, Func<T, string> displaySelector)
     {
         ArgumentNullException.ThrowIfNull(obj);
         obj.Converter = displaySelector;
