@@ -18,9 +18,7 @@ internal sealed class AutoCompleteHandler : IInputStateHandler
             state.Buffer.ToString(),
             key.Modifiers.HasFlag(ConsoleModifiers.Shift));
 
-        return (!string.IsNullOrEmpty(replace)) ?
-            RenderSuggestion(state.Request.AnsiConsole, replace, state.Buffer, state) :
-            state;
+        return RenderSuggestion(state.Request.AnsiConsole, replace, state.Buffer, state);
     }
 
     private InputState RenderSuggestion(IAnsiConsole console, string replace, StringBuilder buffer, InputState state)

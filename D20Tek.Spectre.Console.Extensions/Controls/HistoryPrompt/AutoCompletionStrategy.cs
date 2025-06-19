@@ -20,12 +20,9 @@ internal static class AutoCompletionStrategy
 
     private static string GetAutoCompleteValue(Direction autoCompleteDirection, List<string> autocomplete, string found)
     {
-        var index = autoCompleteDirection switch
-        {
-            Direction.Forward => (autocomplete.IndexOf(found) + 1) % autocomplete.Count,
-            Direction.Backward => (autocomplete.IndexOf(found) - 1 + autocomplete.Count) % autocomplete.Count,
-            _ => throw new ArgumentOutOfRangeException(nameof(autoCompleteDirection), autoCompleteDirection, null),
-        };
+        var index = autoCompleteDirection == Direction.Forward ?
+            (autocomplete.IndexOf(found) + 1) % autocomplete.Count :
+            (autocomplete.IndexOf(found) - 1 + autocomplete.Count) % autocomplete.Count;
 
         return autocomplete.ElementAt(index);
     }

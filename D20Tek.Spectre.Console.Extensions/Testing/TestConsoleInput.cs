@@ -66,6 +66,15 @@ namespace D20Tek.Spectre.Console.Extensions.Testing
             _input.Enqueue(new ConsoleKeyInfo((char)input, input, false, false, false));
         }
 
+        /// <summary>
+        /// Pushes the specified key to the input queue.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        public void PushKey(ConsoleKeyInfo input)
+        {
+            _input.Enqueue(input);
+        }
+
         /// <inheritdoc/>
         public bool IsKeyAvailable()
         {
