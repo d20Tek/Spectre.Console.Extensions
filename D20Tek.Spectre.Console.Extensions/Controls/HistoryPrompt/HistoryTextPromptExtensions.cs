@@ -1,6 +1,6 @@
 ﻿using Spectre.Console;
 
-namespace D20Tek.Spectre.Console.Extensions.Controls.HistoryPrompt;
+namespace D20Tek.Spectre.Console.Extensions.Controls;
 
 /// <summary>
 /// Extension helper methods to assist in configuring the HistoryTextPrompt. These extension methods
