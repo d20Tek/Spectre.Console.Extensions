@@ -28,7 +28,7 @@ internal sealed class UpArrowHandler : IInputStateHandler
             }
 
             var history = state.Request.History.AsEnumerable();
-            var prev = history.Skip(historyIndex).Take(1).FirstOrDefault();
+            var prev = history.Reverse().Skip(historyIndex).Take(1).FirstOrDefault();
             state.Buffer.Clear();
             var cursorIndex = 0;
             if (prev != null)

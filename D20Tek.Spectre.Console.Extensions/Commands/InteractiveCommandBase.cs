@@ -29,11 +29,12 @@ public abstract class InteractiveCommandBase : AsyncCommand
     public override async Task<int> ExecuteAsync(CommandContext context)
     {
         ShowWelcomeMessage(_console);
+        var historyPrompt = new HistoryTextPrompt<string>(GetAppPromptPrefix());
 
         while (true)
         {
             _console.WriteLine();
-            var commandText = _console.Prompt(new HistoryTextPrompt<string>(GetAppPromptPrefix()));
+            var commandText = _console.Prompt(historyPrompt);
 
             if (IsExitCommand(commandText))
             {

@@ -29,7 +29,7 @@ internal sealed class DownArrowHandler : IInputStateHandler
             else
             {
                 var history = state.Request.History.AsEnumerable();
-                state.Buffer.Insert(0, history!.Reverse().Skip(historyIndex).Take(1).FirstOrDefault() ?? string.Empty);
+                state.Buffer.Insert(0, history.Reverse().Skip(historyIndex).Take(1).FirstOrDefault() ?? string.Empty);
             }
 
             state.Request.AnsiConsole.Write(state.Buffer.ToString());

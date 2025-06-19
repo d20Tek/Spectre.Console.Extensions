@@ -21,7 +21,9 @@ public sealed partial class HistoryTextPrompt<T>
 
             while (true)
             {
-                var input = await console.ReadLine(new ReadLineRequest(console, 
+                var input = await console.ReadLine(
+                    new ReadLineRequest(
+                        console, 
                         PromptStyle ?? Style.Plain,
                         IsSecret,
                         Mask,
