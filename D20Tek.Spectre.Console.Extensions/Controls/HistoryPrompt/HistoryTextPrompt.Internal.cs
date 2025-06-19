@@ -21,13 +21,21 @@ public sealed partial class HistoryTextPrompt<T>
 
             while (true)
             {
-                var input = await console.ReadLine(
-                    PromptStyle ?? Style.Plain,
-                    IsSecret,
-                    Mask,
-                    [.. Choices.Select(choice => SafeConverter(choice))],
-                    History,
+                var input = await console.ReadLine(new ReadLineRequest(console, 
+                        PromptStyle ?? Style.Plain,
+                        IsSecret,
+                        Mask,
+                        [.. Choices.Select(choice => SafeConverter(choice))],
+                        History),
                     cancellationToken).ConfigureAwait(false);
+
+                //var input = await console.ReadLine(
+                //    PromptStyle ?? Style.Plain,
+                //    IsSecret,
+                //    Mask,
+                //    [.. Choices.Select(choice => SafeConverter(choice))],
+                //    History,
+                //    cancellationToken).ConfigureAwait(false);
 
                 // Nothing entered?
                 if (string.IsNullOrWhiteSpace(input))
@@ -77,6 +85,7 @@ public sealed partial class HistoryTextPrompt<T>
                     continue;
                 }
 
+                History.Add(input);
                 return result;
             }
         }).ConfigureAwait(false);
@@ -131,13 +140,19 @@ public sealed partial class HistoryTextPrompt<T>
 
     private bool ValidateResult(T value, out string message)
     {
-        var result = Validator?.Invoke(value);
+        if (Validator is null)
+        {
+            message = string.Empty;
+            return true;
+        }
+
+        var result = Validator.Invoke(value);
         message = GetErrorMessageOnFailed(result);
-        return result is { Successful: true };
+        return result.Successful;
     }
 
-    private string GetErrorMessageOnFailed(ValidationResult? result) =>
+    private string GetErrorMessageOnFailed(ValidationResult result) =>
         result is { Successful: false } ?
-            result?.Message ?? ValidationErrorMessage :
+            result.Message ?? ValidationErrorMessage :
             string.Empty;
 }

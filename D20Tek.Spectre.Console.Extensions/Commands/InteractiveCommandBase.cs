@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using D20Tek.Spectre.Console.Extensions.Controls;
+using Spectre.Console;
 using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions.Commands;
@@ -32,7 +33,7 @@ public abstract class InteractiveCommandBase : AsyncCommand
         while (true)
         {
             _console.WriteLine();
-            var commandText = _console.Prompt(new TextPrompt<string>(GetAppPromptPrefix()));
+            var commandText = _console.Prompt(new HistoryTextPrompt<string>(GetAppPromptPrefix()));
 
             if (IsExitCommand(commandText))
             {
