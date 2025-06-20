@@ -188,10 +188,10 @@ public class TypeConverterTests
         // arrange
 
         // act
-        var result = TypeConverterHelper.ConvertToString(CultureInfo.CurrentCulture);
+        var result = TypeConverterHelper.ConvertToString(CultureInfo.InvariantCulture);
 
         // assert
-        Assert.AreEqual("en-us", result, true);
+        Assert.AreEqual("(Default)", result, true);
     }
 
     [TestMethod]
