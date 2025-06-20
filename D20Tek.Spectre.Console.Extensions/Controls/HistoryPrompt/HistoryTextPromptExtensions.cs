@@ -8,6 +8,8 @@ namespace D20Tek.Spectre.Console.Extensions.Controls;
 /// </summary>
 public static class HistoryTextPromptExtensions
 {
+    private const char _defaultMask = '*';
+
     /// <summary>
     /// Allow empty input.
     /// </summary>
@@ -200,7 +202,7 @@ public static class HistoryTextPromptExtensions
     /// <param name="obj">The prompt.</param>
     /// <param name="mask">The masking character to use for the secret.</param>
     /// <returns>The same instance so that multiple calls can be chained.</returns>
-    public static HistoryTextPrompt<T> Secret<T>(this HistoryTextPrompt<T> obj, char? mask = null)
+    public static HistoryTextPrompt<T> Secret<T>(this HistoryTextPrompt<T> obj, char? mask = _defaultMask)
     {
         ArgumentNullException.ThrowIfNull(obj);
         obj.IsSecret = true;

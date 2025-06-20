@@ -67,7 +67,7 @@ public sealed partial class HistoryTextPrompt<T> : IPrompt<T>, IHasCulture
     /// Gets or sets the converter to get the display string for a choice. By default
     /// the corresponding <see cref="TypeConverter"/> is used.
     /// </summary>
-    public Func<T, string>? Converter { get; set; } = TypeConverterHelper.ConvertToString;
+    public Func<T, string> Converter { get; set; } = TypeConverterHelper.ConvertToString;
 
     /// <summary>
     /// Gets or sets the validator.

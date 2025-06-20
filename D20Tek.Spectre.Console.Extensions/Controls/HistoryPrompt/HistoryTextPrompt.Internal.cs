@@ -7,7 +7,6 @@ namespace D20Tek.Spectre.Console.Extensions.Controls;
 
 public sealed partial class HistoryTextPrompt<T>
 {
-    private Func<T, string> SafeConverter => Converter ?? TypeConverterHelper.ConvertToString;
     private readonly string _prompt;
     private readonly StringComparer? _comparer;
 
@@ -27,7 +26,7 @@ public sealed partial class HistoryTextPrompt<T>
                         PromptStyle ?? Style.Plain,
                         IsSecret,
                         Mask,
-                        [.. Choices.Select(choice => SafeConverter(choice))],
+                        [.. Choices.Select(choice => Converter(choice))],
                         History),
                     cancellationToken).ConfigureAwait(false);
 
@@ -52,7 +51,7 @@ public sealed partial class HistoryTextPrompt<T>
                 T? result;
                 if (Choices.Count > 0)
                 {
-                    var choiceMap = Choices.ToDictionary(choice => SafeConverter(choice), choice => choice, _comparer);
+                    var choiceMap = Choices.ToDictionary(choice => Converter(choice), choice => choice, _comparer);
                     if (choiceMap.TryGetValue(input, out result) && result != null)
                     {
                         return result;
@@ -103,7 +102,7 @@ public sealed partial class HistoryTextPrompt<T>
         if (ShowChoices && Choices.Count > 0)
         {
             appendSuffix = true;
-            var choices = string.Join("/", Choices.Select(choice => SafeConverter(choice)));
+            var choices = string.Join("/", Choices.Select(choice => Converter(choice)));
             var choicesStyle = ChoicesStyle?.ToMarkup() ?? "blue";
             builder.AppendFormat(CultureInfo.InvariantCulture, " [{0}][[{1}]][/]", choicesStyle, choices);
         }
@@ -127,8 +126,7 @@ public sealed partial class HistoryTextPrompt<T>
 
     private string GetDefaultValueDisplay()
     {
-        if (DefaultValue is null) return string.Empty;
-        var defaultValue = SafeConverter(DefaultValue.Value);
+        var defaultValue = Converter(DefaultValue!.Value);
         return IsSecret ? defaultValue.Mask(Mask) : defaultValue;
     }
 

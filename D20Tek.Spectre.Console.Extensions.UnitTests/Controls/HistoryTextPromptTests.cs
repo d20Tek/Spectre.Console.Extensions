@@ -5,6 +5,7 @@ using Spectre.Console;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -115,6 +116,23 @@ public class HistoryTextPromptTests
     }
 
     [TestMethod]
+    public void ShowPrompt_WithSecretAndDefaultValue_ReturnsString()
+    {
+        // arrange
+        var console = new TestConsole();
+        console.TestInput.PushKey(ConsoleKey.Enter);
+
+        // act
+        var result = console.Prompt(new HistoryTextPrompt<string>("enter text:")
+                            .Secret()
+                            .DefaultValue("default"));
+
+        // assert
+        Assert.AreEqual("default", result);
+        StringAssert.Contains(console.Output, "*******");
+    }
+
+    [TestMethod]
     public void ShowPrompt_WithAllowEmpty_ReturnsString()
     {
         // arrange
@@ -191,5 +209,23 @@ public class HistoryTextPromptTests
 
         // assert
         Assert.AreEqual(42, result);
+    }
+
+    [TestMethod]
+    public void ShowPrompt_WithSetLocale_ReturnsString()
+    {
+        // arrange
+        var console = new TestConsole();
+        console.TestInput.PushTextWithEnter("Test Text!");
+
+        // act
+        var prompt = new HistoryTextPrompt<string>("enter text:")
+        {
+            Culture = CultureInfo.GetCultureInfo("en-US")
+        };
+        var result = console.Prompt(prompt);
+
+        // assert
+        Assert.AreEqual("Test Text!", result);
     }
 }

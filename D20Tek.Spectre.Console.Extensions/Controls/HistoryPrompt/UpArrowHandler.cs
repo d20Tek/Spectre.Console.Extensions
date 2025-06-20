@@ -18,9 +18,9 @@ internal sealed class UpArrowHandler : IInputStateHandler
 
             string? savedHistory = null;
             var historyIndex = state.HistoryIndex + 1;
-            if (historyIndex > historyCount)
+            if (historyIndex >= historyCount)
             {
-                historyIndex = historyCount;
+                historyIndex = historyCount - 1;
             }
             else if (historyIndex == 0)
             {
@@ -28,7 +28,7 @@ internal sealed class UpArrowHandler : IInputStateHandler
             }
 
             var history = state.Request.History.AsEnumerable();
-            var prev = history.Reverse().Skip(historyIndex).Take(1).FirstOrDefault();
+            var prev = history.Reverse().Skip(historyIndex).First();
             state.Buffer.Clear();
             var cursorIndex = 0;
             if (prev != null)
