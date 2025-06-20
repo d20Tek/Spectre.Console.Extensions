@@ -10,8 +10,9 @@ internal sealed class DownArrowHandler : IInputStateHandler
         if (ShouldHandle(key, historyCount, state.HistoryIndex))
         {
             var bufferLength = state.Buffer.Length;
+            ArgumentOutOfRangeException.ThrowIfZero(bufferLength);
 
-            var amountToMoveCursorLeft = bufferLength == 0 ? 0 : state.CursorIndex;
+            var amountToMoveCursorLeft = state.CursorIndex;
             state.Request.AnsiConsole.Cursor.MoveLeft(amountToMoveCursorLeft);
             state.Request.AnsiConsole.Write(" ".Repeat(bufferLength));
             state.Request.AnsiConsole.Cursor.MoveLeft(bufferLength);

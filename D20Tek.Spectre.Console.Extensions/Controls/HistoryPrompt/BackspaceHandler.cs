@@ -1,4 +1,5 @@
 ﻿using Spectre.Console;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Wcwidth;
 
@@ -37,6 +38,7 @@ internal sealed class BackspaceHandler : IInputStateHandler
         return state with { CursorIndex = cursorIndex, Handled = true };
     }
 
+    [ExcludeFromCodeCoverage]
     private void HandleMask(char charToRemove, char? mask, IAnsiConsole console) => 
         console.Write((mask, UnicodeCalculator.GetWidth(charToRemove)) switch
         {

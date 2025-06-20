@@ -14,5 +14,5 @@ internal sealed record InputState(
     bool Done)
 {
     public static InputState Initialize(ReadLineRequest request) =>
-        new(request, new StringBuilder(), 0, false, [.. request.Items], -1, null, false, false);
+        new(request, new StringBuilder(), 0, true, [.. request.Items], -1, null, false, false);
 }

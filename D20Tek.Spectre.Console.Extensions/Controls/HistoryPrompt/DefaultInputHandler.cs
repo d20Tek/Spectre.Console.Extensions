@@ -25,14 +25,9 @@ internal sealed class DefaultInputHandler : IInputStateHandler
             }
             else
             {
-                if (state.Buffer.Length == 0)
-                {
-                    state.Buffer.Append(key.KeyChar);
-                }
-                else
-                {
-                    state.Buffer[cursorIndex] = key.KeyChar;
-                }
+                ArgumentOutOfRangeException.ThrowIfZero(state.Buffer.Length);
+
+                state.Buffer[cursorIndex] = key.KeyChar;
                 cursorIndex++;
                 WriteTextWithSecret(key.KeyChar.ToString(), state.Request);
             }

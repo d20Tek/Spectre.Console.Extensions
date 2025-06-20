@@ -25,8 +25,10 @@ internal sealed class LeftArrowHandler : IInputStateHandler
 {
     public InputState Handle(ConsoleKeyInfo key, InputState state)
     {
-        if (ShouldHandle(key, state))
+        if (ShouldHandle(key))
         {
+            if (state.CursorIndex <= 0) return state with { Handled = true };
+
             state.Request.AnsiConsole.Cursor.Show();
             state.Request.AnsiConsole.Cursor.MoveLeft(1);
             return state with { CursorIndex = state.CursorIndex - 1, Handled = true };
@@ -35,16 +37,17 @@ internal sealed class LeftArrowHandler : IInputStateHandler
         return state;
     }
 
-    private bool ShouldHandle(ConsoleKeyInfo key, InputState state) =>
-        key.Key == ConsoleKey.LeftArrow && state.CursorIndex > 0;
+    private bool ShouldHandle(ConsoleKeyInfo key) => key.Key == ConsoleKey.LeftArrow;
 }
 
 internal sealed class RightArrowHandler : IInputStateHandler
 {
     public InputState Handle(ConsoleKeyInfo key, InputState state)
     {
-        if (ShouldHandle(key, state))
+        if (ShouldHandle(key))
         {
+            if (state.CursorIndex > state.Buffer.Length - 1) return state with { Handled = true };
+
             state.Request.AnsiConsole.Cursor.Show();
             state.Request.AnsiConsole.Cursor.MoveRight(1);
             return state with { CursorIndex = state.CursorIndex + 1, Handled = true };
@@ -53,6 +56,5 @@ internal sealed class RightArrowHandler : IInputStateHandler
         return state;
     }
 
-    private bool ShouldHandle(ConsoleKeyInfo key, InputState state) =>
-        key.Key == ConsoleKey.RightArrow && System.Console.CursorLeft <= state.Buffer.Length + 1;
+    private bool ShouldHandle(ConsoleKeyInfo key) => key.Key == ConsoleKey.RightArrow;
 }
