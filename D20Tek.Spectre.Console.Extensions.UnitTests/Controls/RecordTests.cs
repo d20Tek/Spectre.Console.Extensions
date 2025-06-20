@@ -1,4 +1,5 @@
-﻿using D20Tek.Spectre.Console.Extensions.Controls.HistoryPrompt;
+﻿using D20Tek.Spectre.Console.Extensions.Controls;
+using D20Tek.Spectre.Console.Extensions.Controls.HistoryPrompt;
 using D20Tek.Spectre.Console.Extensions.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Spectre.Console;
@@ -54,5 +55,18 @@ public class RecordTests
 
         // assert
         Assert.IsNotNull(result);
+    }
+
+    [TestMethod]
+    public void DefaultPromptValue_WithChanges_ReturnsUpdate()
+    {
+        // arrange
+        var defValue = new DefaultPromptValue<string>("");
+
+        // act
+        var result = defValue with { Value = "test" };
+
+        // assert
+        Assert.AreEqual("test", result.Value);
     }
 }

@@ -5,6 +5,8 @@ namespace D20Tek.Spectre.Console.Extensions.Controls.HistoryPrompt;
 
 internal sealed class AutoCompleteHandler : IInputStateHandler
 {
+    private const string _backspaceText = "\b \b";
+
     public InputState Handle(ConsoleKeyInfo key, InputState state) => 
         ShouldHandle(key, state) ? ProcessAutoCompletion(key, state) : state;
 
@@ -23,7 +25,7 @@ internal sealed class AutoCompleteHandler : IInputStateHandler
 
     private InputState RenderSuggestion(IAnsiConsole console, string replace, StringBuilder buffer, InputState state)
     {
-        console.Write("\b \b".Repeat(state.Buffer.Length), state.Request.PromptStyle);
+        console.Write(_backspaceText.Repeat(state.Buffer.Length), state.Request.PromptStyle);
         console.Write(replace);
         buffer.Clear()
               .Insert(0, replace);

@@ -18,7 +18,10 @@ internal static class AutoCompletionStrategy
     private static string GetFuzzyMatch(List<string> autocomplete, string text) =>
         autocomplete.Find(i => i.StartsWith(text, true, CultureInfo.InvariantCulture)) ?? autocomplete.First();
 
-    private static string GetAutoCompleteValue(Direction autoCompleteDirection, List<string> autocomplete, string found)
+    private static string GetAutoCompleteValue(
+        Direction autoCompleteDirection,
+        List<string> autocomplete,
+        string found)
     {
         var index = autoCompleteDirection == Direction.Forward ?
             (autocomplete.IndexOf(found) + 1) % autocomplete.Count :

@@ -12,6 +12,18 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Controls;
 [TestClass]
 public class TypeConverterTests
 {
+    [TestMethod]
+    public void TryConvertFromString_WithValue_ReturnsTrue()
+    {
+        // arrange
+
+        // act
+        var result = TypeConverterHelper.TryConvertFromString<int>("42", out int x);
+
+        // assert
+        Assert.IsTrue(result);
+        Assert.AreEqual(42, x);
+    }
 
     [TestMethod]
     public void TryConvertFromStringWithCulture_WithConversionError_ReturnsFalse()

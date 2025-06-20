@@ -1,7 +1,5 @@
 ﻿using Spectre.Console;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Wcwidth;
 
 namespace D20Tek.Spectre.Console.Extensions.Controls.HistoryPrompt;
 
@@ -24,12 +22,7 @@ internal sealed class BackspaceHandler : IInputStateHandler
 
     private InputState ProcessBackspace(StringBuilder builder, int cursorIndex, InputState state)
     {
-        var characterToRemove = builder[cursorIndex - 1];
-        builder.Remove(cursorIndex - 1, 1);
-        cursorIndex--;
-
-        HandleMask(characterToRemove, state.Request.Mask, state.Request.AnsiConsole);
-
+        cursorIndex = RemoveCharacter(builder, cursorIndex, state);
         if (cursorIndex != builder.Length && cursorIndex >= 0)
         {
             RenderUpdate(builder, cursorIndex, state.Request);
@@ -38,14 +31,15 @@ internal sealed class BackspaceHandler : IInputStateHandler
         return state with { CursorIndex = cursorIndex, Handled = true };
     }
 
-    [ExcludeFromCodeCoverage]
-    private void HandleMask(char charToRemove, char? mask, IAnsiConsole console) => 
-        console.Write((mask, UnicodeCalculator.GetWidth(charToRemove)) switch
-        {
-            (not null, 1) => "\b \b",
-            (not null, 2) => "\b \b\b \b",
-            _ => string.Empty
-        });
+    private int RemoveCharacter(StringBuilder builder, int cursorIndex, InputState state)
+    {
+        var characterToRemove = builder[cursorIndex - 1];
+        builder.Remove(cursorIndex - 1, 1);
+
+        UnicodeTextHelper.HandleMask(characterToRemove, state.Request.Mask, state.Request.AnsiConsole);
+
+        return cursorIndex - 1;
+    }
 
     private void RenderUpdate(StringBuilder builder, int cursorIndex, ReadLineRequest request)
     {
