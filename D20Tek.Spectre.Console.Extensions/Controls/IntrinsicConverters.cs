@@ -62,5 +62,5 @@ internal static class IntrinsicConverters
         };
 
     private static FuncWithDam CreateEnumConverter() =>
-        ([DynamicallyAccessedMembers(ConverterAnnotation)] type) => new EnumConverter(type);
+        [ExcludeFromCodeCoverage]([DynamicallyAccessedMembers(ConverterAnnotation)] type) => new EnumConverter(type);
 }
