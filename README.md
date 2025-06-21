@@ -17,6 +17,8 @@ We also support the CommandAppBuilder to easily create, configure, and run your 
 
 The new Spectre.Console.Extensions.Testing namespace supports test infrastructure classes to easily test commands, configuration, and end-to-end functionaly runs. There are various CommandAppTextContext classes and helpers that simplify unit test boilerplate code.
 
+Additional Spectre Controls: HistoryTextPrompt&lt;T&gt; - duplicates TextPrompt and add ability to remember previous entries and use arrow up/down keys to navigate the list.
+
 Note: Only Microsoft.Extensions.DependencyInjection is implemented in the core extensions package (D20Tek.Spectre.Console.Extensions). The other DI containers have been repackaged into D20Tek.Spectre.Console.Extensions.MoreContainers, so that we could minimize the dependencies of the core package, and only add those dependencies for users that want to use one of those other frameworks. And, our TypeRegistrars continue to work for those different frameworks.
 
 For future releases, I will continue to investigate integration with other DI frameworks and logging integrations.

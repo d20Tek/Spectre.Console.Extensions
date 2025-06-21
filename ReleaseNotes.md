@@ -4,7 +4,13 @@
 * Implemented ApplyConfiguration pattern to make it easier to build large CommandApps with many defined commands.
 * ICommandConfiguration allows you do define groups of commands that are configured more cleanly together.
 * The ApplyConfiguration extension method lets to run each ICommandConfiguration implementation.
-
+* Implemented HistoryTextPrompt&lt;T&gt; that collects console input and converts it to type of T. Adds the ability to remember past command entries similar to command prompt history behavior.
+	* Replicated basic TextPrompt&lt;T&gt; to enter text and process special keys like arrow left, right, backspace, insert.
+	* Added support for setting and accepting default text when no text is entered.
+	* Added support for choice list and picking a value from that, including auto-complete from the list items.
+	* Added history functionality to use arrow up key to move to past entries that were entered.
+	* Added arrow down key to move the next entry it previous entries history list.
+ 
 ## Release v1.50.1.3
 * Implemented InteractiveCommandBase to build an interactive command prompt that parses input string and runs other registered commands.
 * Added sample to show how to build an interactive prompt.
