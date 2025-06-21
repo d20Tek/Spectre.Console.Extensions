@@ -8,7 +8,7 @@ public sealed partial class HistoryTextPrompt<T>
     private readonly string _prompt;
     private readonly StringComparer? _comparer;
 
-    private async Task<T> ShowInternalAsync(IAnsiConsole console, CancellationToken cancellationToken)
+    private async Task<T> ShowInternalAsync(IAnsiConsole console, CancellationToken token)
     {
         ArgumentNullException.ThrowIfNull(console);
         return await console.RunExclusive(async () =>
@@ -17,7 +17,7 @@ public sealed partial class HistoryTextPrompt<T>
 
             while (true)
             {
-                var input = await GetConsoleInput(console, cancellationToken);
+                var input = await console.ReadLine(ReadLineRequest.Create(this, console), token).ConfigureAwait(false);
                 if (string.IsNullOrWhiteSpace(input))
                 {
                     if (DefaultValue is not null)
@@ -33,21 +33,18 @@ public sealed partial class HistoryTextPrompt<T>
                 }
 
                 console.WriteLine();
+
                 T? result;
                 if (Choices.Count > 0)
                 {
-                    if (FindChoice(input, out result) && result is not null)
-                    {
-                        return result;
-                    }
-                    else
+                    if (!FindChoice(input, out result) || result is null)
                     {
                         WriteMessageAndPrompt(console, InvalidChoiceMessage);
                         continue;
                     }
                 }
                 else if (!TypeConverterHelper.TryConvertFromStringWithCulture<T>(input, Culture, out result)
-                         || result == null)
+                         || result is null)
                 {
                     WriteMessageAndPrompt(console, ValidationErrorMessage);
                     continue;
@@ -76,17 +73,6 @@ public sealed partial class HistoryTextPrompt<T>
         console.MarkupLine(message);
         PromptDisplayExtensions.WritePrompt(this, console, _prompt);
     }
-
-    private async Task<string> GetConsoleInput(IAnsiConsole console, CancellationToken cancellationToken) =>
-        await console.ReadLine(
-            new ReadLineRequest(
-                console,
-                PromptStyle ?? Style.Plain,
-                IsSecret,
-                Mask,
-                [.. Choices.Select(choice => Converter(choice))],
-                History),
-            cancellationToken).ConfigureAwait(false);
 
     private bool FindChoice(string input, out T? result)
     {
