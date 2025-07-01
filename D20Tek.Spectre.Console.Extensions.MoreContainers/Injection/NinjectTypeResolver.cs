@@ -31,13 +31,9 @@ namespace D20Tek.Spectre.Console.Extensions.Injection
         /// type exists.</returns>
         public object? Resolve(Type? type)
         {
-            if (type == null)
-            {
-                return null;
-            }
-
             try
             {
+                if (type == null) return null;
                 var instances = _provider.GetAll(type);
                 return instances.FirstOrDefault();
             }

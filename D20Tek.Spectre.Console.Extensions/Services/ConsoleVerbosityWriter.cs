@@ -23,55 +23,42 @@ namespace D20Tek.Spectre.Console.Extensions.Services
         /// <exception cref="ArgumentNullException">when console parameter is null.</exception>
         public ConsoleVerbosityWriter(IAnsiConsole console)
         {
-            _console = console ?? throw new ArgumentNullException(nameof(console));
+            ArgumentNullException.ThrowIfNull(console, nameof(console));
+            _console = console;
         }
 
         /// <inheritdoc/>
-        public void MarkupDetailed(string text) =>
-            this.MarkupLine(text, VerbosityLevel.Detailed);
+        public void MarkupDetailed(string text) => MarkupLine(text, VerbosityLevel.Detailed);
 
         /// <inheritdoc/>
-        public void MarkupDiagnostics(string text) =>
-            this.MarkupLine(text, VerbosityLevel.Diagnostic);
+        public void MarkupDiagnostics(string text) => MarkupLine(text, VerbosityLevel.Diagnostic);
 
         /// <inheritdoc/>
-        public void MarkupNormal(string text) =>
-            this.MarkupLine(text, VerbosityLevel.Normal);
+        public void MarkupNormal(string text) => MarkupLine(text, VerbosityLevel.Normal);
 
         /// <inheritdoc/>
-        public void MarkupSummary(string text) =>
-            this.MarkupLine(text, VerbosityLevel.Minimal);
+        public void MarkupSummary(string text) => MarkupLine(text, VerbosityLevel.Minimal);
 
         /// <inheritdoc/>
-        public void WriteDetailed(string text) =>
-            this.WriteLine(text, VerbosityLevel.Detailed);
+        public void WriteDetailed(string text) => WriteLine(text, VerbosityLevel.Detailed);
 
         /// <inheritdoc/>
-        public void WriteDiagnostics(string text) =>
-            this.WriteLine(text, VerbosityLevel.Diagnostic);
+        public void WriteDiagnostics(string text) => WriteLine(text, VerbosityLevel.Diagnostic);
 
         /// <inheritdoc/>
-        public void WriteNormal(string text) =>
-            this.WriteLine(text, VerbosityLevel.Normal);
+        public void WriteNormal(string text) => WriteLine(text, VerbosityLevel.Normal);
 
         /// <inheritdoc/>
-        public void WriteSummary(string text) =>
-            this.WriteLine(text, VerbosityLevel.Minimal);
+        public void WriteSummary(string text) => WriteLine(text, VerbosityLevel.Minimal);
 
         private void WriteLine(string text, VerbosityLevel expectedVerbosity)
         {
-            if (this.Verbosity >= expectedVerbosity)
-            {
-                _console.WriteLine(text);
-            }
+            if (Verbosity >= expectedVerbosity) _console.WriteLine(text);
         }
 
         private void MarkupLine(string text, VerbosityLevel expectedVerbosity)
         {
-            if (this.Verbosity >= expectedVerbosity)
-            {
-                _console.MarkupLine(text);
-            }
+            if (this.Verbosity >= expectedVerbosity) _console.MarkupLine(text);
         }
     }
 }

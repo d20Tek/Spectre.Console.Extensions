@@ -28,7 +28,6 @@ namespace D20Tek.Spectre.Console.Extensions
         {
             // if no pre-registerd IServiceCollecion specified, create a new empty instance.
             services ??= new ServiceCollection();
-
             builder.SetRegistrar(new DependencyInjectionTypeRegistrar(services, lifetime));
             return builder;
         }

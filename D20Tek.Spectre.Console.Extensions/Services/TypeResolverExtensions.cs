@@ -25,7 +25,7 @@ public static class TypeResolverExtensions
     /// <returns>Service instance of type <typeparamref name="T"/>.</returns>
     /// <exception cref="InvalidOperationException">Thrown when the service cannot be resolved.</exception>
     public static T GetRequiredService<T>(this ITypeResolver resolver)
-        where T : class
-        => resolver.Resolve(typeof(T)) as T ??
+        where T : class =>
+        resolver.Resolve(typeof(T)) as T ??
             throw new InvalidOperationException($"Cannot resolve service of type: {typeof(T)}.");
 }

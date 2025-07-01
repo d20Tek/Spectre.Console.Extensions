@@ -54,7 +54,7 @@ namespace D20Tek.Spectre.Console.Extensions
         public CommandAppBuilder WithDefaultCommand<TDefault>()
             where TDefault : class, ICommand
         {
-            SetDefaultCommand = () => App?.SetDefaultCommand<TDefault>();
+            SetDefaultCommand = () => App!.SetDefaultCommand<TDefault>();
             return this;
         }
 
