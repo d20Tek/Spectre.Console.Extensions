@@ -1,6 +1,10 @@
 # Release Notes
 
 ## Release v1.50.1.4
+* Implemented Table extension AddSeparatorRow to add a separator based on the knowns column widths.
+* Minor library cleanup.
+
+## Release v1.50.1.4
 * Implemented ApplyConfiguration pattern to make it easier to build large CommandApps with many defined commands.
 * ICommandConfiguration allows you do define groups of commands that are configured more cleanly together.
 * The ApplyConfiguration extension method lets to run each ICommandConfiguration implementation.
