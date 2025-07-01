@@ -1,13 +1,12 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using D20Tek.Spectre.Console.Extensions.Injection;
 using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions
 {
     /// <summary>
-    /// 
+    /// Builder pattern for creating a CommandApp.
     /// </summary>
     public class CommandAppBuilder
     {
@@ -55,13 +54,7 @@ namespace D20Tek.Spectre.Console.Extensions
         public CommandAppBuilder WithDefaultCommand<TDefault>()
             where TDefault : class, ICommand
         {
-            SetDefaultCommand = () => {
-                if (App != null)
-                {
-                    App.SetDefaultCommand<TDefault>();
-                }
-            };
-            
+            SetDefaultCommand = () => App?.SetDefaultCommand<TDefault>();
             return this;
         }
 
@@ -106,7 +99,6 @@ namespace D20Tek.Spectre.Console.Extensions
         {
             _ = App ?? throw new ArgumentNullException(
                 nameof(App), "Build was not called prior to calling RunAsync.");
-
             return await App.RunAsync(args);
         }
 
@@ -119,7 +111,6 @@ namespace D20Tek.Spectre.Console.Extensions
         {
             _ = App ?? throw new ArgumentNullException(
                 nameof(App), "Build was not called prior to calling Run.");
-
             return App.Run(args);
         }
     }
