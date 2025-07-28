@@ -1,5 +1,8 @@
 # Release Notes
 
+## Release v1.50.1.6
+* Updated dependent packages to the latest versions.
+
 ## Release v1.50.1.4
 * Implemented Table extension AddSeparatorRow to add a separator based on the knowns column widths.
 * Minor library cleanup.
