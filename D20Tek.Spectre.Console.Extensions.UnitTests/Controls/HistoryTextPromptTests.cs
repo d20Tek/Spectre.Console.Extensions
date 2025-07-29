@@ -3,10 +3,8 @@ using D20Tek.Spectre.Console.Extensions.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Spectre.Console;
 using System;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Controls;
