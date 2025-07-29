@@ -20,6 +20,11 @@ internal sealed class Startup : StartupBase
               .WithDescription("Echoes out the text that call provides.")
               .WithExample(["echo", "--text", "'Test string'"]);
 
+        config.AddCommand<GetNetWorthCommand>("get-worth")
+              .WithAlias("w")
+              .WithDescription("Requests current input for net worth.")
+              .WithExample(["get-worth"]);
+
         return config;
     }
 
