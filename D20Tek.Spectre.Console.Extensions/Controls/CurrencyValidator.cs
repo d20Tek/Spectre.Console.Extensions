@@ -30,7 +30,7 @@ internal class CurrencyValidator
         if (HasDefaultValue(input)) return ValidationResult.Success();
 
         return !decimal.TryParse(input, NumberStyles.Currency, _culture, out var value) ?
-            ValidationResult.Error(_errorMessage ?? $"'{input}' is not a valid currency value.") :
+            ValidationResult.Error(_errorMessage ?? $"[red]'{input}' is not a valid currency value.[/]") :
             ValidateRange(value);
     }
 
@@ -40,9 +40,9 @@ internal class CurrencyValidator
         value switch
         {
             var v when _minValue.HasValue && v < _minValue.Value =>
-                ValidationResult.Error($"Value must be at least {_minValue.Value.ToString("C", _culture)}."),
+                ValidationResult.Error($"[red]Value must be at least {_minValue.Value.ToString("C", _culture)}.[/]"),
             var v when _maxValue.HasValue && v > _maxValue.Value =>
-                ValidationResult.Error($"Value must not exceed {_maxValue.Value.ToString("C", _culture)}."),
+                ValidationResult.Error($"[red]Value must not exceed {_maxValue.Value.ToString("C", _culture)}.[/]"),
             _ => ValidationResult.Success()
         };
 }
