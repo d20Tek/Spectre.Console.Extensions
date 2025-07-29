@@ -11,7 +11,8 @@ public partial class CurrencyPrompt
 
         var textPrompt = new TextPrompt<string>(BuildPromptMessage())
             .DefaultValue(_defaultValue.HasValue ? _defaultValue.Value.ToString("C", _culture) : string.Empty)
-            .Validate(ValidateCurrency);
+            .Culture(_culture)
+            .Validate(_validator);
 
         var input = console.Prompt(textPrompt);
         return ConvertResultOrDefault(input);
@@ -20,25 +21,9 @@ public partial class CurrencyPrompt
     private string BuildPromptMessage() =>
         string.IsNullOrWhiteSpace(_exampleHint) ? _promptLabel : $"{_promptLabel} (e.g., {_exampleHint})";
 
-    private ValidationResult ValidateCurrency(string input)
-    {
-        // Default value handling
-        if (string.IsNullOrWhiteSpace(input) && _defaultValue.HasValue)
-            return ValidationResult.Success();
-
-        // Currency parsing
-        if (!decimal.TryParse(input, NumberStyles.Currency, _culture, out var value))
-            return ValidationResult.Error(_errorMessage ?? $"'{input}' is not a valid currency value.");
-
-        // Range validation
-        if (_minValue.HasValue && value < _minValue.Value)
-            return ValidationResult.Error($"Value must be at least {_minValue.Value.ToString("C", _culture)}.");
-
-        if (_maxValue.HasValue && value > _maxValue.Value)
-            return ValidationResult.Error($"Value must not exceed {_maxValue.Value.ToString("C", _culture)}.");
-
-        return ValidationResult.Success();
-    }
+    private ValidationResult ValidateCurrency(string input) =>
+        new CurrencyValidator(_defaultValue, _minValue, _maxValue, _errorMessage, _culture)
+            .Validate(input);
 
     private decimal ConvertResultOrDefault(string? result) =>
         string.IsNullOrWhiteSpace(result) && _defaultValue.HasValue

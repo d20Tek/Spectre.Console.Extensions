@@ -16,6 +16,7 @@ public partial class CurrencyPrompt : IPrompt<decimal>, IHasCulture
     private string? _exampleHint;
     private string? _errorMessage;
     private CultureInfo _culture;
+    private Func<string, ValidationResult> _validator;
 
     /// <inheritdoc/>
     public CultureInfo? Culture
@@ -34,6 +35,7 @@ public partial class CurrencyPrompt : IPrompt<decimal>, IHasCulture
         ArgumentNullException.ThrowIfNullOrEmpty(promptLabel, nameof(promptLabel));
         _promptLabel = promptLabel;
         _culture = CultureInfo.CurrentCulture;
+        _validator = ValidateCurrency;
     }
 
     /// <summary>
