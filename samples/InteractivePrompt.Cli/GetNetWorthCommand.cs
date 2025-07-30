@@ -20,7 +20,7 @@ internal class GetNetWorthCommand : Command<GetNetWorthCommand.Settings>
 
     public override int Execute(CommandContext context, Settings settings)
     {
-        var prompt = new CurrencyPrompt("Enter your net worth:")
+        var prompt = new CurrencyPrompt("Enter your net worth")
             .WithDefaultValue(1000m)
             .WithExampleHint(1000m);
 

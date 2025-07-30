@@ -15,6 +15,7 @@ public partial class CurrencyPrompt : IPrompt<decimal>, IHasCulture
     private decimal? _maxValue;
     private string? _exampleHint;
     private string? _errorMessage;
+    private Style _style = Style.Plain;
     private CultureInfo _culture;
     private Func<string, ValidationResult> _validator;
 
@@ -101,6 +102,17 @@ public partial class CurrencyPrompt : IPrompt<decimal>, IHasCulture
     public CurrencyPrompt WithErrorMessage(string message)
     {
         _errorMessage = message;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the prompt style to use when displaying its label text.
+    /// </summary>
+    /// <param name="promptStyle">Prompt style to use.</param>
+    /// <returns>Current prompt</returns>
+    public CurrencyPrompt WithPromptStyle(Style promptStyle)
+    {
+        _style = promptStyle;
         return this;
     }
 

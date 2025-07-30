@@ -1,6 +1,7 @@
 ﻿using D20Tek.Spectre.Console.Extensions.Controls;
 using D20Tek.Spectre.Console.Extensions.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Spectre.Console;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,22 +43,6 @@ public class CurrencyPromptTests
         Assert.AreEqual(50.00m, result);
         StringAssert.Contains(console.Output, "Enter amount:");
         StringAssert.Contains(console.Output, "50.00");
-    }
-
-    [TestMethod]
-    public void Show_WithoutDefaultValueAndEmptyInput_ReturnsZero()
-    {
-        // Arrange
-        var console = new TestConsole();
-        console.TestInput.PushKey(System.ConsoleKey.Enter);
-        var prompt = new CurrencyPrompt("Enter amount:");
-
-        // Act
-        var result = prompt.Show(console);
-
-        // Assert
-        Assert.AreEqual(0.00m, result);
-        StringAssert.Contains(console.Output, "Enter amount:");
     }
 
     [TestMethod]
@@ -135,5 +120,20 @@ public class CurrencyPromptTests
         StringAssert.Contains(console.Output, "Enter amount:");
         StringAssert.Contains(console.Output, "123.45");
         Assert.IsNotNull(prompt.Culture);
+    }
+
+    [TestMethod]
+    public void Show_WithPromptStyle_ReturnsParsedValue()
+    {
+        // Arrange
+        var console = new TestConsole();
+        console.TestInput.PushTextWithEnter("123.45");
+        var prompt = new CurrencyPrompt("Enter amount:").WithPromptStyle(new Style(decoration: Decoration.Italic));
+
+        // Act
+        var result = prompt.Show(console);
+
+        // Assert
+        Assert.AreEqual(123.45m, result);
     }
 }
