@@ -1,5 +1,9 @@
 # Release Notes
 
+## Release v1.50.1.7
+* Implemented CurrencyPrompt control, a TextPrompt (culture-aware) for currency input validation and conversion to decimal value.
+* Added unit tests.
+
 ## Release v1.50.1.6
 * Updated dependent packages to the latest versions.
 
