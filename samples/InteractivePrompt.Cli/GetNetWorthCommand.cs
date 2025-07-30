@@ -28,7 +28,7 @@ internal class GetNetWorthCommand : Command<GetNetWorthCommand.Settings>
         if (settings.Max is not null) prompt.WithMaxValue(settings.Max.Value);
 
         var amount = AnsiConsole.Prompt(prompt);
-        AnsiConsole.MarkupLine($"You entered: {amount:C}");
+        AnsiConsole.MarkupLine($"You entered: {amount.Render()}");
 
         return 0;
     }
