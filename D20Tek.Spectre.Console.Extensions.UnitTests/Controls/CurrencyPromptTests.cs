@@ -2,6 +2,7 @@
 using D20Tek.Spectre.Console.Extensions.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Spectre.Console;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -135,5 +136,41 @@ public class CurrencyPromptTests
 
         // Assert
         Assert.AreEqual(123.45m, result);
+    }
+
+    [TestMethod]
+    public void Show_WithCustomValidatorAndValidInput_ReturnsParsedValue()
+    {
+        // Arrange
+        var console = new TestConsole();
+        console.TestInput.PushTextWithEnter("123.45");
+        var prompt = new CurrencyPrompt("Enter amount:").WithValidator([ExcludeFromCodeCoverage] (input) =>
+            input == "123.45" ? ValidationResult.Success() : ValidationResult.Error("Unexpected value"));
+
+        // Act
+        var result = prompt.Show(console);
+
+        // Assert
+        Assert.AreEqual(123.45m, result);
+    }
+
+    [TestMethod]
+    public void Show_WithCustomValidatorAndInvalidInput_ReturnsError()
+    {
+        // Arrange
+        var console = new TestConsole();
+        console.TestInput.PushTextWithEnter("0.45");
+        console.TestInput.PushKey(System.ConsoleKey.Enter);
+        var prompt = new CurrencyPrompt("Enter amount:")
+            .WithDefaultValue(0)
+            .WithValidator([ExcludeFromCodeCoverage] (input) =>
+            input == "123.45" ? ValidationResult.Success() : ValidationResult.Error("Unexpected value"));
+
+        // Act
+        var result = prompt.Show(console);
+
+        // Assert
+        Assert.AreEqual(0m, result);
+        StringAssert.Contains(console.Output, "Unexpected value");
     }
 }

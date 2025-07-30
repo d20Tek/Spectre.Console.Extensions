@@ -116,6 +116,17 @@ public partial class CurrencyPrompt : IPrompt<decimal>, IHasCulture
         return this;
     }
 
+    /// <summary>
+    /// Sets a custom validation function to be used by the currency prompt.
+    /// </summary>
+    /// <param name="validator">Custom valiator to use.</param>
+    /// <returns>Current prompt</returns>
+    public CurrencyPrompt WithValidator(Func<string, ValidationResult> validator)
+    {
+        _validator = validator;
+        return this;
+    }
+
     /// <inheritdoc/>
     public decimal Show(IAnsiConsole console) => ShowInternal(console);
 
