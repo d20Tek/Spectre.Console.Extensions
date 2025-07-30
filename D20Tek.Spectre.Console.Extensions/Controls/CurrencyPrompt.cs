@@ -89,7 +89,7 @@ public partial class CurrencyPrompt : IPrompt<decimal>, IHasCulture
     /// <returns>Current prompt</returns>
     public CurrencyPrompt WithExampleHint(decimal value)
     {
-        _exampleHint = value.ToString("C", _culture);
+        _exampleHint = value.ToString(_currencyFormat, _culture);
         return this;
     }
 
@@ -108,6 +108,6 @@ public partial class CurrencyPrompt : IPrompt<decimal>, IHasCulture
     public decimal Show(IAnsiConsole console) => ShowInternal(console);
 
     /// <inheritdoc/>
-    public Task<decimal> ShowAsync(IAnsiConsole console, CancellationToken cancellationToken) =>
+    public Task<decimal> ShowAsync(IAnsiConsole console, CancellationToken token) =>
         Task.FromResult(ShowInternal(console));
 }
