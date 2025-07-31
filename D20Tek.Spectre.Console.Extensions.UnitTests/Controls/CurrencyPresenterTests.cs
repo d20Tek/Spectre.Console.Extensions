@@ -1,5 +1,6 @@
 ﻿using D20Tek.Spectre.Console.Extensions.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Globalization;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Controls;
 
@@ -62,6 +63,10 @@ public class CurrencyPresenterTests
     public void RenderAbbreviated_WithPositiveValue_ReturnsValueAsString()
     {
         // Arrange
+        var culture = new CultureInfo("en-US");
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+
         decimal value = 1234.5m;
 
         // Act
@@ -75,6 +80,10 @@ public class CurrencyPresenterTests
     public void RenderAbbreviated_WithNegativeValue_ReturnsValueAsString()
     {
         // Arrange
+        var culture = new CultureInfo("en-US");
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+
         decimal value = -1234.5m;
 
         // Act
@@ -88,6 +97,10 @@ public class CurrencyPresenterTests
     public void RenderAbbreviated_WithPositiveValueAndStyle_ReturnsValueAsString()
     {
         // Arrange
+        var culture = new CultureInfo("en-US");
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+
         decimal value = 1234.5m;
 
         // Act
@@ -101,6 +114,10 @@ public class CurrencyPresenterTests
     public void RenderAbbreviated_WithNegativeValueAndStyle_ReturnsValueAsString()
     {
         // Arrange
+        var culture = new CultureInfo("en-US");
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+
         decimal value = -1234.5m;
 
         // Act

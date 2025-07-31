@@ -8,10 +8,10 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Controls;
 public class CurrencyAbbreviatorTests
 {
     [DataTestMethod]
-    [DataRow(1234.5, "$1.23K", "")]
-    [DataRow(1234567.9, "$1.23M", "")]
-    [DataRow(1234567890, "$1.23B", "")]
-    [DataRow(123, "$123", "")]
+    [DataRow(1234.5, "$1.23K", "en-US")]
+    [DataRow(1234567.9, "$1.23M", "en-US")]
+    [DataRow(1234567890, "$1.23B", "en-US")]
+    [DataRow(123, "$123", "en-US")]
     [DataRow(1234.5, "£1.23K", "en-GB")]
     [DataRow(1234.5, "1.23K €", "fr-FR")]
     [DataRow(1234.5, "€ 1.23K", "nl-NL")]
@@ -19,7 +19,7 @@ public class CurrencyAbbreviatorTests
     public void Render_WithPositiveValue_ReturnsFormattedCurrency(double value, string expected, string cultureName)
     {
         // Arrange
-        var culture = string.IsNullOrEmpty(cultureName) ? null : new CultureInfo(cultureName);
+        var culture = new CultureInfo(cultureName);
 
         // Act
         var result = CurrencyAbbreviator.Format((decimal)value, culture);
@@ -29,7 +29,7 @@ public class CurrencyAbbreviatorTests
     }
 
     [DataTestMethod]
-    [DataRow(-1234.5, "($1.23K)", "")]
+    [DataRow(-1234.5, "($1.23K)", "en-US")]
     [DataRow(-1234.5, "-£1.23K", "en-GB")]
     [DataRow(-1234.5, "-1.23K €", "fr-FR")]
     [DataRow(-1234.5, "(€ 1.23K)", "nl-NL")]
@@ -37,7 +37,7 @@ public class CurrencyAbbreviatorTests
     public void Render_WithNegativeValue_ReturnsFormattedCurrency(double value, string expected, string cultureName)
     {
         // Arrange
-        var culture = string.IsNullOrEmpty(cultureName) ? null : new CultureInfo(cultureName);
+        var culture = new CultureInfo(cultureName);
 
         // Act
         var result = CurrencyAbbreviator.Format((decimal)value, culture);
