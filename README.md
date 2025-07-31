@@ -19,6 +19,7 @@ The new Spectre.Console.Extensions.Testing namespace supports test infrastructur
 
 Additional Spectre Controls:
 - **CurrencyPrompt** - TextPrompt (culture-aware) for currency input validation and conversion to decimal value.
+- **CurrencyPresenter** - show currency in a culture-aware way, including abbreviations for large values.
 - **HistoryTextPrompt&lt;T&gt;** - duplicates TextPrompt and add ability to remember previous entries and use arrow up/down keys to navigate the list.
 - **Table** extension to add a separator row.
 
