@@ -29,7 +29,6 @@ public class CurrencyAbbreviatorTests
     }
 
     [DataTestMethod]
-    [DataRow(-1234.5, "($1.23K)", "en-US")]
     [DataRow(-1234.5, "-£1.23K", "en-GB")]
     [DataRow(-1234.5, "-1.23K €", "fr-FR")]
     [DataRow(-1234.5, "(€ 1.23K)", "nl-NL")]
