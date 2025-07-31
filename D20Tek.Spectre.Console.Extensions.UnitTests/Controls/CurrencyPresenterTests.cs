@@ -144,4 +144,21 @@ public class CurrencyPresenterTests
         // Assert
         Assert.IsTrue(result == "[red]($1.23K)[/]" || result == "[red]-$1.23K[/]");
     }
+
+    [TestMethod]
+    public void RenderAbbreviated_WithPositiveValueInFrench_ReturnsValueAsString()
+    {
+        // Arrange
+        var culture = new CultureInfo("fr-FR");
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+
+        decimal value = 1234.5m;
+
+        // Act
+        var result = value.RenderAbbreviated();
+
+        // Assert
+        Assert.AreEqual("1,23K €", result);
+    }
 }

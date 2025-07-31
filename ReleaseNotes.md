@@ -3,6 +3,7 @@
 ## Release v1.50.1.7
 * Implemented CurrencyPrompt control, a TextPrompt (culture-aware) for currency input validation and conversion to decimal value.
 * Implemented CurrencyPresenter control to show currency in a culture-aware way, including abbreviations for large values.
+* Ensured CurrencyPresenter abbreviations worked in various locale configurations.
 * Added unit tests.
 
 ## Release v1.50.1.6
