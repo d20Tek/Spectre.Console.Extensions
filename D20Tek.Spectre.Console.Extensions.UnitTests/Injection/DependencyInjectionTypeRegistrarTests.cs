@@ -125,8 +125,6 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
         private TestService FactoryMethod() => new TestService();
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        [ExcludeFromCodeCoverage]
         public void RegisterLazy_WithNullFactory()
         {
             // arrange
@@ -135,7 +133,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
 
             // act
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            registrar.RegisterLazy(typeof(ITestService), null);
+            Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () =>
+                registrar.RegisterLazy(typeof(ITestService), null));
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
     }

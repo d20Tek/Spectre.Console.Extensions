@@ -103,14 +103,13 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Services
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         [ExcludeFromCodeCoverage]
         public void Create_WithNullConsole()
         {
             // arrange
 
             // act
-            _ = new ConsoleVerbosityWriter(null);
+            Assert.ThrowsExactly<ArgumentNullException>(() => new ConsoleVerbosityWriter(null));
         }
     }
 }

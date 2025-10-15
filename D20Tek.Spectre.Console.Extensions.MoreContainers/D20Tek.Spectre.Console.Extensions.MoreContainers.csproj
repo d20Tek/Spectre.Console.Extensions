@@ -38,8 +38,8 @@ The current release contain implementations of ITypeRegistrar and ITypeResolver 
     <PackageReference Include="LightInject" Version="7.0.1" />
     <PackageReference Include="Ninject" Version="3.3.6" />
     <PackageReference Include="SimpleInjector" Version="5.5.0" />
-    <PackageReference Include="Spectre.Console" Version="0.51.1" />
-    <PackageReference Include="Spectre.Console.Cli" Version="0.51.1" />
+    <PackageReference Include="Spectre.Console" Version="0.52.0" />
+    <PackageReference Include="Spectre.Console.Cli" Version="0.52.0" />
   </ItemGroup>
 
 </Project>

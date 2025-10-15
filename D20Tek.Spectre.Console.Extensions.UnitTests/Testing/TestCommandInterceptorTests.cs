@@ -53,27 +53,23 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
         }
 
         [TestMethod]
-        [ExcludeFromCodeCoverage]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Intercept_WithNullContext()
         {
             // arrange
             var i = new TestCommandInterceptor();
 
             // act
-            i.Intercept(null, _settings);
+            Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => i.Intercept(null, _settings));
         }
 
         [TestMethod]
-        [ExcludeFromCodeCoverage]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Intercept_WithNullSettings()
         {
             // arrange
             var i = new TestCommandInterceptor();
 
             // act
-            i.Intercept(_context, null);
+            Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => i.Intercept(_context, null));
         }
     }
 }

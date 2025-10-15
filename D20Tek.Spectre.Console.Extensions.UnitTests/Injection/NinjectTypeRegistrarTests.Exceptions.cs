@@ -19,17 +19,15 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
 
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Create_WithNullStandardKernel()
         {
             // arrange
 
             // act
-            _ = new NinjectTypeRegistrar(null);
+            Assert.ThrowsExactly<ArgumentNullException>(() => new NinjectTypeRegistrar(null));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Register_WithNullServiceType()
         {
             // arrange
@@ -37,11 +35,10 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
             var registrar = new NinjectTypeRegistrar(services);
 
             // act
-            registrar.Register(null, typeof(TestService));
+            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.Register(null, typeof(TestService)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Register_WithNullImplementationType()
         {
             // arrange
@@ -49,11 +46,10 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
             var registrar = new NinjectTypeRegistrar(services);
 
             // act
-            registrar.Register(typeof(ITestService), null);
+            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.Register(typeof(ITestService), null));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void RegisterInstance_WithNullType()
         {
             // arrange
@@ -61,11 +57,10 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
             var registrar = new NinjectTypeRegistrar(services);
 
             // act
-            registrar.RegisterInstance(null, new TestService());
+            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterInstance(null, new TestService()));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void RegisterInstance_WithNullImplementation()
         {
             // arrange
@@ -73,11 +68,10 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
             var registrar = new NinjectTypeRegistrar(services);
 
             // act
-            registrar.RegisterInstance(typeof(ITestService), null);
+            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterInstance(typeof(ITestService), null));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void RegisterLazy_WithNullType()
         {
             // arrange
@@ -85,11 +79,10 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
             var registrar = new NinjectTypeRegistrar(services);
 
             // act
-            registrar.RegisterLazy(null, null);
+            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterLazy(null, null));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void RegisterLazy_WithNullFactory()
         {
             // arrange
@@ -97,7 +90,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
             var registrar = new NinjectTypeRegistrar(services);
 
             // act
-            registrar.RegisterLazy(typeof(ITestService), null);
+            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterLazy(typeof(ITestService), null));
         }
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }

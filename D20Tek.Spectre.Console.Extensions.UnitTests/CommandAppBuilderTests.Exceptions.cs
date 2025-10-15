@@ -14,7 +14,6 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests
     public class CommandAppBuilderExceptionTests
     {
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Run_WithoutBuildFirst()
         {
             // arrange
@@ -23,11 +22,10 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests
                               .WithDefaultCommand<MockCommand>();
 
             // act
-            _ = builder.Run(Array.Empty<string>());
+            Assert.ThrowsExactly<ArgumentNullException>(() => builder.Run(Array.Empty<string>()));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public async Task RunAsync_WithoutBuildFirst()
         {
             // arrange
@@ -36,7 +34,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests
                               .WithDefaultCommand<MockCommand>();
 
             // act
-            _ = await builder.RunAsync(Array.Empty<string>());
+            await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => builder.RunAsync(Array.Empty<string>()));
         }
     }
 }

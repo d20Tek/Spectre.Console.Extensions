@@ -42,7 +42,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
                            .WithStartup<MockStartupWithExceptionCommand>();
 
             // act
-            var result = context.RunWithException<ArgumentOutOfRangeException>(new string[] { "mock" });
+            var result = context.RunWithException<ArgumentOutOfRangeException>(["mock"]);
 
             // assert
             Assert.IsNotNull(result);
@@ -51,8 +51,6 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
         }
 
         [TestMethod]
-        [ExcludeFromCodeCoverage]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void RunWithException_NoException()
         {
             // arrange
@@ -61,12 +59,11 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
                            .WithStartup<MockStartupWithConfig>();
 
             // act
-            _ = context.RunWithException<ArgumentOutOfRangeException>(new string[] { "mock" });
+            Assert.ThrowsExactly<InvalidOperationException>([ExcludeFromCodeCoverage] () =>
+                context.RunWithException<ArgumentOutOfRangeException>(["mock"]));
         }
 
         [TestMethod]
-        [ExcludeFromCodeCoverage]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void RunWithException_UnexpectedException()
         {
             // arrange
@@ -75,7 +72,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
                            .WithStartup<MockStartupWithExceptionCommand>();
 
             // act
-            _ = context.RunWithException<InvalidOperationException>(new string[] { "mock" });
+            Assert.ThrowsExactly<InvalidOperationException>([ExcludeFromCodeCoverage] () => 
+                context.RunWithException<InvalidOperationException>(["mock"]));
         }
 
         [TestMethod]
@@ -117,7 +115,6 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
 
         [TestMethod]
         [ExcludeFromCodeCoverage]
-        [ExpectedException(typeof(InvalidOperationException))]
         public async Task RunWithExceptionAsync_NoException()
         {
             // arrange
@@ -126,13 +123,12 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
                            .WithStartup<MockAsyncStartupWithConfig>();
 
             // act
-            _ = await context.RunWithExceptionAsync<ArgumentOutOfRangeException>(
-                new string[] { "mock" });
+            await Assert.ThrowsExactlyAsync<InvalidOperationException>(() => 
+                context.RunWithExceptionAsync<ArgumentOutOfRangeException>(["mock"]));
         }
 
         [TestMethod]
         [ExcludeFromCodeCoverage]
-        [ExpectedException(typeof(InvalidOperationException))]
         public async Task RunWithExceptionAsync_UnexpectedException()
         {
             // arrange
@@ -141,8 +137,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
                            .WithStartup<MockAsyncStartupWithExceptionCommand>();
 
             // act
-            _ = await context.RunWithExceptionAsync<InvalidOperationException>(
-                new string[] { "mock" });
+            await Assert.ThrowsExactlyAsync<InvalidOperationException>(() => 
+                context.RunWithExceptionAsync<InvalidOperationException>(["mock"]));
         }
     }
 }

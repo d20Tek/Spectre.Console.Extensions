@@ -84,7 +84,6 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
         private TestService FactoryMethod() => new TestService();
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         [ExcludeFromCodeCoverage]
         public void Constructor_WithNullServiceCollection()
         {
@@ -92,7 +91,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
 
             // act
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _ = new AutofacTypeResolver(null);
+            Assert.ThrowsExactly<ArgumentNullException>(() => new AutofacTypeResolver(null));
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
     }

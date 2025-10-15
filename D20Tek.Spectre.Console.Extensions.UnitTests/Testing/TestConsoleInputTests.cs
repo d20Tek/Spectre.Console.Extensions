@@ -42,15 +42,13 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
         }
 
         [TestMethod]
-        [ExcludeFromCodeCoverage]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void PushText_WithNull()
         {
             // arrange
             var input = new TestConsoleInput();
 
             // act
-            input.PushTextWithEnter(null);
+            Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => input.PushTextWithEnter(null));
         }
 
 
@@ -72,8 +70,6 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
         }
 
         [TestMethod]
-        [ExcludeFromCodeCoverage]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void ReadKey_PastTheEnd()
         {
             // arrange
@@ -81,8 +77,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             input.PushText("1");
 
             // act
-            var key = input.ReadKey(false);
-            key = input.ReadKey(false);
+            _ = input.ReadKey(false);
+            Assert.ThrowsExactly<InvalidOperationException>([ExcludeFromCodeCoverage] () => input.ReadKey(false));
         }
 
         [TestMethod]

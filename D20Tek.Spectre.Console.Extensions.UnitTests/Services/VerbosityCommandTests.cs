@@ -11,7 +11,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Services
     [TestClass]
     public class VerbosityCommandTests
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Quiet", "", DisplayName = "Quiet")]
         [DataRow("Q", "", DisplayName = "Q")]
         [DataRow("quiet", "", DisplayName = "quiet")]

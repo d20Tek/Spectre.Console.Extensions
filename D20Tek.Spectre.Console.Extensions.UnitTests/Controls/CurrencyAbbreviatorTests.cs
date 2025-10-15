@@ -7,7 +7,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Controls;
 [TestClass]
 public class CurrencyAbbreviatorTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(1234.5, "$1.23K", "en-US")]
     [DataRow(1234567.9, "$1.23M", "en-US")]
     [DataRow(1234567890, "$1.23B", "en-US")]
@@ -28,7 +28,7 @@ public class CurrencyAbbreviatorTests
         Assert.AreEqual(expected, result);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(-1234.5, "-£1.23K", "en-GB")]
     [DataRow(-1234.5, "-1.23K €", "fr-FR")]
     [DataRow(-1234.5, "(€ 1.23K)", "nl-NL")]
@@ -45,7 +45,7 @@ public class CurrencyAbbreviatorTests
         Assert.AreEqual(expected, result);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(2, "$-1.23K")]
     [DataRow(3, "$1.23K-")]
     [DataRow(4, "(1.23K$)")]
