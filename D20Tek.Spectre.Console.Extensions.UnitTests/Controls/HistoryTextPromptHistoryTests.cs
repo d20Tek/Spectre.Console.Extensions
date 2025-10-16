@@ -20,8 +20,7 @@ public class HistoryTextPromptHistoryTests
 
         // act
         var result = console.Prompt(
-            new HistoryTextPrompt<string>("enter:")
-                .AddHistory(history));
+            new HistoryTextPrompt<string>("enter:").AddHistory(history));
 
         // assert
         Assert.AreEqual("Command2", result);
@@ -40,8 +39,7 @@ public class HistoryTextPromptHistoryTests
 
         // act
         var result = console.Prompt(
-            new HistoryTextPrompt<string>("enter:")
-                .AddHistory(history));
+            new HistoryTextPrompt<string>("enter:").AddHistory(history));
 
         // assert
         Assert.AreEqual("Command1", result);
@@ -60,8 +58,7 @@ public class HistoryTextPromptHistoryTests
 
         // act
         var result = console.Prompt(
-            new HistoryTextPrompt<string>("enter:")
-                .AddHistory(history));
+            new HistoryTextPrompt<string>("enter:").AddHistory(history));
 
         // assert
         Assert.AreEqual("Command3", result);
@@ -81,9 +78,8 @@ public class HistoryTextPromptHistoryTests
 
         // act
         var result = console.Prompt(
-            new HistoryTextPrompt<string>("enter:")
-                .AddHistory(history)
-                .AllowEmpty());
+            new HistoryTextPrompt<string>("enter:").AddHistory(history)
+                                                   .AllowEmpty());
 
         // assert
         Assert.AreEqual("", result);
@@ -102,9 +98,8 @@ public class HistoryTextPromptHistoryTests
 
         // act
         var result = console.Prompt(
-            new HistoryTextPrompt<string>("enter:")
-                .AddHistory(history)
-                .AllowEmpty());
+            new HistoryTextPrompt<string>("enter:").AddHistory(history)
+                                                   .AllowEmpty());
 
         // assert
         Assert.AreEqual("foo", result);

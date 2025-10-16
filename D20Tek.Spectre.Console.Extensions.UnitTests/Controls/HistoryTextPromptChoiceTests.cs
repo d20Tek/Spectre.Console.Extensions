@@ -44,7 +44,7 @@ public class HistoryTextPromptChoiceTests
                 .AddChoices(choices));
 
         // assert
-        StringAssert.Contains(console.Output, "Invalid choice");
+        Assert.Contains("Invalid choice", console.Output);
     }
 
     [TestMethod]
@@ -81,7 +81,7 @@ public class HistoryTextPromptChoiceTests
                 .ShowChoices());
 
         // assert
-        StringAssert.Contains(console.Output, "First/Second/Third");
+        Assert.Contains("First/Second/Third", console.Output);
     }
 
     [TestMethod]
@@ -237,7 +237,7 @@ public class HistoryTextPromptChoiceTests
                     choices.Contains(x) ? ValidationResult.Success() : ValidationResult.Error()));
 
         // assert
-        StringAssert.Contains(console.Output, "test invalid choice");
+        Assert.Contains("test invalid choice", console.Output);
     }
 
     [TestMethod]

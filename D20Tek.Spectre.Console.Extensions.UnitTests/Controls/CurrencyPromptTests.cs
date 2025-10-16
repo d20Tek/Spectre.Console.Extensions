@@ -25,8 +25,8 @@ public class CurrencyPromptTests
 
         // Assert
         Assert.AreEqual(123.45m, result);
-        StringAssert.Contains(console.Output, "Enter amount:");
-        StringAssert.Contains(console.Output, "123.45");
+        Assert.Contains("Enter amount:", console.Output);
+        Assert.Contains("123.45", console.Output);
     }
 
     [TestMethod]
@@ -42,8 +42,8 @@ public class CurrencyPromptTests
 
         // Assert
         Assert.AreEqual(50.00m, result);
-        StringAssert.Contains(console.Output, "Enter amount:");
-        StringAssert.Contains(console.Output, "50.00");
+        Assert.Contains("Enter amount:", console.Output);
+        Assert.Contains("50.00", console.Output);
     }
 
     [TestMethod]
@@ -59,8 +59,8 @@ public class CurrencyPromptTests
 
         // Assert
         Assert.AreEqual(789.10m, result);
-        StringAssert.Contains(console.Output, "Enter amount:");
-        StringAssert.Contains(console.Output, "789.10");
+        Assert.Contains("Enter amount:", console.Output);
+        Assert.Contains("789.10", console.Output);
     }
 
     [TestMethod]
@@ -77,7 +77,7 @@ public class CurrencyPromptTests
 
         // Assert
         Assert.AreEqual(123.45m, result);
-        StringAssert.Contains(console.Output, "Please enter a valid test currency.");
+        Assert.Contains("Please enter a valid test currency.", console.Output);
     }
 
     [TestMethod]
@@ -87,18 +87,17 @@ public class CurrencyPromptTests
         var culture = new CultureInfo("fr-FR");
         var console = new TestConsole();
         console.TestInput.PushTextWithEnter("123,45");
-        var prompt = new CurrencyPrompt("Enter amount:")
-            .WithCulture(new CultureInfo("fr-FR"))
-            .WithExampleHint(1000M);
+        var prompt = new CurrencyPrompt("Enter amount:").WithCulture(new CultureInfo("fr-FR"))
+                                                        .WithExampleHint(1000M);
 
         // Act
         var result = prompt.Show(console);
 
         // Assert
         Assert.AreEqual(123.45m, result);
-        StringAssert.Contains(console.Output, "Enter amount:");
-        StringAssert.Contains(console.Output, "1 000,00");
-        StringAssert.Contains(console.Output, "123,45");
+        Assert.Contains("Enter amount:", console.Output);
+        Assert.Contains("1 000,00", console.Output);
+        Assert.Contains("123,45", console.Output);
         Assert.AreEqual(culture, prompt.Culture);
     }
 
@@ -118,8 +117,8 @@ public class CurrencyPromptTests
 
         // Assert
         Assert.AreEqual(123.45m, result);
-        StringAssert.Contains(console.Output, "Enter amount:");
-        StringAssert.Contains(console.Output, "123.45");
+        Assert.Contains("Enter amount:", console.Output);
+        Assert.Contains("123.45", console.Output);
         Assert.IsNotNull(prompt.Culture);
     }
 
@@ -144,8 +143,9 @@ public class CurrencyPromptTests
         // Arrange
         var console = new TestConsole();
         console.TestInput.PushTextWithEnter("123.45");
-        var prompt = new CurrencyPrompt("Enter amount:").WithValidator([ExcludeFromCodeCoverage] (input) =>
-            input == "123.45" ? ValidationResult.Success() : ValidationResult.Error("Unexpected value"));
+        var prompt = new CurrencyPrompt("Enter amount:").WithValidator(
+            [ExcludeFromCodeCoverage] (input) =>
+                input == "123.45" ? ValidationResult.Success() : ValidationResult.Error("Unexpected value"));
 
         // Act
         var result = prompt.Show(console);
@@ -164,13 +164,13 @@ public class CurrencyPromptTests
         var prompt = new CurrencyPrompt("Enter amount:")
             .WithDefaultValue(0)
             .WithValidator([ExcludeFromCodeCoverage] (input) =>
-            input == "123.45" ? ValidationResult.Success() : ValidationResult.Error("Unexpected value"));
+                input == "123.45" ? ValidationResult.Success() : ValidationResult.Error("Unexpected value"));
 
         // Act
         var result = prompt.Show(console);
 
         // Assert
         Assert.AreEqual(0m, result);
-        StringAssert.Contains(console.Output, "Unexpected value");
+        Assert.Contains("Unexpected value", console.Output);
     }
 }

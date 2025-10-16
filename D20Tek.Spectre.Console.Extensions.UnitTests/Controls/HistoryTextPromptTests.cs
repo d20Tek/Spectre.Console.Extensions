@@ -110,7 +110,7 @@ public class HistoryTextPromptTests
 
         // assert
         Assert.AreEqual("secret text", result);
-        StringAssert.Contains(console.Output, "***********");
+        Assert.Contains("***********", console.Output);
     }
 
     [TestMethod]
@@ -127,7 +127,7 @@ public class HistoryTextPromptTests
 
         // assert
         Assert.AreEqual("default", result);
-        StringAssert.Contains(console.Output, "*******");
+        Assert.Contains("*******", console.Output);
     }
 
     [TestMethod]
@@ -169,12 +169,11 @@ public class HistoryTextPromptTests
 
         // act
         var result = console.Prompt(
-            new HistoryTextPrompt<int>("enter:")
-                .ValidationErrorMessage("test error")
-                .Validate(x => x >= 18 && x < 100));
+            new HistoryTextPrompt<int>("enter:").ValidationErrorMessage("test error")
+                                                .Validate(x => x >= 18 && x < 100));
 
         // assert
-        StringAssert.Contains(console.Output, "test error");
+        Assert.Contains("test error", console.Output);
     }
 
     [TestMethod]
@@ -186,9 +185,8 @@ public class HistoryTextPromptTests
 
         // act
         var result = console.Prompt(
-            new HistoryTextPrompt<int>("enter:")
-                .ValidationErrorMessage("test error")
-                .Validate([ExcludeFromCodeCoverage] (x) => x >= 18 && x < 100));
+            new HistoryTextPrompt<int>("enter:").ValidationErrorMessage("test error")
+                                                .Validate([ExcludeFromCodeCoverage] (x) => x >= 18 && x < 100));
 
         // assert
         Assert.AreEqual(42, result);

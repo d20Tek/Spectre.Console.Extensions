@@ -29,7 +29,7 @@ public class TableExtensionsTests
         // assert
         Assert.HasCount(1, table.Rows);
         Assert.HasCount(3, table.Columns);
-        StringAssert.Contains(console.Output, "──────────");
+        Assert.Contains("──────────", console.Output);
     }
 
     [TestMethod]
@@ -61,6 +61,6 @@ public class TableExtensionsTests
         // assert
         Assert.HasCount(1, table.Rows);
         Assert.HasCount(3, table.Columns);
-        StringAssert.Contains(console.Output, "==========");
+        Assert.Contains("==========", console.Output);
     }
 }

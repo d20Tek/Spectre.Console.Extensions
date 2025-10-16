@@ -46,7 +46,8 @@ public class TypeConverterTests
         var input = new ConvertibleType { Value = "invalid" };
 
         // act - assert
-        Assert.Throws<InvalidOperationException>([ExcludeFromCodeCoverage]() => TypeConverterHelper.ConvertToString(input));
+        Assert.Throws<InvalidOperationException>(
+            [ExcludeFromCodeCoverage]() => TypeConverterHelper.ConvertToString(input));
     }
 
 
@@ -215,7 +216,7 @@ public class TypeConverterTests
         var result = TypeConverterHelper.ConvertToString(DateTime.MinValue);
 
         // assert
-        Assert.AreEqual("", result);
+        Assert.AreEqual(string.Empty, result);
     }
 
     [TestMethod]
@@ -227,7 +228,7 @@ public class TypeConverterTests
         var result = TypeConverterHelper.ConvertToString(DateTimeOffset.MinValue);
 
         // assert
-        Assert.AreEqual("", result);
+        Assert.AreEqual(string.Empty, result);
     }
 
     [TestMethod]
@@ -338,7 +339,7 @@ public class TypeConverterTests
         var result = TypeConverterHelper.ConvertToString(DateOnly.MinValue);
 
         // assert
-        Assert.AreEqual("", result);
+        Assert.AreEqual(string.Empty, result);
     }
 
     [TestMethod]
@@ -350,7 +351,7 @@ public class TypeConverterTests
         var result = TypeConverterHelper.ConvertToString(TimeOnly.MinValue);
 
         // assert
-        Assert.AreEqual("", result);
+        Assert.AreEqual(string.Empty, result);
     }
 
     [TestMethod]
