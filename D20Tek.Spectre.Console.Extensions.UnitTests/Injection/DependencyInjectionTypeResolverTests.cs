@@ -7,78 +7,75 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
+namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection;
+
+[TestClass]
+public class TypeResolverExtensionsTests
 {
-    [TestClass]
-    public class TypeResolverExtensionsTests
+    public interface ITestService { };
+
+    public class TestService : ITestService { };
+
+    [TestMethod]
+    public void Resolve_WithTypes()
     {
-        public interface ITestService { };
+        // arrange
+        var services = new ServiceCollection();
+        var registrar = new DependencyInjectionTypeRegistrar(services);
 
-        public class TestService : ITestService { };
+        registrar.Register(typeof(ITestService), typeof(TestService));
+        var resolver = registrar.Build();
 
-        [TestMethod]
-        public void Resolve_WithTypes()
-        {
-            // arrange
-            var services = new ServiceCollection();
-            var registrar = new DependencyInjectionTypeRegistrar(services);
+        // act
+        var service = resolver.Resolve(typeof(ITestService));
 
-            registrar.Register(typeof(ITestService), typeof(TestService));
-            var resolver = registrar.Build();
+        // assert
+        Assert.IsNotNull(service);
+        Assert.IsInstanceOfType<ITestService>(service);
+        Assert.IsInstanceOfType<TestService>(service);
+    }
 
-            // act
-            var service = resolver.Resolve(typeof(ITestService));
+    [TestMethod]
+    public void Resolve_WithNullType()
+    {
+        // arrange
+        var services = new ServiceCollection();
+        using var resolver = new DependencyInjectionTypeResolver(services.BuildServiceProvider());
 
-            // assert
-            Assert.IsNotNull(service);
-            Assert.IsInstanceOfType(service, typeof(ITestService));
-            Assert.IsInstanceOfType(service, typeof(TestService));
-        }
+        // act
+        var service = resolver.Resolve(null);
 
-        [TestMethod]
-        public void Resolve_WithNullType()
-        {
-            // arrange
-            var services = new ServiceCollection();
-            using var resolver = new DependencyInjectionTypeResolver(services.BuildServiceProvider());
+        // assert
+        Assert.IsNull(service);
+    }
 
-            // act
-            var service = resolver.Resolve(null);
+    [TestMethod]
+    public void Resolve_WithFactory()
+    {
+        var services = new ServiceCollection();
+        var registrar = new DependencyInjectionTypeRegistrar(services);
 
-            // assert
-            Assert.IsNull(service);
-        }
+        registrar.RegisterLazy(typeof(ITestService), FactoryMethod);
+        var resolver = registrar.Build();
 
-        [TestMethod]
-        public void Resolve_WithFactory()
-        {
-            var services = new ServiceCollection();
-            var registrar = new DependencyInjectionTypeRegistrar(services);
+        // act
+        var service = resolver.Resolve(typeof(ITestService));
 
-            registrar.RegisterLazy(typeof(ITestService), FactoryMethod);
-            var resolver = registrar.Build();
+        // assert
+        Assert.IsNotNull(service);
+        Assert.IsInstanceOfType<ITestService>(service);
+        Assert.IsInstanceOfType<TestService>(service);
+    }
 
-            // act
-            var service = resolver.Resolve(typeof(ITestService));
+    private TestService FactoryMethod() => new();
 
-            // assert
-            Assert.IsNotNull(service);
-            Assert.IsInstanceOfType(service, typeof(ITestService));
-            Assert.IsInstanceOfType(service, typeof(TestService));
-        }
+    [TestMethod]
+    [ExcludeFromCodeCoverage]
+    public void Constructor_WithNullServiceCollection()
+    {
+        // arrange
 
-        private TestService FactoryMethod() => new TestService();
-
-        [TestMethod]
-        [ExcludeFromCodeCoverage]
-        public void Constructor_WithNullServiceCollection()
-        {
-            // arrange
-
-            // act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.ThrowsExactly<ArgumentNullException>(() => new DependencyInjectionTypeResolver(null));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-        }
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>(() => new DependencyInjectionTypeResolver(null));
     }
 }

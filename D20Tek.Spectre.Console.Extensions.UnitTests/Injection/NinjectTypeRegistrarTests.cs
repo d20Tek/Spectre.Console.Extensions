@@ -6,75 +6,74 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using System.Diagnostics.CodeAnalysis;
 
-namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
+namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection;
+
+[TestClass]
+public class NinjectTypeRegistrarTests
 {
-    [TestClass]
-    public class NinjectTypeRegistrarTests
+    public interface ITestService { };
+
+    public class TestService : ITestService { };
+
+    [TestMethod]
+    public void Register()
     {
-        public interface ITestService { };
+        // arrange
+        var services = new StandardKernel();
+        var registrar = new NinjectTypeRegistrar(services);
 
-        public class TestService : ITestService { };
+        // act
+        registrar.Register(typeof(ITestService), typeof(TestService));
 
-        [TestMethod]
-        public void Register()
-        {
-            // arrange
-            var services = new StandardKernel();
-            var registrar = new NinjectTypeRegistrar(services);
-
-            // act
-            registrar.Register(typeof(ITestService), typeof(TestService));
-
-            // assert
-            Assert.IsNotNull(services.Get<ITestService>());
-        }
-
-        [TestMethod]
-        public void RegisterInstance()
-        {
-            // arrange
-            var services = new StandardKernel();
-            var registrar = new NinjectTypeRegistrar(services);
-            var instance = new TestService();
-
-            // act
-            registrar.RegisterInstance(typeof(ITestService), instance);
-
-            // assert
-            Assert.IsNotNull(services.Get<ITestService>());
-        }
-
-        [TestMethod]
-        public void RegisterLazy()
-        {
-            // arrange
-            var services = new StandardKernel();
-            var registrar = new NinjectTypeRegistrar(services);
-
-            // act
-            registrar.RegisterLazy(typeof(ITestService), FactoryMethod);
-
-            // assert
-            Assert.IsNotNull(services.Get<ITestService>());
-        }
-
-        [TestMethod]
-        public void Build()
-        {
-            // arrange
-            var services = new StandardKernel();
-            var registrar = new NinjectTypeRegistrar(services);
-
-            registrar.Register(typeof(ITestService), typeof(TestService));
-
-            // act
-            var resolver = registrar.Build();
-
-            // assert
-            Assert.IsNotNull(resolver);
-        }
-
-        [ExcludeFromCodeCoverage]
-        private TestService FactoryMethod() => new TestService();
+        // assert
+        Assert.IsNotNull(services.Get<ITestService>());
     }
+
+    [TestMethod]
+    public void RegisterInstance()
+    {
+        // arrange
+        var services = new StandardKernel();
+        var registrar = new NinjectTypeRegistrar(services);
+        var instance = new TestService();
+
+        // act
+        registrar.RegisterInstance(typeof(ITestService), instance);
+
+        // assert
+        Assert.IsNotNull(services.Get<ITestService>());
+    }
+
+    [TestMethod]
+    public void RegisterLazy()
+    {
+        // arrange
+        var services = new StandardKernel();
+        var registrar = new NinjectTypeRegistrar(services);
+
+        // act
+        registrar.RegisterLazy(typeof(ITestService), FactoryMethod);
+
+        // assert
+        Assert.IsNotNull(services.Get<ITestService>());
+    }
+
+    [TestMethod]
+    public void Build()
+    {
+        // arrange
+        var services = new StandardKernel();
+        var registrar = new NinjectTypeRegistrar(services);
+
+        registrar.Register(typeof(ITestService), typeof(TestService));
+
+        // act
+        var resolver = registrar.Build();
+
+        // assert
+        Assert.IsNotNull(resolver);
+    }
+
+    [ExcludeFromCodeCoverage]
+    private TestService FactoryMethod() => new();
 }

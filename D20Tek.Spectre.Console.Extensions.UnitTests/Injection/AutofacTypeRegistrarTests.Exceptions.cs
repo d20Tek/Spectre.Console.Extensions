@@ -7,91 +7,88 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
+namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection;
+
+[TestClass]
+[ExcludeFromCodeCoverage]
+public class AutofacTypeRegistrarExceptionTests
 {
-    [TestClass]
-    [ExcludeFromCodeCoverage]
-    public class AutofacTypeRegistrarExceptionTests
+    public interface ITestService { };
+
+    public class TestService : ITestService { };
+
+    [TestMethod]
+    public void Create_WithNullStandardKernel()
     {
-        public interface ITestService { };
+        // arrange
 
-        public class TestService : ITestService { };
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>(() => new AutofacTypeRegistrar(null));
+    }
 
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-        [TestMethod]
-        public void Create_WithNullStandardKernel()
-        {
-            // arrange
+    [TestMethod]
+    public void Register_WithNullServiceType()
+    {
+        // arrange
+        var services = new ContainerBuilder();
+        var registrar = new AutofacTypeRegistrar(services);
 
-            // act
-            Assert.ThrowsExactly<ArgumentNullException>(() => new AutofacTypeRegistrar(null));
-        }
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.Register(null, typeof(TestService)));
+    }
 
-        [TestMethod]
-        public void Register_WithNullServiceType()
-        {
-            // arrange
-            var services = new ContainerBuilder();
-            var registrar = new AutofacTypeRegistrar(services);
+    [TestMethod]
+    public void Register_WithNullImplementationType()
+    {
+        // arrange
+        var services = new ContainerBuilder();
+        var registrar = new AutofacTypeRegistrar(services);
 
-            // act
-            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.Register(null, typeof(TestService)));
-        }
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.Register(typeof(ITestService), null));
+    }
 
-        [TestMethod]
-        public void Register_WithNullImplementationType()
-        {
-            // arrange
-            var services = new ContainerBuilder();
-            var registrar = new AutofacTypeRegistrar(services);
+    [TestMethod]
+    public void RegisterInstance_WithNullType()
+    {
+        // arrange
+        var services = new ContainerBuilder();
+        var registrar = new AutofacTypeRegistrar(services);
 
-            // act
-            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.Register(typeof(ITestService), null));
-        }
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterInstance(null, new TestService()));
+    }
 
-        [TestMethod]
-        public void RegisterInstance_WithNullType()
-        {
-            // arrange
-            var services = new ContainerBuilder();
-            var registrar = new AutofacTypeRegistrar(services);
+    [TestMethod]
+    public void RegisterInstance_WithNullImplementation()
+    {
+        // arrange
+        var services = new ContainerBuilder();
+        var registrar = new AutofacTypeRegistrar(services);
 
-            // act
-            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterInstance(null, new TestService()));
-        }
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterInstance(typeof(ITestService), null));
+    }
 
-        [TestMethod]
-        public void RegisterInstance_WithNullImplementation()
-        {
-            // arrange
-            var services = new ContainerBuilder();
-            var registrar = new AutofacTypeRegistrar(services);
+    [TestMethod]
+    public void RegisterLazy_WithNullType()
+    {
+        // arrange
+        var services = new ContainerBuilder();
+        var registrar = new AutofacTypeRegistrar(services);
 
-            // act
-            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterInstance(typeof(ITestService), null));
-        }
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterLazy(null, null));
+    }
 
-        [TestMethod]
-        public void RegisterLazy_WithNullType()
-        {
-            // arrange
-            var services = new ContainerBuilder();
-            var registrar = new AutofacTypeRegistrar(services);
+    [TestMethod]
+    public void RegisterLazy_WithNullFactory()
+    {
+        // arrange
+        var services = new ContainerBuilder();
+        var registrar = new AutofacTypeRegistrar(services);
 
-            // act
-            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterLazy(null, null));
-        }
-
-        [TestMethod]
-        public void RegisterLazy_WithNullFactory()
-        {
-            // arrange
-            var services = new ContainerBuilder();
-            var registrar = new AutofacTypeRegistrar(services);
-
-            // act
-            Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterLazy(typeof(ITestService), null));
-        }
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterLazy(typeof(ITestService), null));
     }
 }

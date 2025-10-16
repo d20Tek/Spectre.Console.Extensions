@@ -25,7 +25,7 @@ public class LifetimeExtensionsTests
 
         // assert
         Assert.IsNotNull(result);
-        Assert.AreEqual(1, container.Count());
+        Assert.AreEqual(1, container.Count);
         Assert.IsTrue(container.Any(x => x.Lifetime == ServiceLifetime.Singleton));
         Assert.IsTrue(container.Any(x => x.ServiceType == typeof(ITestService)));
         Assert.IsTrue(container.Any(x => x.ImplementationType == typeof(TestService)));
@@ -44,7 +44,7 @@ public class LifetimeExtensionsTests
 
         // assert
         Assert.IsNotNull(result);
-        Assert.AreEqual(1, container.Count());
+        Assert.AreEqual(1, container.Count);
         Assert.IsTrue(container.Any(x => x.Lifetime == ServiceLifetime.Singleton));
         Assert.IsTrue(container.Any(x => x.ServiceType == typeof(ITestService)));
         Assert.IsTrue(container.Any(x => x.ImplementationInstance == instance));
@@ -62,7 +62,7 @@ public class LifetimeExtensionsTests
             [ExcludeFromCodeCoverage] (sp) => new TestService());
 
         // assert
-        Assert.AreEqual(1, container.Count());
+        Assert.AreEqual(1, container.Count);
         Assert.IsTrue(container.Any(x => x.Lifetime == ServiceLifetime.Singleton));
         Assert.IsTrue(container.Any(x => x.ServiceType == typeof(ITestService)));
         Assert.IsFalse(container.Any(x => x.ImplementationType == typeof(TestService)));
@@ -81,7 +81,7 @@ public class LifetimeExtensionsTests
 
         // assert
         Assert.IsNotNull(result);
-        Assert.AreEqual(1, container.Count());
+        Assert.AreEqual(1, container.Count);
         Assert.IsTrue(container.Any(x => x.Lifetime == ServiceLifetime.Scoped));
         Assert.IsTrue(container.Any(x => x.ServiceType == typeof(ITestService)));
         Assert.IsTrue(container.Any(x => x.ImplementationType == typeof(TestService)));
@@ -99,7 +99,7 @@ public class LifetimeExtensionsTests
             [ExcludeFromCodeCoverage] (sp) => new TestService());
 
         // assert
-        Assert.AreEqual(1, container.Count());
+        Assert.AreEqual(1, container.Count);
         Assert.IsTrue(container.Any(x => x.Lifetime == ServiceLifetime.Scoped));
         Assert.IsTrue(container.Any(x => x.ServiceType == typeof(ITestService)));
         Assert.IsFalse(container.Any(x => x.ImplementationType == typeof(TestService)));
@@ -118,7 +118,7 @@ public class LifetimeExtensionsTests
 
         // assert
         Assert.IsNotNull(result);
-        Assert.AreEqual(1, container.Count());
+        Assert.AreEqual(1, container.Count);
         Assert.IsTrue(container.Any(x => x.Lifetime == ServiceLifetime.Transient));
         Assert.IsTrue(container.Any(x => x.ServiceType == typeof(ITestService)));
         Assert.IsTrue(container.Any(x => x.ImplementationType == typeof(TestService)));
@@ -136,7 +136,7 @@ public class LifetimeExtensionsTests
             [ExcludeFromCodeCoverage] (sp) => new TestService());
 
         // assert
-        Assert.AreEqual(1, container.Count());
+        Assert.AreEqual(1, container.Count);
         Assert.IsTrue(container.Any(x => x.Lifetime == ServiceLifetime.Transient));
         Assert.IsTrue(container.Any(x => x.ServiceType == typeof(ITestService)));
         Assert.IsFalse(container.Any(x => x.ImplementationType == typeof(TestService)));

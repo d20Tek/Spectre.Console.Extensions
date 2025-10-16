@@ -8,134 +8,131 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection
+namespace D20Tek.Spectre.Console.Extensions.UnitTests.Injection;
+
+[TestClass]
+public class DependencyInjectionTypeRegistrarTests
 {
-    [TestClass]
-    public class DependencyInjectionTypeRegistrarTests
+    public interface ITestService { };
+
+    public class TestService : ITestService { };
+
+    [TestMethod]
+    public void Register()
     {
-        public interface ITestService { };
+        // arrange
+        var services = new ServiceCollection();
+        var registrar = new DependencyInjectionTypeRegistrar(services);
 
-        public class TestService : ITestService { };
+        // act
+        registrar.Register(typeof(ITestService), typeof(TestService));
 
-        [TestMethod]
-        public void Register()
-        {
-            // arrange
-            var services = new ServiceCollection();
-            var registrar = new DependencyInjectionTypeRegistrar(services);
+        // assert
+        Assert.AreEqual(1, services.Count());
+        Assert.IsTrue(services.Any(x => x.Lifetime == ServiceLifetime.Singleton));
+        Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
+        Assert.IsTrue(services.Any(x => x.ImplementationType == typeof(TestService)));
+    }
 
-            // act
-            registrar.Register(typeof(ITestService), typeof(TestService));
+    [TestMethod]
+    public void Register_AsTransient()
+    {
+        // arrange
+        var services = new ServiceCollection();
+        var registrar = new DependencyInjectionTypeRegistrar(services, ServiceLifetime.Transient);
 
-            // assert
-            Assert.AreEqual(1, services.Count());
-            Assert.IsTrue(services.Any(x => x.Lifetime == ServiceLifetime.Singleton));
-            Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
-            Assert.IsTrue(services.Any(x => x.ImplementationType == typeof(TestService)));
-        }
+        // act
+        registrar.Register(typeof(ITestService), typeof(TestService));
 
-        [TestMethod]
-        public void Register_AsTransient()
-        {
-            // arrange
-            var services = new ServiceCollection();
-            var registrar = new DependencyInjectionTypeRegistrar(services, ServiceLifetime.Transient);
+        // assert
+        Assert.AreEqual(1, services.Count());
+        Assert.IsTrue(services.Any(x => x.Lifetime == ServiceLifetime.Transient));
+        Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
+        Assert.IsTrue(services.Any(x => x.ImplementationType == typeof(TestService)));
+    }
 
-            // act
-            registrar.Register(typeof(ITestService), typeof(TestService));
+    [TestMethod]
+    public void RegisterInstance()
+    {
+        // arrange
+        var services = new ServiceCollection();
+        var registrar = new DependencyInjectionTypeRegistrar(services);
+        var instance = new TestService();
 
-            // assert
-            Assert.AreEqual(1, services.Count());
-            Assert.IsTrue(services.Any(x => x.Lifetime == ServiceLifetime.Transient));
-            Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
-            Assert.IsTrue(services.Any(x => x.ImplementationType == typeof(TestService)));
-        }
+        // act
+        registrar.RegisterInstance(typeof(ITestService), instance);
 
-        [TestMethod]
-        public void RegisterInstance()
-        {
-            // arrange
-            var services = new ServiceCollection();
-            var registrar = new DependencyInjectionTypeRegistrar(services);
-            var instance = new TestService();
+        // assert
+        Assert.AreEqual(1, services.Count());
+        Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
+        Assert.IsFalse(services.Any(x => x.ImplementationType == typeof(TestService)));
+        Assert.IsTrue(services.Any(x => x.ImplementationInstance == instance));
+    }
 
-            // act
-            registrar.RegisterInstance(typeof(ITestService), instance);
+    [TestMethod]
+    public void RegisterInstance_AsTransient_StillRegistersAsSingleton()
+    {
+        // arrange
+        var services = new ServiceCollection();
+        var registrar = new DependencyInjectionTypeRegistrar(services, ServiceLifetime.Transient);
+        var instance = new TestService();
 
-            // assert
-            Assert.AreEqual(1, services.Count());
-            Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
-            Assert.IsFalse(services.Any(x => x.ImplementationType == typeof(TestService)));
-            Assert.IsTrue(services.Any(x => x.ImplementationInstance == instance));
-        }
+        // act
+        registrar.RegisterInstance(typeof(ITestService), instance);
 
-        [TestMethod]
-        public void RegisterInstance_AsTransient_StillRegistersAsSingleton()
-        {
-            // arrange
-            var services = new ServiceCollection();
-            var registrar = new DependencyInjectionTypeRegistrar(services, ServiceLifetime.Transient);
-            var instance = new TestService();
+        // assert
+        Assert.AreEqual(1, services.Count());
+        Assert.IsTrue(services.Any(x => x.Lifetime == ServiceLifetime.Singleton));
+        Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
+        Assert.IsFalse(services.Any(x => x.ImplementationType == typeof(TestService)));
+        Assert.IsTrue(services.Any(x => x.ImplementationInstance == instance));
+    }
 
-            // act
-            registrar.RegisterInstance(typeof(ITestService), instance);
+    [TestMethod]
+    public void RegisterLazy()
+    {
+        // arrange
+        var services = new ServiceCollection();
+        var registrar = new DependencyInjectionTypeRegistrar(services);
 
-            // assert
-            Assert.AreEqual(1, services.Count());
-            Assert.IsTrue(services.Any(x => x.Lifetime == ServiceLifetime.Singleton));
-            Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
-            Assert.IsFalse(services.Any(x => x.ImplementationType == typeof(TestService)));
-            Assert.IsTrue(services.Any(x => x.ImplementationInstance == instance));
-        }
+        // act
+        registrar.RegisterLazy(typeof(ITestService), FactoryMethod);
 
-        [TestMethod]
-        public void RegisterLazy()
-        {
-            // arrange
-            var services = new ServiceCollection();
-            var registrar = new DependencyInjectionTypeRegistrar(services);
+        // assert
+        Assert.AreEqual(1, services.Count());
+        Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
+        Assert.IsFalse(services.Any(x => x.ImplementationType == typeof(TestService)));
+        Assert.IsNotNull(services.First().ImplementationFactory);
+    }
 
-            // act
-            registrar.RegisterLazy(typeof(ITestService), FactoryMethod);
+    [TestMethod]
+    public void Build()
+    {
+        // arrange
+        var services = new ServiceCollection();
+        var registrar = new DependencyInjectionTypeRegistrar(services);
 
-            // assert
-            Assert.AreEqual(1, services.Count());
-            Assert.IsTrue(services.Any(x => x.ServiceType == typeof(ITestService)));
-            Assert.IsFalse(services.Any(x => x.ImplementationType == typeof(TestService)));
-            Assert.IsNotNull(services.First().ImplementationFactory);
-        }
+        registrar.Register(typeof(ITestService), typeof(TestService));
 
-        [TestMethod]
-        public void Build()
-        {
-            // arrange
-            var services = new ServiceCollection();
-            var registrar = new DependencyInjectionTypeRegistrar(services);
+        // act
+        var resolver = registrar.Build();
 
-            registrar.Register(typeof(ITestService), typeof(TestService));
+        // assert
+        Assert.IsNotNull(resolver);
+    }
 
-            // act
-            var resolver = registrar.Build();
+    [ExcludeFromCodeCoverage]
+    private TestService FactoryMethod() => new TestService();
 
-            // assert
-            Assert.IsNotNull(resolver);
-        }
+    [TestMethod]
+    public void RegisterLazy_WithNullFactory()
+    {
+        // arrange
+        var services = new ServiceCollection();
+        var registrar = new DependencyInjectionTypeRegistrar(services);
 
-        [ExcludeFromCodeCoverage]
-        private TestService FactoryMethod() => new TestService();
-
-        [TestMethod]
-        public void RegisterLazy_WithNullFactory()
-        {
-            // arrange
-            var services = new ServiceCollection();
-            var registrar = new DependencyInjectionTypeRegistrar(services);
-
-            // act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () =>
-                registrar.RegisterLazy(typeof(ITestService), null));
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-        }
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () =>
+            registrar.RegisterLazy(typeof(ITestService), null));
     }
 }
