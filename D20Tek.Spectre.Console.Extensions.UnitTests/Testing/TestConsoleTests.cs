@@ -6,104 +6,103 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Spectre.Console;
 
-namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
+namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing;
+
+[TestClass]
+public class TestConsoleTests
 {
-    [TestClass]
-    public class TestConsoleTests
+    [TestMethod]
+    public void Create()
     {
-        [TestMethod]
-        public void Create()
-        {
-            // arranage
+        // arranage
 
-            // act
-            using var c = new TestConsole();
+        // act
+        using var c = new TestConsole();
 
-            // assert
-            Assert.IsNotNull(c);
-            Assert.IsNotNull(c.Profile);
-            Assert.IsNotNull(c.ExclusivityMode);
-            Assert.IsNotNull(c.Input);
-            Assert.IsInstanceOfType(c.Input, typeof(TestConsoleInput));
-            Assert.IsNotNull(c.Pipeline);
-            Assert.IsNotNull(c.Cursor);
-            Assert.IsNotNull(c.TestInput);
-            Assert.AreEqual(string.Empty, c.Output);
-            Assert.IsNotNull(c.Lines);
-            Assert.IsFalse(c.EmitAnsiSequences);
-        }
+        // assert
+        Assert.IsNotNull(c);
+        Assert.IsNotNull(c.Profile);
+        Assert.IsNotNull(c.ExclusivityMode);
+        Assert.IsNotNull(c.Input);
+        Assert.IsInstanceOfType<TestConsoleInput>(c.Input);
+        Assert.IsNotNull(c.Pipeline);
+        Assert.IsNotNull(c.Cursor);
+        Assert.IsNotNull(c.TestInput);
+        Assert.AreEqual(string.Empty, c.Output);
+        Assert.IsNotNull(c.Lines);
+        Assert.IsFalse(c.EmitAnsiSequences);
+    }
 
-        [TestMethod]
-        public void Write()
-        {
-            // arranage
-            using var c = new TestConsole();
+    [TestMethod]
+    public void Write()
+    {
+        // arranage
+        using var c = new TestConsole();
 
-            // act
-            c.WriteLine("Test line 1");
-            c.WriteLine("Test line 2");
+        // act
+        c.WriteLine("Test line 1");
+        c.WriteLine("Test line 2");
 
-            // assert
-            Assert.AreEqual("Test line 1\nTest line 2\n", c.Output);
-            Assert.IsNotNull(c.Lines);
-            Assert.HasCount(2, c.Lines);
-        }
+        // assert
+        Assert.AreEqual("Test line 1\nTest line 2\n", c.Output);
+        Assert.IsNotNull(c.Lines);
+        Assert.HasCount(2, c.Lines);
+    }
 
-        [TestMethod]
-        public void Clear()
-        {
-            // arranage
-            using var c = new TestConsole();
-            c.WriteLine("test");
+    [TestMethod]
+    public void Clear()
+    {
+        // arranage
+        using var c = new TestConsole();
+        c.WriteLine("test");
 
-            // act
-            c.Clear();
+        // act
+        c.Clear();
 
-            // assert
-            Assert.IsNotNull(c.Output);
-            Assert.IsNotNull(c.Lines);
-        }
+        // assert
+        Assert.IsNotNull(c.Output);
+        Assert.IsNotNull(c.Lines);
+    }
 
-        [TestMethod]
-        public void Write_WithEmitAnsi()
-        {
-            // arranage
-            using var c = new TestConsole();
-            c.EmitAnsiSequences = true;
+    [TestMethod]
+    public void Write_WithEmitAnsi()
+    {
+        // arranage
+        using var c = new TestConsole();
+        c.EmitAnsiSequences = true;
 
-            // act
-            c.WriteLine("test");
+        // act
+        c.WriteLine("test");
 
-            // assert
-            StringAssert.Contains(c.Output, "test");
-        }
+        // assert
+        Assert.Contains("test", c.Output);
+    }
 
-        [TestMethod]
-        public void Write_WithControlCodes()
-        {
-            // arranage
-            using var c = new TestConsole();
+    [TestMethod]
+    public void Write_WithControlCodes()
+    {
+        // arranage
+        using var c = new TestConsole();
 
-            // act
-            c.WriteLine("test\n\u001b[2J\u001b[3J\u001b[1;1H");
+        // act
+        c.WriteLine("test\n\u001b[2J\u001b[3J\u001b[1;1H");
 
-            // assert
-            StringAssert.Contains(c.Output, "test");
-        }
+        // assert
+        Assert.Contains("test", c.Output);
+    }
 
-        [TestMethod]
-        public void SetCursor()
-        {
-            // arranage
-            var testCursor = new Mock<IAnsiConsoleCursor>().Object;
-            using var c = new TestConsole();
-            c.WriteLine("test");
+    [TestMethod]
+    public void SetCursor()
+    {
+        // arranage
+        var testCursor = new Mock<IAnsiConsoleCursor>().Object;
+        using var c = new TestConsole();
+        c.WriteLine("test");
 
-            // act
-            c.SetCursor(testCursor);
+        // act
+        c.SetCursor(testCursor);
 
-            // assert
-            Assert.AreEqual(testCursor, c.Cursor);
-        }
+        // assert
+        Assert.AreEqual(testCursor, c.Cursor);
     }
 }

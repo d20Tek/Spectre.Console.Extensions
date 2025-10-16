@@ -9,204 +9,203 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
+namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing;
+
+[TestClass]
+public class CommandAppTestContextTests
 {
-    [TestClass]
-    public class CommandAppTestContextTests
+    [TestMethod]
+    public void Run()
     {
-        [TestMethod]
-        public void Run()
+        // arrange
+        var context = new CommandAppTestContext();
+        context.Configure(config =>
         {
-            // arrange
-            var context = new CommandAppTestContext();
-            context.Configure(config =>
-            {
-                config.Settings.ApplicationName = "Run Test 1";
-                config.AddCommand<MockCommand>("test");
-            });
+            config.Settings.ApplicationName = "Run Test 1";
+            config.AddCommand<MockCommand>("test");
+        });
 
-            // act
-            var result = context.Run(["test"]);
+        // act
+        var result = context.Run(["test"]);
 
-            // assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.ExitCode);
-            StringAssert.Contains(result.Output, "Success");
-            Assert.AreEqual("test", result.Context.Name);
-            Assert.IsInstanceOfType(result.Settings, typeof(EmptyCommandSettings));
-        }
+        // assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(0, result.ExitCode);
+        Assert.Contains("Success", result.Output);
+        Assert.AreEqual("test", result.Context.Name);
+        Assert.IsInstanceOfType(result.Settings, typeof(EmptyCommandSettings));
+    }
 
-        [TestMethod]
-        public void Run_WithNoConfigAction()
+    [TestMethod]
+    public void Run_WithNoConfigAction()
+    {
+        // arrange
+        var context = new CommandAppTestContext();
+
+        // act
+        var result = context.Run(["test"]);
+
+        // assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(-1, result.ExitCode);
+    }
+
+    [TestMethod]
+    [ExcludeFromCodeCoverage]
+    public void Run_WithMultipleConfigActions()
+    {
+        // arrange
+        var context = new CommandAppTestContext();
+        context.Configure([ExcludeFromCodeCoverage] (config) =>
         {
-            // arrange
-            var context = new CommandAppTestContext();
+            config.Settings.ApplicationName = "Run Test 2";
+            config.AddCommand<MockCommand>("test");
+        });
 
-            // act
-            var result = context.Run(["test"]);
+        // act
+        Assert.ThrowsExactly<InvalidOperationException>([ExcludeFromCodeCoverage] () =>
+            context.Configure([ExcludeFromCodeCoverage] (config) => config.AddCommand<MockCommand>("test-2")));
+    }
 
-            // assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(-1, result.ExitCode);
-        }
-
-        [TestMethod]
-        [ExcludeFromCodeCoverage]
-        public void Run_WithMultipleConfigActions()
+    [TestMethod]
+    public void RunWithException()
+    {
+        // arrange
+        var context = new CommandAppTestContext();
+        context.Configure(config =>
         {
-            // arrange
-            var context = new CommandAppTestContext();
-            context.Configure([ExcludeFromCodeCoverage] (config) =>
-            {
-                config.Settings.ApplicationName = "Run Test 2";
-                config.AddCommand<MockCommand>("test");
-            });
+            config.Settings.ApplicationName = "Run Test 3";
+            config.AddCommand<MockCommandWithException>("fail");
+        });
 
-            // act
-            Assert.ThrowsExactly<InvalidOperationException>([ExcludeFromCodeCoverage] () =>
-                context.Configure([ExcludeFromCodeCoverage] (config) => config.AddCommand<MockCommand>("test-2")));
-        }
+        // act
+        var result = context.RunWithException<ArgumentOutOfRangeException>(["fail"]);
 
-        [TestMethod]
-        public void RunWithException()
+        // assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(-1, result.ExitCode);
+        Assert.Contains("out of the range", result.Output);
+    }
+
+    [TestMethod]
+    public void RunWithException_NoException()
+    {
+        // arrange
+        var context = new CommandAppTestContext();
+        context.Configure(config =>
         {
-            // arrange
-            var context = new CommandAppTestContext();
-            context.Configure(config =>
-            {
-                config.Settings.ApplicationName = "Run Test 3";
-                config.AddCommand<MockCommandWithException>("fail");
-            });
+            config.Settings.ApplicationName = "Run Test 4";
+            config.AddCommand<MockCommand>("succeeds");
+        });
 
-            // act
-            var result = context.RunWithException<ArgumentOutOfRangeException>(["fail"]);
+        // act
+        Assert.ThrowsExactly<InvalidOperationException>([ExcludeFromCodeCoverage] () =>
+            context.RunWithException<ArgumentOutOfRangeException>(["succeeds"]));
+    }
 
-            // assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(-1, result.ExitCode);
-            StringAssert.Contains(result.Output, "out of the range");
-        }
-
-        [TestMethod]
-        public void RunWithException_NoException()
+    [TestMethod]
+    public void RunWithException_UnexpectedException()
+    {
+        // arrange
+        var context = new CommandAppTestContext();
+        context.Configure(config =>
         {
-            // arrange
-            var context = new CommandAppTestContext();
-            context.Configure(config =>
-            {
-                config.Settings.ApplicationName = "Run Test 4";
-                config.AddCommand<MockCommand>("succeeds");
-            });
+            config.Settings.ApplicationName = "Run Test 5";
+            config.AddCommand<MockCommandWithException>("fail");
+        });
 
-            // act
-            Assert.ThrowsExactly<InvalidOperationException>([ExcludeFromCodeCoverage] () =>
-                context.RunWithException<ArgumentOutOfRangeException>(["succeeds"]));
-        }
+        // act
+        Assert.ThrowsExactly<InvalidOperationException>([ExcludeFromCodeCoverage] () =>
+            context.RunWithException<InvalidOperationException>(["fail"]));
+    }
 
-        [TestMethod]
-        public void RunWithException_UnexpectedException()
+    [TestMethod]
+    public async Task RunAsync()
+    {
+        // arrange
+        var context = new CommandAppTestContext();
+        context.Configure(config =>
         {
-            // arrange
-            var context = new CommandAppTestContext();
-            context.Configure(config =>
-            {
-                config.Settings.ApplicationName = "Run Test 5";
-                config.AddCommand<MockCommandWithException>("fail");
-            });
+            config.Settings.ApplicationName = "Run Test 1";
+            config.AddCommand<MockAsyncCommand>("test");
+        });
 
-            // act
-            Assert.ThrowsExactly<InvalidOperationException>([ExcludeFromCodeCoverage] () =>
-                context.RunWithException<InvalidOperationException>(["fail"]));
-        }
+        // act
+        var result = await context.RunAsync(["test"]);
 
-        [TestMethod]
-        public async Task RunAsync()
+        // assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(0, result.ExitCode);
+        Assert.Contains("Success", result.Output);
+        Assert.AreEqual("test", result.Context.Name);
+        Assert.IsInstanceOfType(result.Settings, typeof(EmptyCommandSettings));
+    }
+
+    [TestMethod]
+    public async Task RunAsync_WithNoConfigAction()
+    {
+        // arrange
+        var context = new CommandAppTestContext();
+
+        // act
+        var result = await context.RunAsync(["test"]);
+
+        // assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(-1, result.ExitCode);
+    }
+
+    [TestMethod]
+    public async Task RunWithExceptionAsync()
+    {
+        // arrange
+        var context = new CommandAppTestContext();
+        context.Configure(config =>
         {
-            // arrange
-            var context = new CommandAppTestContext();
-            context.Configure(config =>
-            {
-                config.Settings.ApplicationName = "Run Test 1";
-                config.AddCommand<MockAsyncCommand>("test");
-            });
+            config.Settings.ApplicationName = "Run Test 3";
+            config.AddCommand<MockAsyncCommandWithException>("fail");
+        });
 
-            // act
-            var result = await context.RunAsync(["test"]);
+        // act
+        var result = await context.RunWithExceptionAsync<ArgumentOutOfRangeException>(["fail"]);
 
-            // assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.ExitCode);
-            StringAssert.Contains(result.Output, "Success");
-            Assert.AreEqual("test", result.Context.Name);
-            Assert.IsInstanceOfType(result.Settings, typeof(EmptyCommandSettings));
-        }
+        // assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(-1, result.ExitCode);
+        Assert.Contains("out of the range", result.Output);
+    }
 
-        [TestMethod]
-        public async Task RunAsync_WithNoConfigAction()
+    [TestMethod]
+    [ExcludeFromCodeCoverage]
+    public async Task RunWithExceptionAsync_NoException()
+    {
+        // arrange
+        var context = new CommandAppTestContext();
+        context.Configure(config =>
         {
-            // arrange
-            var context = new CommandAppTestContext();
+            config.Settings.ApplicationName = "Run Test 4";
+            config.AddCommand<MockAsyncCommand>("succeeds");
+        });
 
-            // act
-            var result = await context.RunAsync(["test"]);
+        // act
+        await Assert.ThrowsExactlyAsync<InvalidOperationException>(() =>
+            context.RunWithExceptionAsync<ArgumentOutOfRangeException>(["succeeds"]));
+    }
 
-            // assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(-1, result.ExitCode);
-        }
-
-        [TestMethod]
-        public async Task RunWithExceptionAsync()
+    [TestMethod]
+    [ExcludeFromCodeCoverage]
+    public async Task RunWithExceptionAsync_UnexpectedException()
+    {
+        // arrange
+        var context = new CommandAppTestContext();
+        context.Configure(config =>
         {
-            // arrange
-            var context = new CommandAppTestContext();
-            context.Configure(config =>
-            {
-                config.Settings.ApplicationName = "Run Test 3";
-                config.AddCommand<MockAsyncCommandWithException>("fail");
-            });
+            config.Settings.ApplicationName = "Run Test 5";
+            config.AddCommand<MockAsyncCommandWithException>("fail");
+        });
 
-            // act
-            var result = await context.RunWithExceptionAsync<ArgumentOutOfRangeException>(["fail"]);
-
-            // assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(-1, result.ExitCode);
-            StringAssert.Contains(result.Output, "out of the range");
-        }
-
-        [TestMethod]
-        [ExcludeFromCodeCoverage]
-        public async Task RunWithExceptionAsync_NoException()
-        {
-            // arrange
-            var context = new CommandAppTestContext();
-            context.Configure(config =>
-            {
-                config.Settings.ApplicationName = "Run Test 4";
-                config.AddCommand<MockAsyncCommand>("succeeds");
-            });
-
-            // act
-            await Assert.ThrowsExactlyAsync<InvalidOperationException>(() =>
-                context.RunWithExceptionAsync<ArgumentOutOfRangeException>(["succeeds"]));
-        }
-
-        [TestMethod]
-        [ExcludeFromCodeCoverage]
-        public async Task RunWithExceptionAsync_UnexpectedException()
-        {
-            // arrange
-            var context = new CommandAppTestContext();
-            context.Configure(config =>
-            {
-                config.Settings.ApplicationName = "Run Test 5";
-                config.AddCommand<MockAsyncCommandWithException>("fail");
-            });
-
-            // act
-            await Assert.ThrowsExactlyAsync<InvalidOperationException>(() =>
-                context.RunWithExceptionAsync<InvalidOperationException>(["fail"]));
-        }
+        // act
+        await Assert.ThrowsExactlyAsync<InvalidOperationException>(() =>
+            context.RunWithExceptionAsync<InvalidOperationException>(["fail"]));
     }
 }

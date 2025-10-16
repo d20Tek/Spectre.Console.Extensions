@@ -8,68 +8,67 @@ using Spectre.Console.Cli;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
+namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing;
+
+[TestClass]
+public class TestCommandInterceptorTests
 {
-    [TestClass]
-    public class TestCommandInterceptorTests
+    private readonly CommandContext _context;
+    private readonly CommandSettings _settings;
+
+    public TestCommandInterceptorTests()
     {
-        private readonly CommandContext _context;
-        private readonly CommandSettings _settings;
+        var remaining = new Mock<IRemainingArguments>().Object;
+        _context = new CommandContext([], remaining, "test", null);
+        _settings = new EmptyCommandSettings();
+    }
 
-        public TestCommandInterceptorTests()
-        {
-            var remaining = new Mock<IRemainingArguments>().Object;
-            _context = new CommandContext([], remaining, "test", null);
-            _settings = new EmptyCommandSettings();
-        }
+    [TestMethod]
+    public void Create()
+    {
+        // arrange
 
-        [TestMethod]
-        public void Create()
-        {
-            // arrange
+        // act
+        var i = new TestCommandInterceptor();
 
-            // act
-            var i = new TestCommandInterceptor();
+        // assert
+        Assert.IsNotNull(i);
+        Assert.IsNull(i.Context);
+        Assert.IsNull(i.Settings);
+    }
 
-            // assert
-            Assert.IsNotNull(i);
-            Assert.IsNull(i.Context);
-            Assert.IsNull(i.Settings);
-        }
+    [TestMethod]
+    public void Intercept()
+    {
+        // arrange
+        var i = new TestCommandInterceptor();
 
-        [TestMethod]
-        public void Intercept()
-        {
-            // arrange
-            var i = new TestCommandInterceptor();
+        // act
+        i.Intercept(_context, _settings);
 
-            // act
-            i.Intercept(_context, _settings);
+        // assert
+        Assert.IsNotNull(i);
+        Assert.AreEqual(_context, i.Context);
+        Assert.AreEqual(_settings, i.Settings);
+    }
 
-            // assert
-            Assert.IsNotNull(i);
-            Assert.AreEqual(_context, i.Context);
-            Assert.AreEqual(_settings, i.Settings);
-        }
+    [TestMethod]
+    public void Intercept_WithNullContext()
+    {
+        // arrange
+        var i = new TestCommandInterceptor();
 
-        [TestMethod]
-        public void Intercept_WithNullContext()
-        {
-            // arrange
-            var i = new TestCommandInterceptor();
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => i.Intercept(null, _settings));
+    }
 
-            // act
-            Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => i.Intercept(null, _settings));
-        }
+    [TestMethod]
+    public void Intercept_WithNullSettings()
+    {
+        // arrange
+        var i = new TestCommandInterceptor();
 
-        [TestMethod]
-        public void Intercept_WithNullSettings()
-        {
-            // arrange
-            var i = new TestCommandInterceptor();
-
-            // act
-            Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => i.Intercept(_context, null));
-        }
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => i.Intercept(_context, null));
     }
 }
