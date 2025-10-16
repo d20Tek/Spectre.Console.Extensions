@@ -3,115 +3,116 @@
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console.Cli;
 
-namespace D20Tek.Spectre.Console.Extensions
+namespace D20Tek.Spectre.Console.Extensions;
+
+/// <summary>
+/// Builder pattern for creating a CommandApp.
+/// </summary>
+public class CommandAppBuilder
 {
+    internal CommandApp? App { get; set; } = null;
+    
+    internal Action? SetDefaultCommand { get; set; }
+
+    internal ITypeRegistrar? Registrar { get; set; }
+
+    internal StartupBase? Startup { get; set; }
+
+    internal Action? SetCustomConfig { get; set; }
+
     /// <summary>
-    /// Builder pattern for creating a CommandApp.
+    /// Sets up the Startup class to use in this builder.
     /// </summary>
-    public class CommandAppBuilder
+    /// <typeparam name="TStartup">Type of the Startup class in this project,
+    /// which must derive from StartupBase.</typeparam>
+    /// <returns>Returns the CommandAppBuilder.</returns>
+    public CommandAppBuilder WithStartup<TStartup>()
+        where TStartup : StartupBase, new()
     {
-        internal CommandApp? App { get; set; } = null;
-        
-        internal Action? SetDefaultCommand { get; set; }
+        // Create the startup class instance from the app project.
+        Startup = new TStartup();
+        return this;
+    }
 
-        internal ITypeRegistrar? Registrar { get; set; }
+    /// <summary>
+    /// Allows extension methods to set different registrars based on configuration.
+    /// </summary>
+    /// <param name="registrar">Registrar to set before building.</param>
+    /// <returns>Returns the CommandAppBuilder.</returns>
+    public CommandAppBuilder SetRegistrar(ITypeRegistrar registrar)
+    {
+        ArgumentNullException.ThrowIfNull(registrar);
+        Registrar = registrar;
+        return this;
+    }
 
-        internal StartupBase? Startup { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TDefault"></typeparam>
+    /// <returns></returns>
+    public CommandAppBuilder WithDefaultCommand<TDefault>()
+        where TDefault : class, ICommand
+    {
+        SetDefaultCommand = () => App!.SetDefaultCommand<TDefault>();
+        return this;
+    }
 
-        internal Action? SetCustomConfig { get; set; }
+    /// <summary>
+    /// Builds the CommandApp encapsulated by this builder. It ensures that the
+    /// application services are configured, the CommandApp is created with the
+    /// type registrar, and the app Commands are configured.
+    /// </summary>
+    /// <returns>Returns the CommandAppBuilder.</returns>
+    public CommandAppBuilder Build()
+    {
+        ArgumentNullException.ThrowIfNull(Startup);
 
-        /// <summary>
-        /// Sets up the Startup class to use in this builder.
-        /// </summary>
-        /// <typeparam name="TStartup">Type of the Startup class in this project,
-        /// which must derive from StartupBase.</typeparam>
-        /// <returns>Returns the CommandAppBuilder.</returns>
-        public CommandAppBuilder WithStartup<TStartup>()
-            where TStartup : StartupBase, new()
+        if (Registrar != null)
         {
-            // Create the startup class instance from the app project.
-            Startup = new TStartup();
-            return this;
+            // Configure all services with this DI framework.
+            Startup.ConfigureServices(Registrar);
         }
 
-        /// <summary>
-        /// Allows extension methods to set different registrars based on configuration.
-        /// </summary>
-        /// <param name="registrar">Registrar to set before building.</param>
-        /// <returns>Returns the CommandAppBuilder.</returns>
-        public CommandAppBuilder SetRegistrar(ITypeRegistrar registrar)
-        {
-            ArgumentNullException.ThrowIfNull(registrar, nameof(registrar));
-            Registrar = registrar;
-            return this;
-        }
+        // Create the CommandApp with the type registrar.
+        App = new CommandApp(Registrar);
+        Registrar?.RegisterInstance(typeof(ICommandApp), App);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TDefault"></typeparam>
-        /// <returns></returns>
-        public CommandAppBuilder WithDefaultCommand<TDefault>()
-            where TDefault : class, ICommand
-        {
-            SetDefaultCommand = () => App!.SetDefaultCommand<TDefault>();
-            return this;
-        }
+        // If a default command was specified, then add it to the CommandApp now.
+        SetDefaultCommand?.Invoke();
 
-        /// <summary>
-        /// Builds the CommandApp encapsulated by this builder. It ensures that the
-        /// application services are configured, the CommandApp is created with the
-        /// type registrar, and the app Commands are configured.
-        /// </summary>
-        /// <returns>Returns the CommandAppBuilder.</returns>
-        public CommandAppBuilder Build()
-        {
-            ArgumentNullException.ThrowIfNull(Startup, nameof(Startup));
+        // Configure any commands in the application.
+        App.Configure(config => Startup.ConfigureCommands(config));
 
-            if (Registrar != null)
-            {
-                // Configure all services with this DI framework.
-                Startup.ConfigureServices(Registrar);
-            }
+        // Configure any custom set configuration if it's available.
+        SetCustomConfig?.Invoke();
 
-            // Create the CommandApp with the type registrar.
-            App = new CommandApp(Registrar);
-            Registrar?.RegisterInstance(typeof(ICommandApp), App);
+        return this;
+    }
 
-            // If a default command was specified, then add it to the CommandApp now.
-            SetDefaultCommand?.Invoke();
+    /// <summary>
+    /// Runs the CommandApp asynchronously.
+    /// </summary>
+    /// <param name="args">Command line arguments run with.</param>
+    /// <returns>Return value from the application.</returns>
+    public async Task<int> RunAsync(string[] args)
+    {
+        ArgumentNullException.ThrowIfNull(App);
+        ArgumentNullException.ThrowIfNull(args);
 
-            // Configure any commands in the application.
-            App.Configure(config => Startup.ConfigureCommands(config));
+        return await App.RunAsync(args);
+    }
 
-            // Configure any custom set configuration if it's available.
-            SetCustomConfig?.Invoke();
+    /// <summary>
+    /// Runs the CommandApp.
+    /// </summary>
+    /// <param name="args">Command line arguments run with.</param>
+    /// <returns>Return value from the application.</returns>
+    public int Run(string[] args)
+    {
+        ArgumentNullException.ThrowIfNull(App);
+        ArgumentNullException.ThrowIfNull(args);
 
-            return this;
-        }
-
-        /// <summary>
-        /// Runs the CommandApp asynchronously.
-        /// </summary>
-        /// <param name="args">Command line arguments run with.</param>
-        /// <returns>Return value from the application.</returns>
-        public async Task<int> RunAsync(string[] args)
-        {
-            _ = App ?? throw new ArgumentNullException(
-                nameof(App), "Build was not called prior to calling RunAsync.");
-            return await App.RunAsync(args);
-        }
-
-        /// <summary>
-        /// Runs the CommandApp.
-        /// </summary>
-        /// <param name="args">Command line arguments run with.</param>
-        /// <returns>Return value from the application.</returns>
-        public int Run(string[] args)
-        {
-            _ = App ?? throw new ArgumentNullException(
-                nameof(App), "Build was not called prior to calling Run.");
-            return App.Run(args);
-        }
+        return App.Run(args);
     }
 }

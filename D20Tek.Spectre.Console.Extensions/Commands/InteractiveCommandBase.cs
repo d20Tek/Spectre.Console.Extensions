@@ -21,6 +21,9 @@ public abstract class InteractiveCommandBase : AsyncCommand
     /// <param name="console">Console to write into.</param>
     public InteractiveCommandBase(ICommandApp app, IAnsiConsole console)
     {
+        ArgumentNullException.ThrowIfNull(app);
+        ArgumentNullException.ThrowIfNull(console);
+
         _commandApp = app;
         _console = console;
     }
