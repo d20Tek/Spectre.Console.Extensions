@@ -7,34 +7,31 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace D20Tek.Spectre.Console.Extensions.UnitTests
+namespace D20Tek.Spectre.Console.Extensions.UnitTests;
+
+[TestClass]
+[ExcludeFromCodeCoverage]
+public class CommandAppBuilderExceptionTests
 {
-    [TestClass]
-    [ExcludeFromCodeCoverage]
-    public class CommandAppBuilderExceptionTests
+    [TestMethod]
+    public void Run_WithoutBuildFirst()
     {
-        [TestMethod]
-        public void Run_WithoutBuildFirst()
-        {
-            // arrange
-            var builder = new CommandAppBuilder()
-                              .WithStartup<MockStartup>()
-                              .WithDefaultCommand<MockCommand>();
+        // arrange
+        var builder = new CommandAppBuilder().WithStartup<MockStartup>()
+                                             .WithDefaultCommand<MockCommand>();
 
-            // act
-            Assert.ThrowsExactly<ArgumentNullException>(() => builder.Run(Array.Empty<string>()));
-        }
+        // act - assert
+        Assert.ThrowsExactly<ArgumentNullException>(() => builder.Run([]));
+    }
 
-        [TestMethod]
-        public async Task RunAsync_WithoutBuildFirst()
-        {
-            // arrange
-            var builder = new CommandAppBuilder()
-                              .WithStartup<MockStartup>()
-                              .WithDefaultCommand<MockCommand>();
+    [TestMethod]
+    public async Task RunAsync_WithoutBuildFirst()
+    {
+        // arrange
+        var builder = new CommandAppBuilder().WithStartup<MockStartup>()
+                                             .WithDefaultCommand<MockCommand>();
 
-            // act
-            await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => builder.RunAsync(Array.Empty<string>()));
-        }
+        // act
+        await Assert.ThrowsExactlyAsync<ArgumentNullException>(() => builder.RunAsync([]));
     }
 }

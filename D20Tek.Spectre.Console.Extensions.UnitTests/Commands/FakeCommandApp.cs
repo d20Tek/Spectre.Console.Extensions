@@ -7,14 +7,9 @@ using System.Threading.Tasks;
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Commands;
 
 [ExcludeFromCodeCoverage]
-internal class FakeCommandApp : ICommandApp
+internal class FakeCommandApp(int expectedResult = 0) : ICommandApp
 {
-    private readonly int _expectedResult;
-
-    public FakeCommandApp(int expectedResult = 0)
-    {
-        _expectedResult = expectedResult;
-    }
+    private readonly int _expectedResult = expectedResult;
 
     public void Configure(Action<IConfigurator> configuration) => throw new NotImplementedException();
 

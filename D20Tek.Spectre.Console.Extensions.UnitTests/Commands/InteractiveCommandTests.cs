@@ -26,9 +26,9 @@ public class InteractiveCommandTests
 
         // assert
         Assert.AreEqual(0, result);
-        StringAssert.StartsWith(console.Output, "Test Starting...");
-        StringAssert.EndsWith(console.Output, "Test Ending...\n");
-        StringAssert.Contains(console.Output, "test>");
+        Assert.StartsWith("Test Starting...", console.Output);
+        Assert.EndsWith("Test Ending...\n", console.Output);
+        Assert.Contains("test>", console.Output);
     }
 
     [TestMethod]

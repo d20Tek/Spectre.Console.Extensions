@@ -11,26 +11,28 @@ public class CliParserTests
     public void SplitCommandLine_WithSimpleInput_ReturnsArgsList()
     {
         // arrange
+        string[] expected = ["foo", "bar", "baz"];
 
         // act
         var args = CliParser.SplitCommandLine("foo bar baz").ToArray();
 
         // assert
         Assert.IsNotNull(args);
-        CollectionAssert.AreEqual(new[] { "foo", "bar", "baz" }, args);
+        CollectionAssert.AreEqual(expected, args);
     }
 
     [TestMethod]
     public void SplitCommandLine_WithMultipleArgs_ReturnsArgsList()
     {
         // arrange
+        string[] expected = ["command", "--foo", "bar", "-x", "-y", "not"];
 
         // act
         var args = CliParser.SplitCommandLine("command --foo bar -x -y \"not\"").ToArray();
 
         // assert
         Assert.IsNotNull(args);
-        CollectionAssert.AreEqual(new[] { "command", "--foo", "bar", "-x", "-y", "not" }, args);
+        CollectionAssert.AreEqual(expected, args);
     }
 
     [TestMethod]
@@ -38,12 +40,13 @@ public class CliParserTests
     {
         // arrange
         var input = "foo \"bar baz\"";
+        string[] expected = ["foo", "bar baz"];
 
         // act
         var result = CliParser.SplitCommandLine(input).ToArray();
 
         // assert
-        CollectionAssert.AreEqual(new[] { "foo", "bar baz" }, result);
+        CollectionAssert.AreEqual(expected, result);
     }
 
     [TestMethod]
@@ -51,12 +54,13 @@ public class CliParserTests
     {
         // arrange
         var input = "\"foo bar\" \"baz qux\"";
+        string[] expected = ["foo bar", "baz qux"];
 
         // act
         var result = CliParser.SplitCommandLine(input).ToArray();
 
         // assert
-        CollectionAssert.AreEqual(new[] { "foo bar", "baz qux" }, result);
+        CollectionAssert.AreEqual(expected, result);
     }
 
     [TestMethod]
@@ -65,7 +69,7 @@ public class CliParserTests
         // arrange
 
         // act
-        var result = CliParser.SplitCommandLine("").ToArray();
+        var result = CliParser.SplitCommandLine(string.Empty).ToArray();
 
         // assert.
         Assert.IsEmpty(result);
@@ -89,12 +93,13 @@ public class CliParserTests
     {
         // arrange
         var input = "cmd \"unterminated value";
+        string[] expected = ["cmd"];
 
         // act
         var result = CliParser.SplitCommandLine(input).ToArray();
 
         // assert
-        CollectionAssert.AreEqual(new[] { "cmd" }, result);
+        CollectionAssert.AreEqual(expected, result);
     }
 
     [TestMethod]
@@ -102,12 +107,13 @@ public class CliParserTests
     {
         // arrange
         var input = "one   two    \"three   four\"";
+        string[] expected = ["one", "two", "three   four"];
 
         // act
         var result = CliParser.SplitCommandLine(input).ToArray();
 
         // assert
-        CollectionAssert.AreEqual(new[] { "one", "two", "three   four" }, result);
+        CollectionAssert.AreEqual(expected, result);
     }
 
     [TestMethod]
@@ -115,12 +121,13 @@ public class CliParserTests
     {
         // arrange
         var input = "do something \"quoted arg\" again";
+        string[] expected = ["do", "something", "quoted arg", "again"];
 
         // act
         var result = CliParser.SplitCommandLine(input).ToArray();
 
         // assert
-        CollectionAssert.AreEqual(new[] { "do", "something", "quoted arg", "again" }, result);
+        CollectionAssert.AreEqual(expected, result);
     }
 
     [TestMethod]
@@ -128,11 +135,12 @@ public class CliParserTests
     {
         // arrange
         var input = "arg\"middle\"end";
+        string[] expected = ["argmiddleend"];
 
         // act
         var result = CliParser.SplitCommandLine(input).ToArray();
 
         // assert
-        CollectionAssert.AreEqual(new[] { "argmiddleend" }, result);
+        CollectionAssert.AreEqual(expected, result);
     }
 }

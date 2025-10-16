@@ -4,12 +4,8 @@ using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Commands;
 
-internal class TestInteractivePrompt : InteractiveCommandBase
+internal class TestInteractivePrompt(ICommandApp app, IAnsiConsole console) : InteractiveCommandBase(app, console)
 {
-    public TestInteractivePrompt(ICommandApp app, IAnsiConsole console) : base(app, console)
-    {
-    }
-
     protected override void ShowWelcomeMessage(IAnsiConsole console) => console.WriteLine("Test Starting...");
 
     protected override string GetAppPromptPrefix()
