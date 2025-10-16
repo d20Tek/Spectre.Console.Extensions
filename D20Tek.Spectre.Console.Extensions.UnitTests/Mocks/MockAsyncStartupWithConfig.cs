@@ -3,27 +3,26 @@
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console.Cli;
 
-namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks
+namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
+
+internal class MockAsyncStartupWithConfig : StartupBase
 {
-    internal class MockAsyncStartupWithConfig : StartupBase
+    public override void ConfigureServices(ITypeRegistrar registrar)
     {
-        public override void ConfigureServices(ITypeRegistrar registrar)
-        {
-            registrar.Register(typeof(IMockService), typeof(MockService));
-        }
+        registrar.Register(typeof(IMockService), typeof(MockService));
+    }
 
-        public override IConfigurator ConfigureCommands(IConfigurator config)
-        {
-            config.CaseSensitivity(CaseSensitivity.None);
-            config.SetApplicationName("mock-command");
-            config.ValidateExamples();
+    public override IConfigurator ConfigureCommands(IConfigurator config)
+    {
+        config.CaseSensitivity(CaseSensitivity.None);
+        config.SetApplicationName("mock-command");
+        config.ValidateExamples();
 
-            config.AddCommand<MockAsyncCommand>("mock")
-                .WithAlias("moc")
-                .WithDescription("Default command for mock tests.")
-                .WithExample(new[] { "mock" });
+        config.AddCommand<MockAsyncCommand>("mock")
+              .WithAlias("moc")
+              .WithDescription("Default command for mock tests.")
+              .WithExample(["mock"]);
 
-            return config;
-        }
+        return config;
     }
 }

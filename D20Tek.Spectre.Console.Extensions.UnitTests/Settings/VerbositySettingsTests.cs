@@ -4,35 +4,34 @@
 using D20Tek.Spectre.Console.Extensions.Settings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace D20Tek.Spectre.Console.Extensions.UnitTests.Settings
+namespace D20Tek.Spectre.Console.Extensions.UnitTests.Settings;
+
+[TestClass]
+public class VerbositySettingsTests
 {
-    [TestClass]
-    public class VerbositySettingsTests
+    [TestMethod]
+    public void CreateDefault()
     {
-        [TestMethod]
-        public void CreateDefault()
-        {
-            // arrange
+        // arrange
 
-            // act
-            var settings = new VerbositySettings();
+        // act
+        var settings = new VerbositySettings();
 
-            // assert
-            Assert.IsNotNull(settings);
-            Assert.AreEqual(VerbosityLevel.Normal, settings.Verbosity);
-        }
+        // assert
+        Assert.IsNotNull(settings);
+        Assert.AreEqual(VerbosityLevel.Normal, settings.Verbosity);
+    }
 
-        [TestMethod]
-        public void CreateMinimal()
-        {
-            // arrange
+    [TestMethod]
+    public void CreateMinimal()
+    {
+        // arrange
 
-            // act
-            var settings = new VerbositySettings { Verbosity = VerbosityLevel.Minimal };
+        // act
+        var settings = new VerbositySettings { Verbosity = VerbosityLevel.Minimal };
 
-            // assert
-            Assert.IsNotNull(settings);
-            Assert.AreEqual(VerbosityLevel.Minimal, settings.Verbosity);
-        }
+        // assert
+        Assert.IsNotNull(settings);
+        Assert.AreEqual(VerbosityLevel.Minimal, settings.Verbosity);
     }
 }

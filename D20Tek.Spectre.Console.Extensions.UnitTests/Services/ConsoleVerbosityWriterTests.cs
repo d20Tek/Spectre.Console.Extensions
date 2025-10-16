@@ -8,108 +8,107 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace D20Tek.Spectre.Console.Extensions.UnitTests.Services
+namespace D20Tek.Spectre.Console.Extensions.UnitTests.Services;
+
+[TestClass]
+public class ConsoleVerbosityWriterTests
 {
-    [TestClass]
-    public class ConsoleVerbosityWriterTests
+    [TestMethod]
+    public void CreateDefault()
     {
-        [TestMethod]
-        public void CreateDefault()
+        // arrange
+        var console = new TestConsole();
+
+        // act
+        var writer = new ConsoleVerbosityWriter(console);
+
+        // assert
+        Assert.IsNotNull(writer);
+        Assert.AreEqual(VerbosityLevel.Normal, writer.Verbosity);
+        Assert.AreEqual(string.Empty, console.Output);
+    }
+
+    [TestMethod]
+    public void MarkupDetailed_VerbosityOff()
+    {
+        // arrange
+        var console = new TestConsole();
+        var writer = new ConsoleVerbosityWriter(console)
         {
-            // arrange
-            var console = new TestConsole();
+            Verbosity = VerbosityLevel.N
+        };
 
-            // act
-            var writer = new ConsoleVerbosityWriter(console);
+        // act
+        writer.MarkupNormal("normal");
+        writer.MarkupDetailed("testing");
 
-            // assert
-            Assert.IsNotNull(writer);
-            Assert.AreEqual(VerbosityLevel.Normal, writer.Verbosity);
-            Assert.AreEqual(string.Empty, console.Output);
-        }
+        // assert
+        Assert.Contains("normal", console.Output);
+        Assert.DoesNotContain("testing", console.Output);
+    }
 
-        [TestMethod]
-        public void MarkupDetailed_VerbosityOff()
+    [TestMethod]
+    public void MarkupDiagnostic_VerbosityOn()
+    {
+        // arrange
+        var console = new TestConsole();
+        var writer = new ConsoleVerbosityWriter(console)
         {
-            // arrange
-            var console = new TestConsole();
-            var writer = new ConsoleVerbosityWriter(console)
-            {
-                Verbosity = VerbosityLevel.N
-            };
+            Verbosity = VerbosityLevel.Diag
+        };
 
-            // act
-            writer.MarkupNormal("normal");
-            writer.MarkupDetailed("testing");
+        // act
+        writer.MarkupSummary("minimal");
+        writer.MarkupDiagnostics("testing");
 
-            // assert
-            Assert.Contains("normal", console.Output);
-            Assert.DoesNotContain("testing", console.Output);
-        }
+        // assert
+        Assert.Contains("minimal", console.Output);
+        Assert.Contains("testing", console.Output);
+    }
 
-        [TestMethod]
-        public void MarkupDiagnostic_VerbosityOn()
+    [TestMethod]
+    public void WriteDetailed_VerbosityOff()
+    {
+        // arrange
+        var console = new TestConsole();
+        var writer = new ConsoleVerbosityWriter(console);
+
+        // act
+        writer.WriteNormal("normal");
+        writer.WriteDetailed("testing");
+
+        // assert
+        Assert.Contains("normal", console.Output);
+        Assert.DoesNotContain("testing", console.Output);
+    }
+
+
+    [TestMethod]
+    public void WriteDiagnostic_VerbosityOn()
+    {
+        // arrange
+        var console = new TestConsole();
+        var writer = new ConsoleVerbosityWriter(console)
         {
-            // arrange
-            var console = new TestConsole();
-            var writer = new ConsoleVerbosityWriter(console)
-            {
-                Verbosity = VerbosityLevel.Diag
-            };
+            Verbosity = VerbosityLevel.Diagnostic
+        };
 
-            // act
-            writer.MarkupSummary("minimal");
-            writer.MarkupDiagnostics("testing");
+        // act
+        writer.WriteSummary("minimal");
+        writer.WriteDiagnostics("testing");
 
-            // assert
-            Assert.Contains("minimal", console.Output);
-            Assert.Contains("testing", console.Output);
-        }
+        // assert
+        Assert.Contains("minimal", console.Output);
+        Assert.Contains("testing", console.Output);
+    }
 
-        [TestMethod]
-        public void WriteDetailed_VerbosityOff()
-        {
-            // arrange
-            var console = new TestConsole();
-            var writer = new ConsoleVerbosityWriter(console);
+    [TestMethod]
+    [ExcludeFromCodeCoverage]
+    public void Create_WithNullConsole()
+    {
+        // arrange
 
-            // act
-            writer.WriteNormal("normal");
-            writer.WriteDetailed("testing");
-
-            // assert
-            Assert.Contains("normal", console.Output);
-            Assert.DoesNotContain("testing", console.Output);
-        }
-
-
-        [TestMethod]
-        public void WriteDiagnostic_VerbosityOn()
-        {
-            // arrange
-            var console = new TestConsole();
-            var writer = new ConsoleVerbosityWriter(console)
-            {
-                Verbosity = VerbosityLevel.Diagnostic
-            };
-
-            // act
-            writer.WriteSummary("minimal");
-            writer.WriteDiagnostics("testing");
-
-            // assert
-            Assert.Contains("minimal", console.Output);
-            Assert.Contains("testing", console.Output);
-        }
-
-        [TestMethod]
-        [ExcludeFromCodeCoverage]
-        public void Create_WithNullConsole()
-        {
-            // arrange
-
-            // act
-            Assert.ThrowsExactly<ArgumentNullException>(() => new ConsoleVerbosityWriter(null));
-        }
+        // act
+        Assert.ThrowsExactly<ArgumentNullException>(() => new ConsoleVerbosityWriter(null));
     }
 }
