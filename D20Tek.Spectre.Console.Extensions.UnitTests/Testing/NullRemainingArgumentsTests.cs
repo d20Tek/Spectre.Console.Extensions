@@ -16,7 +16,7 @@ public class NullRemainingArgumentsTests
 
         // assert
         Assert.IsNotNull(remaining);
-        Assert.AreEqual(0, remaining.Raw.Count);
-        Assert.AreEqual(0, remaining.Parsed.Count);
+        Assert.IsEmpty(remaining.Raw);
+        Assert.IsEmpty(remaining.Parsed);
     }
 }

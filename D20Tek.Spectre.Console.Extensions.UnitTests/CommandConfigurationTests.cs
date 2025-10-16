@@ -21,7 +21,7 @@ public class CommandConfigurationTests
         configurator.ApplyConfiguration(new TestConfiguration());
 
         // assert
-        Assert.AreEqual(1, configurator.Commands.Count);
+        Assert.HasCount(1, configurator.Commands);
         var command = configurator.Commands[0];
         Assert.AreEqual(typeof(MockCommand), command.CommandType);
         Assert.AreEqual("config-command-test", command.Name);

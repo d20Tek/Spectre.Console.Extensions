@@ -68,7 +68,7 @@ public class CliParserTests
         var result = CliParser.SplitCommandLine("").ToArray();
 
         // assert.
-        Assert.AreEqual(0, result.Length);
+        Assert.IsEmpty(result);
     }
 
     [TestMethod]
@@ -81,7 +81,7 @@ public class CliParserTests
         var result = CliParser.SplitCommandLine(input).ToArray();
 
         // assert
-        Assert.AreEqual(0, result.Length);
+        Assert.IsEmpty(result);
     }
 
     [TestMethod]

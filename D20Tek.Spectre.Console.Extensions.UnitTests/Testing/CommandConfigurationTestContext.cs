@@ -60,8 +60,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             Assert.AreEqual("mock-command", context.Configurator.Settings.ApplicationName);
             Assert.AreEqual(1, context.Configurator.Commands.Count());
             Assert.AreEqual("mock", context.Configurator.Commands.First().Name);
-            Assert.AreEqual(1, context.Configurator.Commands.First().Aliases.Count);
-            Assert.AreEqual(1, context.Configurator.Commands.First().Examples.Count);
+            Assert.HasCount(1, context.Configurator.Commands.First().Aliases);
+            Assert.HasCount(1, context.Configurator.Commands.First().Examples);
             Assert.AreEqual(0, context.Configurator.Examples.Count());
         }
 
@@ -84,8 +84,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             Assert.AreEqual("test", command.Name);
             Assert.AreEqual("description", command.Description);
             Assert.AreEqual("data", command.Data);
-            Assert.AreEqual(1, command.Aliases.Count);
-            Assert.AreEqual(1, command.Examples.Count);
+            Assert.HasCount(1, command.Aliases);
+            Assert.HasCount(1, command.Examples);
             Assert.AreEqual(typeof(MockCommand), command.CommandType);
             Assert.AreEqual(typeof(EmptyCommandSettings), command.SettingsType);
             Assert.IsFalse(command.IsHidden);
@@ -120,7 +120,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             context.Configurator.AddExample(new string[] { "test" });
 
             // assert
-            Assert.AreEqual(1, context.Configurator.Examples.Count);
+            Assert.HasCount(1, context.Configurator.Examples);
         }
 
         [TestMethod]
@@ -152,8 +152,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             // assert
             Assert.AreEqual(1, context.Configurator.Commands.Count());
             Assert.AreEqual("branch1", context.Configurator.Commands.First().Name);
-            Assert.AreEqual(0, context.Configurator.Commands.First().Aliases.Count);
-            Assert.AreEqual(0, context.Configurator.Commands.First().Examples.Count);
+            Assert.HasCount(0, context.Configurator.Commands.First().Aliases);
+            Assert.HasCount(0, context.Configurator.Commands.First().Examples);
             Assert.AreEqual(0, context.Configurator.Examples.Count());
             Assert.AreEqual("test", context.Configurator.Commands.First().Children.First().Name);
         }
@@ -171,8 +171,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             // assert
             Assert.AreEqual(1, context.Configurator.Commands.Count());
             Assert.AreEqual("branch1", context.Configurator.Commands.First().Name);
-            Assert.AreEqual(0, context.Configurator.Commands.First().Aliases.Count);
-            Assert.AreEqual(0, context.Configurator.Commands.First().Examples.Count);
+            Assert.HasCount(0, context.Configurator.Commands.First().Aliases);
+            Assert.HasCount(0, context.Configurator.Commands.First().Examples);
             Assert.AreEqual(0, context.Configurator.Examples.Count());
             Assert.AreEqual("test", context.Configurator.Commands.First().Children.First().Name);
         }

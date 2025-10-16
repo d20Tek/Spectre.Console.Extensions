@@ -55,7 +55,7 @@ public class FakeConfiguratorTests
 
         // assert
         Assert.IsNotNull(result);
-        Assert.AreEqual(1, config.Commands.Count);
+        Assert.HasCount(1, config.Commands);
         Assert.AreEqual("test-async-delegate", config.Commands.First().Name);
     }
 

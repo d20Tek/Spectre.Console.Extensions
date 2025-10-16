@@ -63,7 +63,7 @@ public class HistoryTextPromptChoiceTests
                 .HideDefaultValue());
 
         // assert
-        Assert.IsFalse(console.Output.Contains("First/Second/Third"));
+        Assert.DoesNotContain("First/Second/Third", console.Output);
     }
 
     [TestMethod]

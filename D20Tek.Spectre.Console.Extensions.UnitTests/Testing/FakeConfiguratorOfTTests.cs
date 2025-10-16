@@ -30,7 +30,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             // assert
             Assert.AreEqual("test description", command.Description);
             Assert.IsTrue(command.IsHidden);
-            Assert.AreEqual(1, command.Examples.Count);
+            Assert.HasCount(1, command.Examples);
         }
 
         [TestMethod]
@@ -44,7 +44,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
 
             // assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, command.Children.Count);
+            Assert.HasCount(1, command.Children);
             Assert.AreEqual("test-command", command.Children.First().Name);
         }
 
@@ -58,7 +58,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             config.SetDefaultCommand<MockCommand>();
 
             // assert
-            Assert.AreEqual(1, command.Children.Count);
+            Assert.HasCount(1, command.Children);
             Assert.AreEqual("__default_command", command.Children.First().Name);
         }
 
@@ -72,7 +72,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             config.AddBranch<EmptyCommandSettings>("branch-2", TestBranchAction);
 
             // assert
-            Assert.AreEqual(1, command.Children.Count);
+            Assert.HasCount(1, command.Children);
             Assert.AreEqual("branch-2", command.Children.First().Name);
         }
 
@@ -87,7 +87,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
 
             // assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, command.Children.Count);
+            Assert.HasCount(1, command.Children);
             Assert.AreEqual("test-delegate", command.Children.First().Name);
         }
 
@@ -119,7 +119,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
 
             // assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, command.Children.Count);
+            Assert.HasCount(1, command.Children);
             Assert.AreEqual("test-async-delegate", command.Children.First().Name);
         }
 

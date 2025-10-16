@@ -27,8 +27,8 @@ public class TableExtensionsTests
         console.Write(table);
 
         // assert
-        Assert.AreEqual(1, table.Rows.Count);
-        Assert.AreEqual(3, table.Columns.Count);
+        Assert.HasCount(1, table.Rows);
+        Assert.HasCount(3, table.Columns);
         StringAssert.Contains(console.Output, "──────────");
     }
 
@@ -59,8 +59,8 @@ public class TableExtensionsTests
         console.Write(table);
 
         // assert
-        Assert.AreEqual(1, table.Rows.Count);
-        Assert.AreEqual(3, table.Columns.Count);
+        Assert.HasCount(1, table.Rows);
+        Assert.HasCount(3, table.Columns);
         StringAssert.Contains(console.Output, "==========");
     }
 }

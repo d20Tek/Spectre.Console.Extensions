@@ -46,7 +46,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing
             // assert
             Assert.AreEqual("Test line 1\nTest line 2\n", c.Output);
             Assert.IsNotNull(c.Lines);
-            Assert.AreEqual(2, c.Lines.Count);
+            Assert.HasCount(2, c.Lines);
         }
 
         [TestMethod]

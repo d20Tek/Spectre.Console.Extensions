@@ -74,7 +74,7 @@ public class InteractiveCommandTests
         // assert
         Assert.AreEqual(-1, result);
         StringAssert.StartsWith(console.Output, "Test Starting...");
-        Assert.IsFalse(console.Output.Contains("Test Ending...\n"));
+        Assert.DoesNotContain("Test Ending...\n", console.Output);
     }
 
     [TestMethod]

@@ -43,8 +43,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Services
             writer.MarkupDetailed("testing");
 
             // assert
-            StringAssert.Contains(console.Output, "normal");
-            Assert.IsFalse(console.Output.Contains("testing"));
+            Assert.Contains("normal", console.Output);
+            Assert.DoesNotContain("testing", console.Output);
         }
 
         [TestMethod]
@@ -62,8 +62,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Services
             writer.MarkupDiagnostics("testing");
 
             // assert
-            StringAssert.Contains(console.Output, "minimal");
-            StringAssert.Contains(console.Output, "testing");
+            Assert.Contains("minimal", console.Output);
+            Assert.Contains("testing", console.Output);
         }
 
         [TestMethod]
@@ -78,8 +78,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Services
             writer.WriteDetailed("testing");
 
             // assert
-            StringAssert.Contains(console.Output, "normal");
-            Assert.IsFalse(console.Output.Contains("testing"));
+            Assert.Contains("normal", console.Output);
+            Assert.DoesNotContain("testing", console.Output);
         }
 
 
@@ -98,8 +98,8 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Services
             writer.WriteDiagnostics("testing");
 
             // assert
-            StringAssert.Contains(console.Output, "minimal");
-            StringAssert.Contains(console.Output, "testing");
+            Assert.Contains("minimal", console.Output);
+            Assert.Contains("testing", console.Output);
         }
 
         [TestMethod]
