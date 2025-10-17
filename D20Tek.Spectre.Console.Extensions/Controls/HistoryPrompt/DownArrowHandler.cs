@@ -26,10 +26,10 @@ internal sealed class DownArrowHandler : IInputStateHandler
         return state;
     }
 
-    private bool ShouldHandle(ConsoleKeyInfo key, int historyCount, int historyIndex) =>
+    private static bool ShouldHandle(ConsoleKeyInfo key, int historyCount, int historyIndex) =>
         key.Key == ConsoleKey.DownArrow && historyCount > 0 && historyIndex > -1;
 
-    private void ErasePrevious(InputState state)
+    private static void ErasePrevious(InputState state)
     {
         var bufferLength = state.Buffer.Length;
         ArgumentOutOfRangeException.ThrowIfZero(bufferLength);
@@ -40,7 +40,7 @@ internal sealed class DownArrowHandler : IInputStateHandler
         console.Cursor.MoveLeft(bufferLength);
     }
 
-    private void UpdateBufferToNextEntry(int historyIndex, InputState state)
+    private static void UpdateBufferToNextEntry(int historyIndex, InputState state)
     {
         state.Buffer.Clear();
 
@@ -58,6 +58,6 @@ internal sealed class DownArrowHandler : IInputStateHandler
         }
     }
 
-    private void RenderUpdatedBuffer(StringBuilder buffer, IAnsiConsole console) =>
+    private static void RenderUpdatedBuffer(StringBuilder buffer, IAnsiConsole console) =>
         console.Write(buffer.ToString());
 }

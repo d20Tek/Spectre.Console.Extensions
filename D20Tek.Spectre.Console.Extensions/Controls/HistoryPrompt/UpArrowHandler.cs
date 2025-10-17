@@ -30,10 +30,10 @@ internal sealed class UpArrowHandler : IInputStateHandler
         return state;
     }
 
-    private bool ShouldHandle(ConsoleKeyInfo key, int historyCount, int historyIndex) =>
+    private static bool ShouldHandle(ConsoleKeyInfo key, int historyCount, int historyIndex) =>
         key.Key == ConsoleKey.UpArrow && historyCount > 0 && historyIndex < historyCount;
 
-    private void ErasePrevious(InputState state)
+    private static void ErasePrevious(InputState state)
     {
         var bufferLength = state.Buffer.Length;
 

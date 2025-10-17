@@ -33,7 +33,6 @@ internal static class AutoCompletionStrategy
     private static Direction GetDirectionFor(bool isBackDirection) =>
         isBackDirection ? Direction.Backward : Direction.Forward;
 
-
     private enum Direction
     {
         Forward,

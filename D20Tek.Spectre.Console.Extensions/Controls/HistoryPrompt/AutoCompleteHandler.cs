@@ -7,10 +7,10 @@ internal sealed class AutoCompleteHandler : IInputStateHandler
 {
     private const string _backspaceText = "\b \b";
 
-    public InputState Handle(ConsoleKeyInfo key, InputState state) => 
+    public InputState Handle(ConsoleKeyInfo key, InputState state) =>
         ShouldHandle(key, state) ? ProcessAutoCompletion(key, state) : state;
 
-    private bool ShouldHandle(ConsoleKeyInfo key, InputState state) =>
+    private static bool ShouldHandle(ConsoleKeyInfo key, InputState state) =>
         key.Key == ConsoleKey.Tab && state.CompletionItems.Count > 0;
 
     private InputState ProcessAutoCompletion(ConsoleKeyInfo key, InputState state)

@@ -8,7 +8,7 @@ internal sealed class DefaultInputHandler : IInputStateHandler
     public InputState Handle(ConsoleKeyInfo key, InputState state) =>
         ShouldHandle(key) ? state with { CursorIndex = ProcessKey(key, state), Handled = true } : state;
 
-    private bool ShouldHandle(ConsoleKeyInfo key) => !char.IsControl(key.KeyChar);
+    private static bool ShouldHandle(ConsoleKeyInfo key) => !char.IsControl(key.KeyChar);
 
     private int ProcessKey(ConsoleKeyInfo key, InputState state) =>
         (state.CursorIndex == state.Buffer.Length, state.InsertMode) switch
@@ -18,14 +18,14 @@ internal sealed class DefaultInputHandler : IInputStateHandler
             _ => OverwriteCharacter(state.Buffer, key.KeyChar, state.Request, state.CursorIndex)
         };
 
-    private int AppendCharacter(StringBuilder buffer, char keyChar, ReadLineRequest request, int cursor)
+    private static int AppendCharacter(StringBuilder buffer, char keyChar, ReadLineRequest request, int cursor)
     {
         buffer.Append(keyChar);
         WriteTextWithSecret(keyChar.ToString(), request);
         return cursor + 1;
     }
 
-    private int InsertCharacter(StringBuilder buffer, char keyChar, ReadLineRequest request, int cursor)
+    private static int InsertCharacter(StringBuilder buffer, char keyChar, ReadLineRequest request, int cursor)
     {
         buffer.Insert(cursor, keyChar);
         WriteTextWithSecret(keyChar.ToString(), request);
@@ -34,7 +34,7 @@ internal sealed class DefaultInputHandler : IInputStateHandler
         return cursor + 1;
     }
 
-    private int OverwriteCharacter(StringBuilder buffer, char keyChar, ReadLineRequest request, int cursor)
+    private static int OverwriteCharacter(StringBuilder buffer, char keyChar, ReadLineRequest request, int cursor)
     {
         ArgumentOutOfRangeException.ThrowIfZero(buffer.Length);
         buffer[cursor] = keyChar;
@@ -42,6 +42,6 @@ internal sealed class DefaultInputHandler : IInputStateHandler
         return cursor + 1;
     }
 
-    private void WriteTextWithSecret(string text, ReadLineRequest request) =>
+    private static void WriteTextWithSecret(string text, ReadLineRequest request) =>
         request.AnsiConsole.Write(request.IsSecret ? text.Mask(request.Mask) : text, request.PromptStyle);
 }

@@ -16,9 +16,9 @@ internal sealed class BackspaceHandler : IInputStateHandler
         return state;
     }
 
-    private bool ShouldHandle(ConsoleKeyInfo key) => key.Key == ConsoleKey.Backspace;
+    private static bool ShouldHandle(ConsoleKeyInfo key) => key.Key == ConsoleKey.Backspace;
 
-    private bool CanBackspace(StringBuilder builder, int cursorIndex) => builder.Length > 0 && cursorIndex >= 1;
+    private static bool CanBackspace(StringBuilder builder, int cursorIndex) => builder.Length > 0 && cursorIndex >= 1;
 
     private InputState ProcessBackspace(StringBuilder builder, int cursorIndex, InputState state)
     {
@@ -31,7 +31,7 @@ internal sealed class BackspaceHandler : IInputStateHandler
         return state with { CursorIndex = cursorIndex, Handled = true };
     }
 
-    private int RemoveCharacter(StringBuilder builder, int cursorIndex, InputState state)
+    private static int RemoveCharacter(StringBuilder builder, int cursorIndex, InputState state)
     {
         var characterToRemove = builder[cursorIndex - 1];
         builder.Remove(cursorIndex - 1, 1);
@@ -48,6 +48,6 @@ internal sealed class BackspaceHandler : IInputStateHandler
         request.AnsiConsole.Cursor.MoveLeft(builder.Length - cursorIndex + 1);
     }
 
-    private string GetUpdatedText(StringBuilder builder, int index, bool isSecret, char? mask) =>
+    private static string GetUpdatedText(StringBuilder builder, int index, bool isSecret, char? mask) =>
         isSecret ? builder.ToString()[index..].Mask(mask) : builder.ToString()[index..];
 }
