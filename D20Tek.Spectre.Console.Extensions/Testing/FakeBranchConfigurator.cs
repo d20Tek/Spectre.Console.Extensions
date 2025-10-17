@@ -3,13 +3,9 @@
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console.Cli;
 
-namespace D20Tek.Spectre.Console.Extensions.Testing
+namespace D20Tek.Spectre.Console.Extensions.Testing;
+
+internal class FakeBranchConfigurator : IBranchConfigurator
 {
-    internal class FakeBranchConfigurator : IBranchConfigurator
-    {
-        public IBranchConfigurator WithAlias(string name)
-        {
-            return this;
-        }
-    }
+    public IBranchConfigurator WithAlias(string name) => this;
 }

@@ -3,45 +3,39 @@
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console.Cli;
 
-namespace D20Tek.Spectre.Console.Extensions.Testing
+namespace D20Tek.Spectre.Console.Extensions.Testing;
+
+internal class FakeCommandConfigurator(CommandMetadata command) : ICommandConfigurator
 {
-    internal class FakeCommandConfigurator : ICommandConfigurator
+    public CommandMetadata Command { get; } = command;
+
+    public ICommandConfigurator WithExample(string[] args)
     {
-        public CommandMetadata Command { get; }
+        Command.Examples.Add(args);
+        return this;
+    }
 
-        public FakeCommandConfigurator(CommandMetadata command)
-        {
-            Command = command;
-        }
+    public ICommandConfigurator WithAlias(string alias)
+    {
+        Command.Aliases.Add(alias);
+        return this;
+    }
 
-        public ICommandConfigurator WithExample(string[] args)
-        {
-            Command.Examples.Add(args);
-            return this;
-        }
+    public ICommandConfigurator WithDescription(string description)
+    {
+        Command.Description = description;
+        return this;
+    }
 
-        public ICommandConfigurator WithAlias(string alias)
-        {
-            Command.Aliases.Add(alias);
-            return this;
-        }
+    public ICommandConfigurator WithData(object data)
+    {
+        Command.Data = data;
+        return this;
+    }
 
-        public ICommandConfigurator WithDescription(string description)
-        {
-            Command.Description = description;
-            return this;
-        }
-
-        public ICommandConfigurator WithData(object data)
-        {
-            Command.Data = data;
-            return this;
-        }
-
-        public ICommandConfigurator IsHidden()
-        {
-            Command.IsHidden = true;
-            return this;
-        }
+    public ICommandConfigurator IsHidden()
+    {
+        Command.IsHidden = true;
+        return this;
     }
 }

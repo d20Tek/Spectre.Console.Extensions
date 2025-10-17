@@ -4,99 +4,89 @@
 using Spectre.Console.Cli;
 using Spectre.Console.Cli.Help;
 
-namespace D20Tek.Spectre.Console.Extensions.Testing
+namespace D20Tek.Spectre.Console.Extensions.Testing;
+
+internal class FakeConfigurator(ITypeRegistrar registrar) : ITestConfigurator
 {
-    internal class FakeConfigurator : ITestConfigurator
+    private const string _defaultCommandName = "__default_command";
+    private readonly ITypeRegistrar _registrar = registrar;
+
+    public IList<CommandMetadata> Commands { get; } = [];
+
+    public ICommandAppSettings Settings { get; } = new FakeCommandAppSettings(registrar);
+
+    public CommandMetadata? DefaultCommand { get; private set; }
+
+    public IList<string[]> Examples { get; } = [];
+
+    public IHelpProvider? HelperProvider { get; private set; } = null;
+
+    ICommandAppSettings IConfigurator.Settings => Settings;
+
+    public void SetDefaultCommand<TDefaultCommand>()
+        where TDefaultCommand : class, ICommand
     {
-        private const string _defaultCommandName = "__default_command";
-        private readonly ITypeRegistrar _registrar;
+        DefaultCommand = CommandMetadata.FromType<TDefaultCommand>(
+            _defaultCommandName, true);
+    }
 
-        public IList<CommandMetadata> Commands { get; }
+    public ICommandConfigurator AddCommand<TCommand>(string name)
+        where TCommand : class, ICommand
+    {
+        var command = CommandMetadata.FromType<TCommand>(name, false);
+        Commands.Add(command);
 
-        public ICommandAppSettings Settings { get; }
-        
-        public CommandMetadata? DefaultCommand { get; private set; }
-        
-        public IList<string[]> Examples { get; }
+        return new FakeCommandConfigurator(command);
+    }
 
-        public IHelpProvider? HelperProvider { get; private set; } = null;
+    public ICommandConfigurator AddDelegate<TSettings>(string name, Func<CommandContext, TSettings, int> func)
+        where TSettings : CommandSettings
+    {
+        var command = CommandMetadata.FromDelegate<TSettings>(
+            name,
+            (context, settings) => func(context, (TSettings)settings));
+        Commands.Add(command);
 
-        ICommandAppSettings IConfigurator.Settings => Settings;
+        return new FakeCommandConfigurator(command);
+    }
 
-        public FakeConfigurator(ITypeRegistrar registrar)
-        {
-            _registrar = registrar;
+    public IBranchConfigurator AddBranch<TSettings>(string name, Action<IConfigurator<TSettings>> action)
+        where TSettings : CommandSettings
+    {
+        var command = CommandMetadata.FromBranch<TSettings>(name);
+        action(new FakeConfigurator<TSettings>(command, _registrar));
 
-            Commands = new List<CommandMetadata>();
-            Settings = new FakeCommandAppSettings(registrar);
-            Examples = new List<string[]>();
-        }
+        Commands.Add(command);
 
-        public void SetDefaultCommand<TDefaultCommand>()
-            where TDefaultCommand : class, ICommand
-        {
-            DefaultCommand = CommandMetadata.FromType<TDefaultCommand>(
-                _defaultCommandName, true);
-        }
+        return new FakeBranchConfigurator();
+    }
 
-        public ICommandConfigurator AddCommand<TCommand>(string name)
-            where TCommand : class, ICommand
-        {
-            var command = CommandMetadata.FromType<TCommand>(name, false);
-            Commands.Add(command);
+    public ICommandConfigurator AddAsyncDelegate<TSettings>(string name, Func<CommandContext, TSettings, Task<int>> func)
+        where TSettings : CommandSettings
+    {
+        var command = CommandMetadata.FromAsyncDelegate<TSettings>(
+            name,
+            (context, settings) => func(context, (TSettings)settings));
+        Commands.Add(command);
 
-            return new FakeCommandConfigurator(command);
-        }
+        return new FakeCommandConfigurator(command);
+    }
 
-        public ICommandConfigurator AddDelegate<TSettings>(string name, Func<CommandContext, TSettings, int> func)
-            where TSettings : CommandSettings
-        {
-            var command = CommandMetadata.FromDelegate<TSettings>(
-                name,
-                (context, settings) => func(context, (TSettings)settings));
-            Commands.Add(command);
+    public IConfigurator SetHelpProvider(IHelpProvider helpProvider)
+    {
+        HelperProvider = helpProvider;
+        return this;
+    }
 
-            return new FakeCommandConfigurator(command);
-        }
+    public IConfigurator SetHelpProvider<T>() where T : IHelpProvider
+    {
+        HelperProvider = Activator.CreateInstance<T>();
+        return this;
+    }
 
-        public IBranchConfigurator AddBranch<TSettings>(string name, Action<IConfigurator<TSettings>> action)
-            where TSettings : CommandSettings
-        {
-            var command = CommandMetadata.FromBranch<TSettings>(name);
-            action(new FakeConfigurator<TSettings>(command, _registrar));
-
-            Commands.Add(command);
-
-            return new FakeBranchConfigurator();
-        }
-
-        public ICommandConfigurator AddAsyncDelegate<TSettings>(string name, Func<CommandContext, TSettings, Task<int>> func)
-            where TSettings : CommandSettings
-        {
-            var command = CommandMetadata.FromAsyncDelegate<TSettings>(
-                name,
-                (context, settings) => func(context, (TSettings)settings));
-            Commands.Add(command);
-
-            return new FakeCommandConfigurator(command);
-        }
-
-        public IConfigurator SetHelpProvider(IHelpProvider helpProvider)
-        {
-            HelperProvider = helpProvider;
-            return this;
-        }
-
-        public IConfigurator SetHelpProvider<T>() where T : IHelpProvider
-        {
-            HelperProvider = Activator.CreateInstance<T>();
-            return this;
-        }
-
-        public IConfigurator AddExample(params string[] args)
-        {
-            Examples.Add(args);
-            return this;
-        }
+    public IConfigurator AddExample(params string[] args)
+    {
+        Examples.Add(args);
+        return this;
     }
 }

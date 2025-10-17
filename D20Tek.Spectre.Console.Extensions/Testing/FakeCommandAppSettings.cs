@@ -6,48 +6,41 @@ using Spectre.Console.Cli;
 using Spectre.Console.Cli.Help;
 using System.Globalization;
 
-namespace D20Tek.Spectre.Console.Extensions.Testing
+namespace D20Tek.Spectre.Console.Extensions.Testing;
+
+internal class FakeCommandAppSettings(ITypeRegistrar registrar) : ICommandAppSettings
 {
-    internal class FakeCommandAppSettings : ICommandAppSettings
-    {
-        public string? ApplicationName { get; set; }
+    public string? ApplicationName { get; set; }
 
-        public string? ApplicationVersion { get; set; }
-        
-        public IAnsiConsole? Console { get; set; }
-        
-        public ICommandInterceptor? Interceptor { get; set; }
-        
-        public ITypeRegistrarFrontend Registrar { get; set; }
-        
-        public CaseSensitivity CaseSensitivity { get; set; }
-        
-        public bool PropagateExceptions { get; set; }
-        
-        public bool ValidateExamples { get; set; }
-        
-        public bool StrictParsing { get; set; }
+    public string? ApplicationVersion { get; set; }
+    
+    public IAnsiConsole? Console { get; set; }
+    
+    public ICommandInterceptor? Interceptor { get; set; }
 
-        public Func<Exception, int>? ExceptionHandler { get; set; }
+    public ITypeRegistrarFrontend Registrar { get; } = new FrontendTypeRegistrar(registrar);
 
-        public bool ShowOptionDefaultValues { get; set; }
-        
-        public bool TrimTrailingPeriod { get; set; }
-        
-        public bool ConvertFlagsToRemainingArguments { get; set; }
+    public CaseSensitivity CaseSensitivity { get; set; } = CaseSensitivity.All;
 
-        public CultureInfo? Culture { get; set; }
-        
-        public int MaximumIndirectExamples { get; set; }
-        
-        public HelpProviderStyle? HelpProviderStyles { get; set; }
-        
-        Func<Exception, ITypeResolver?, int>? ICommandAppSettings.ExceptionHandler { get; set; }
+    public bool PropagateExceptions { get; set; }
+    
+    public bool ValidateExamples { get; set; }
+    
+    public bool StrictParsing { get; set; }
 
-        public FakeCommandAppSettings(ITypeRegistrar registrar)
-        {
-            Registrar = new FrontendTypeRegistrar(registrar);
-            CaseSensitivity = CaseSensitivity.All;
-        }
-    }
+    public Func<Exception, int>? ExceptionHandler { get; set; }
+
+    public bool ShowOptionDefaultValues { get; set; }
+    
+    public bool TrimTrailingPeriod { get; set; }
+    
+    public bool ConvertFlagsToRemainingArguments { get; set; }
+
+    public CultureInfo? Culture { get; set; }
+    
+    public int MaximumIndirectExamples { get; set; }
+    
+    public HelpProviderStyle? HelpProviderStyles { get; set; }
+    
+    Func<Exception, ITypeResolver?, int>? ICommandAppSettings.ExceptionHandler { get; set; }
 }
