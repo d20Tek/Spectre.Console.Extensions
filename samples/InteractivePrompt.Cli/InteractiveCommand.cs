@@ -4,13 +4,8 @@ using Spectre.Console.Cli;
 
 namespace InteractivePrompt.Cli;
 
-internal class InteractiveCommand : InteractiveCommandBase
+internal class InteractiveCommand(ICommandApp app, IAnsiConsole console) : InteractiveCommandBase(app, console)
 {
-    public InteractiveCommand(ICommandApp app, IAnsiConsole console)
-        : base(app, console)
-    {
-    }
-
     protected override void ShowWelcomeMessage(IAnsiConsole console)
     {
         console.Write(new FigletText("Interactive Prompt").Centered().Color(Color.Green));

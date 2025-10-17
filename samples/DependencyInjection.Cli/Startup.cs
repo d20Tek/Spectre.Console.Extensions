@@ -7,28 +7,27 @@ using D20Tek.Spectre.Console.Extensions;
 using D20Tek.Spectre.Console.Extensions.Injection;
 using Spectre.Console.Cli;
 
-namespace DependencyInjection.Cli
+namespace DependencyInjection.Cli;
+
+internal class Startup : StartupBase
 {
-    internal class Startup : StartupBase
+    public override void ConfigureServices(ITypeRegistrar registrar)
     {
-        public override void ConfigureServices(ITypeRegistrar registrar)
-        {
-            // register services here...
-            // registrar.Register(typeof(IDisplayWriter), typeof(ConsoleDisplayWriter));
-            registrar.WithLifetimes().RegisterSingleton<IDisplayWriter, ConsoleDisplayWriter>();
-        }
+        // register services here...
+        // registrar.Register(typeof(IDisplayWriter), typeof(ConsoleDisplayWriter));
+        registrar.WithLifetimes().RegisterSingleton<IDisplayWriter, ConsoleDisplayWriter>();
+    }
 
-        public override IConfigurator ConfigureCommands(IConfigurator config)
-        {
-            config.CaseSensitivity(CaseSensitivity.None);
-            config.SetApplicationName("DependencyInjection.Cli");
-            config.ValidateExamples();
+    public override IConfigurator ConfigureCommands(IConfigurator config)
+    {
+        config.CaseSensitivity(CaseSensitivity.None);
+        config.SetApplicationName("DependencyInjection.Cli");
+        config.ValidateExamples();
 
-            config.AddCommand<DefaultCommand>("default")
-                .WithDescription("Default command that displays some text.")
-                .WithExample(["default", "--verbose", "high"]);
+        config.AddCommand<DefaultCommand>("default")
+            .WithDescription("Default command that displays some text.")
+            .WithExample(["default", "--verbose", "high"]);
 
-            return config;
-        }
+        return config;
     }
 }

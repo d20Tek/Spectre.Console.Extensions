@@ -3,19 +3,10 @@
 //---------------------------------------------------------------------------------------------------------------------
 using D20Tek.Samples.Common.Commands;
 using D20Tek.Spectre.Console.Extensions;
+using LightInject.Cli;
 
-namespace LightInject.Cli
-{
-    public class Program
-    {
-        public static async Task<int> Main(string[] args)
-        {
-            return await new CommandAppBuilder()
-                             .WithLightInjectContainer()
+await new CommandAppBuilder().WithDIContainer()
                              .WithStartup<Startup>()
                              .WithDefaultCommand<DefaultCommand>()
                              .Build()
                              .RunAsync(args);
-        }
-    }
-}

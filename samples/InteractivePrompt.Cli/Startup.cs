@@ -28,7 +28,5 @@ internal sealed class Startup : StartupBase
         return config;
     }
 
-    public override void ConfigureServices(ITypeRegistrar registrar)
-    {
-    }
+    public override void ConfigureServices(ITypeRegistrar registrar) { }
 }

@@ -6,27 +6,26 @@ using D20Tek.Samples.Common.Services;
 using D20Tek.Spectre.Console.Extensions;
 using Spectre.Console.Cli;
 
-namespace Autofac.Cli
+namespace Autofac.Cli;
+
+internal class Startup : StartupBase
 {
-    internal class Startup : StartupBase
+    public override void ConfigureServices(ITypeRegistrar registrar)
     {
-        public override void ConfigureServices(ITypeRegistrar registrar)
-        {
-            // register services here...
-            registrar.Register(typeof(IDisplayWriter), typeof(ConsoleDisplayWriter));
-        }
+        // register services here...
+        registrar.Register(typeof(IDisplayWriter), typeof(ConsoleDisplayWriter));
+    }
 
-        public override IConfigurator ConfigureCommands(IConfigurator config)
-        {
-            config.CaseSensitivity(CaseSensitivity.None);
-            config.SetApplicationName("Autofac.Cli");
-            config.ValidateExamples();
+    public override IConfigurator ConfigureCommands(IConfigurator config)
+    {
+        config.CaseSensitivity(CaseSensitivity.None);
+        config.SetApplicationName("Autofac.Cli");
+        config.ValidateExamples();
 
-            config.AddCommand<DefaultCommand>("default")
-                .WithDescription("Default command that displays some text.")
-                .WithExample(["default", "--verbose", "high"]);
+        config.AddCommand<DefaultCommand>("default")
+            .WithDescription("Default command that displays some text.")
+            .WithExample(["default", "--verbose", "high"]);
 
-            return config;
-        }
+        return config;
     }
 }

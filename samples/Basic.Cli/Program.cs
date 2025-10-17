@@ -7,35 +7,26 @@ using D20Tek.Spectre.Console.Extensions.Injection;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 
-namespace Basic.Cli
+// Create the DI container.
+var services = new ServiceCollection();
+
+// configure services here...
+services.AddSingleton<IDisplayWriter, ConsoleDisplayWriter>();
+var registrar = new DependencyInjectionTypeRegistrar(services);
+
+// Create the CommandApp with specified command type and type registrar.
+var app = new CommandApp<DefaultCommand>(registrar);
+
+// Configure any commands in the application.
+app.Configure(config =>
 {
-    public class Program
-    {
-        public static async Task<int> Main(string[] args)
-        {
-            // Create the DI container.
-            var services = new ServiceCollection();
+    config.CaseSensitivity(CaseSensitivity.None);
+    config.SetApplicationName("Basic.Cli");
+    config.ValidateExamples();
 
-            // configure services here...
-            services.AddSingleton<IDisplayWriter, ConsoleDisplayWriter>();
-            var registrar = new DependencyInjectionTypeRegistrar(services);
+    config.AddCommand<DefaultCommand>("default")
+        .WithDescription("Default command that displays some text.")
+        .WithExample(["default", "--verbose", "high"]);
+});
 
-            // Create the CommandApp with specified command type and type registrar.
-            var app = new CommandApp<DefaultCommand>(registrar);
-
-            // Configure any commands in the application.
-            app.Configure(config =>
-            {
-                config.CaseSensitivity(CaseSensitivity.None);
-                config.SetApplicationName("Basic.Cli");
-                config.ValidateExamples();
-
-                config.AddCommand<DefaultCommand>("default")
-                    .WithDescription("Default command that displays some text.")
-                    .WithExample(["default", "--verbose", "high"]);
-            });
-
-            return await app.RunAsync(args);
-        }
-    }
-}
+return await app.RunAsync(args);

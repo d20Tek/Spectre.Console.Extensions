@@ -1,21 +1,12 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
+using Autofac.Cli;
 using D20Tek.Samples.Common.Commands;
 using D20Tek.Spectre.Console.Extensions;
 
-namespace Autofac.Cli
-{
-    public class Program
-    {
-        public static async Task<int> Main(string[] args)
-        {
-            return await new CommandAppBuilder()
-                             .WithAutofacContainer()
+await new CommandAppBuilder().WithDIContainer()
                              .WithStartup<Startup>()
                              .WithDefaultCommand<DefaultCommand>()
                              .Build()
                              .RunAsync(args);
-        }
-    }
-}

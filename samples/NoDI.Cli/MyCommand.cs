@@ -5,18 +5,17 @@ using Spectre.Console;
 using Spectre.Console.Cli;
 using System.Diagnostics.CodeAnalysis;
 
-namespace NoDI.Cli
+namespace NoDI.Cli;
+
+public class MyCommand : Command
 {
-    public class MyCommand : Command
+    public override int Execute([NotNull] CommandContext context)
     {
-        public override int Execute([NotNull] CommandContext context)
-        {
-            AnsiConsole.WriteLine($"=> MyCommand: Executing command - {context.Name}.");
+        AnsiConsole.WriteLine($"=> MyCommand: Executing command - {context.Name}.");
 
-            AnsiConsole.WriteLine();
-            AnsiConsole.MarkupLine($"[green]Command completed successfully![/]");
+        AnsiConsole.WriteLine();
+        AnsiConsole.MarkupLine($"[green]Command completed successfully![/]");
 
-            return 0; 
-        }
+        return 0; 
     }
 }

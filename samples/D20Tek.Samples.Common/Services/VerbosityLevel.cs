@@ -1,13 +1,11 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
+namespace D20Tek.Samples.Common.Services;
 
-namespace D20Tek.Samples.Common.Services
+public enum VerbosityLevel
 {
-    public enum VerbosityLevel
-    {
-        low = 1,
-        med = 2,
-        high = 3,
-    }
+    low = 1,
+    med = 2,
+    high = 3,
 }

@@ -3,19 +3,10 @@
 //---------------------------------------------------------------------------------------------------------------------
 using D20Tek.Samples.Common.Commands;
 using D20Tek.Spectre.Console.Extensions;
+using Ninject.Cli;
 
-namespace Ninject.Cli
-{
-    public class Program
-    {
-        public static async Task<int> Main(string[] args)
-        {
-            return await new CommandAppBuilder()
-                             .WithNinjectContainer()
+await new CommandAppBuilder().WithDIContainer()
                              .WithStartup<Startup>()
                              .WithDefaultCommand<DefaultCommand>()
                              .Build()
                              .RunAsync(args);
-        }
-    }
-}

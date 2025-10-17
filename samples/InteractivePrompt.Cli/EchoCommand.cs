@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace InteractivePrompt.Cli;
 
-internal sealed class EchoCommand : Command<EchoCommand.Request>
+internal sealed class EchoCommand(IAnsiConsole console) : Command<EchoCommand.Request>
 {
     public sealed class Request : CommandSettings
     {
@@ -14,9 +14,7 @@ internal sealed class EchoCommand : Command<EchoCommand.Request>
         public string? Text { get; set; }
     }
 
-    private readonly IAnsiConsole _console;
-
-    public EchoCommand(IAnsiConsole console) => _console = console;
+    private readonly IAnsiConsole _console = console;
 
     public override int Execute(CommandContext context, Request request)
     {
