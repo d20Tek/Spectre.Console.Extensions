@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release v1.52.1
+* Upgraded Spectre dependencies to latest version 0.52.
+* Modernized code in Spectre.Console.Extensions, unit tests, and sample projects.
+* Upgraded to MsTest 4.0, which required updates to some tests and how Assert is called.
+
 ## Release v1.50.1.7
 * Implemented CurrencyPrompt control, a TextPrompt (culture-aware) for currency input validation and conversion to decimal value.
 * Implemented CurrencyPresenter control to show currency in a culture-aware way, including abbreviations for large values.
