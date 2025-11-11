@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Spectre.Console.Cli;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing;
@@ -141,10 +142,11 @@ public class FakeConfiguratorOfTTests
     }
 
     [ExcludeFromCodeCoverage]
-    private int TestDelegate(CommandContext arg1, EmptyCommandSettings arg2) => 0;
+    private int TestDelegate(CommandContext arg1, EmptyCommandSettings arg2, CancellationToken cancellation) => 0;
 
     [ExcludeFromCodeCoverage]
-    private Task<int> TestAsyncDelegate(CommandContext arg1, EmptyCommandSettings arg2) => Task.FromResult(0);
+    private Task<int> TestAsyncDelegate(CommandContext arg1, EmptyCommandSettings arg2, CancellationToken cancellation) =>
+        Task.FromResult(0);
 
     [ExcludeFromCodeCoverage]
     private void TestBranchAction(IConfigurator<EmptyCommandSettings> obj) { }

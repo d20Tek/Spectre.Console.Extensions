@@ -29,12 +29,12 @@ internal class FakeConfigurator<TSettings>(CommandMetadata command, ITypeRegistr
 
     public ICommandConfigurator AddDelegate<TDerivedSettings>(
         string name,
-        Func<CommandContext, TDerivedSettings, int> func)
+        Func<CommandContext, TDerivedSettings, CancellationToken, int> func)
         where TDerivedSettings : TSettings
     {
         var command = CommandMetadata.FromDelegate<TDerivedSettings>(
             name,
-            (context, settings) => func(context, (TDerivedSettings)settings));
+            (context, settings) => func(context, (TDerivedSettings)settings, CancellationToken.None));
         _command.Children.Add(command);
 
         return new FakeCommandConfigurator(command);
@@ -61,12 +61,12 @@ internal class FakeConfigurator<TSettings>(CommandMetadata command, ITypeRegistr
 
     public ICommandConfigurator AddAsyncDelegate<TDerivedSettings>(
         string name,
-        Func<CommandContext, TDerivedSettings, Task<int>> func)
+        Func<CommandContext, TDerivedSettings, CancellationToken, Task<int>> func)
         where TDerivedSettings : TSettings
     {
         var command = CommandMetadata.FromAsyncDelegate<TSettings>(
             name,
-            (context, settings) => func(context, (TDerivedSettings)settings));
+            (context, settings) => func(context, (TDerivedSettings)settings, CancellationToken.None));
         _command.Children.Add(command);
 
         return new FakeCommandConfigurator(command);

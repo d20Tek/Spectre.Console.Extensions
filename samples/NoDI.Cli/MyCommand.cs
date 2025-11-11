@@ -9,7 +9,7 @@ namespace NoDI.Cli;
 
 public class MyCommand : Command
 {
-    public override int Execute([NotNull] CommandContext context)
+    public override int Execute([NotNull] CommandContext context, CancellationToken cancellation)
     {
         AnsiConsole.WriteLine($"=> MyCommand: Executing command - {context.Name}.");
 

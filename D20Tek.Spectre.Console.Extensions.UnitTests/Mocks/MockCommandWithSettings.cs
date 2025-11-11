@@ -5,6 +5,7 @@ using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
 
@@ -21,7 +22,10 @@ internal class MockCommandWithSettings(IAnsiConsole console) : Command<MockComma
 
     private readonly IAnsiConsole _writer = console;
 
-    public override int Execute([NotNull] CommandContext context, [NotNull] MockSettings settings)
+    public override int Execute(
+        [NotNull] CommandContext context,
+        [NotNull] MockSettings settings,
+        CancellationToken cancellation)
     {
         _writer.WriteLine("Success!");
         return 0;

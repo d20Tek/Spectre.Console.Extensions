@@ -36,9 +36,9 @@ The new Extensions.Testing namespace support test infrastructure classes to easi
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
-    <PackageReference Include="Spectre.Console" Version="0.52.0" />
-    <PackageReference Include="Spectre.Console.Cli" Version="0.52.0" />
-    <PackageReference Include="Wcwidth" Version="3.0.0" />
+    <PackageReference Include="Spectre.Console" Version="0.53.0" />
+    <PackageReference Include="Spectre.Console.Cli" Version="0.53.0" />
+    <PackageReference Include="Wcwidth" Version="4.0.1" />
   </ItemGroup>
 
 </Project>

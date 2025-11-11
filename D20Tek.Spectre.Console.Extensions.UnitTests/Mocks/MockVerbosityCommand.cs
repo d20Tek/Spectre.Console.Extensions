@@ -4,6 +4,7 @@
 using D20Tek.Spectre.Console.Extensions.Services;
 using D20Tek.Spectre.Console.Extensions.Settings;
 using Spectre.Console.Cli;
+using System.Threading;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
 
@@ -11,7 +12,7 @@ internal class MockVerbosityCommand(IVerbosityWriter console) : Command<Verbosit
 {
     private readonly IVerbosityWriter _writer = console;
 
-    public override int Execute(CommandContext context, VerbositySettings settings)
+    public override int Execute(CommandContext context, VerbositySettings settings, CancellationToken cancellation)
     {
         _writer.Verbosity = settings.Verbosity;
 

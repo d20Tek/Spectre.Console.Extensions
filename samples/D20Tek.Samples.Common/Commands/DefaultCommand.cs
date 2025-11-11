@@ -11,7 +11,7 @@ internal class DefaultCommand(IDisplayWriter displayWriter) : Command<BaseSettin
 {
     private readonly IDisplayWriter _displayWriter = displayWriter ?? throw new ArgumentNullException(nameof(displayWriter));
 
-    public override int Execute([NotNull] CommandContext context, [NotNull] BaseSettings settings)
+    public override int Execute([NotNull] CommandContext context, [NotNull] BaseSettings settings, CancellationToken cancellation)
     {
         _displayWriter.Verbosity = settings.Verbose;
         _displayWriter.WriteSummary($"CommandApp running {this.GetType().Assembly.FullName}");

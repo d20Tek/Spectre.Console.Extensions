@@ -8,6 +8,7 @@ using Spectre.Console;
 using Spectre.Console.Cli;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing;
@@ -50,7 +51,7 @@ public class CommandMetadataTests
     [ExcludeFromCodeCoverage]
     internal class MyCommand : IMyCommand
     {
-        public Task<int> Execute(CommandContext context, CommandSettings settings)
+        public Task<int> ExecuteAsync(CommandContext context, CommandSettings settings, CancellationToken cancellation)
         {
             throw new NotImplementedException();
         }

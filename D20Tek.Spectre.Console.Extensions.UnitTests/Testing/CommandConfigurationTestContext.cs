@@ -8,6 +8,7 @@ using Spectre.Console.Cli;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Testing;
 
@@ -192,7 +193,7 @@ public class CommandConfigurationTestContextTests
     }
 
     [ExcludeFromCodeCoverage]
-    private int DelegateCall(CommandContext context, EmptyCommandSettings settings) => 0;
+    private int DelegateCall(CommandContext context, EmptyCommandSettings settings, CancellationToken cancellation) => 0;
 
     [TestMethod]
     public void Configurator_WithCommandAppSettings()

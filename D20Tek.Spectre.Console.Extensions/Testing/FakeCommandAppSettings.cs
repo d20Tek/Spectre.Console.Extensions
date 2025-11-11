@@ -41,6 +41,8 @@ internal class FakeCommandAppSettings(ITypeRegistrar registrar) : ICommandAppSet
     public int MaximumIndirectExamples { get; set; }
     
     public HelpProviderStyle? HelpProviderStyles { get; set; }
-    
+
+    public int CancellationExitCode { get; set; }
+
     Func<Exception, ITypeResolver?, int>? ICommandAppSettings.ExceptionHandler { get; set; }
 }

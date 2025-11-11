@@ -29,6 +29,7 @@ public class FakeCommandAppSettingsTests
             Culture = System.Globalization.CultureInfo.CurrentUICulture,
             MaximumIndirectExamples = 5,
             HelpProviderStyles = helpStyle,
+            CancellationExitCode = 0,
         };
 
         // assert
@@ -41,5 +42,6 @@ public class FakeCommandAppSettingsTests
         Assert.AreEqual(System.Globalization.CultureInfo.CurrentUICulture, appSettings.Culture);
         Assert.AreEqual(5, appSettings.MaximumIndirectExamples);
         Assert.AreEqual(helpStyle, appSettings.HelpProviderStyles);
+        Assert.AreEqual(0, appSettings.CancellationExitCode);
     }
 }

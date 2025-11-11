@@ -29,7 +29,7 @@ public abstract class InteractiveCommandBase : AsyncCommand
     }
 
     /// <inheritdoc />
-    public override async Task<int> ExecuteAsync(CommandContext context)
+    public override async Task<int> ExecuteAsync(CommandContext context, CancellationToken cancellation)
     {
         ShowWelcomeMessage(_console);
         var historyPrompt = new HistoryTextPrompt<string>(GetAppPromptPrefix());

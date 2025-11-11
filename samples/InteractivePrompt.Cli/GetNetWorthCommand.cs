@@ -18,7 +18,7 @@ internal class GetNetWorthCommand : Command<GetNetWorthCommand.Settings>
         public decimal? Max { get; set; }
     }
 
-    public override int Execute(CommandContext context, Settings settings)
+    public override int Execute(CommandContext context, Settings settings, CancellationToken cancellation)
     {
         var prompt = new CurrencyPrompt("Enter your net worth")
                             .WithDefaultValue(1000m)

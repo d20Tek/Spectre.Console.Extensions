@@ -1,6 +1,7 @@
 ﻿using D20Tek.Spectre.Console.Extensions.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Spectre.Console.Cli;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Commands;
@@ -22,7 +23,7 @@ public class InteractiveCommandTests
         var context = new CommandContext([], NullRemainingArguments.Instance, "test", null);
 
         // act
-        var result = await command.ExecuteAsync(context);
+        var result = await command.ExecuteAsync(context, CancellationToken.None);
 
         // assert
         Assert.AreEqual(0, result);
@@ -46,7 +47,7 @@ public class InteractiveCommandTests
         var context = new CommandContext([], NullRemainingArguments.Instance, "test", null);
 
         // act
-        var result = await command.ExecuteAsync(context);
+        var result = await command.ExecuteAsync(context, CancellationToken.None);
 
         // assert
         Assert.AreEqual(0, result);
@@ -69,7 +70,7 @@ public class InteractiveCommandTests
         var context = new CommandContext([], NullRemainingArguments.Instance, "test", null);
 
         // act
-        var result = await command.ExecuteAsync(context);
+        var result = await command.ExecuteAsync(context, CancellationToken.None);
 
         // assert
         Assert.AreEqual(-1, result);
@@ -92,7 +93,7 @@ public class InteractiveCommandTests
         var context = new CommandContext([], NullRemainingArguments.Instance, "test", null);
 
         // act
-        var result = await command.ExecuteAsync(context);
+        var result = await command.ExecuteAsync(context, CancellationToken.None);
 
         // assert
         Assert.AreEqual(0, result);

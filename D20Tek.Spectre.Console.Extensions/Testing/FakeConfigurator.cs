@@ -39,12 +39,14 @@ internal class FakeConfigurator(ITypeRegistrar registrar) : ITestConfigurator
         return new FakeCommandConfigurator(command);
     }
 
-    public ICommandConfigurator AddDelegate<TSettings>(string name, Func<CommandContext, TSettings, int> func)
+    public ICommandConfigurator AddDelegate<TSettings>(
+        string name,
+        Func<CommandContext, TSettings, CancellationToken, int> func)
         where TSettings : CommandSettings
     {
         var command = CommandMetadata.FromDelegate<TSettings>(
             name,
-            (context, settings) => func(context, (TSettings)settings));
+            (context, settings) => func(context, (TSettings)settings, CancellationToken.None));
         Commands.Add(command);
 
         return new FakeCommandConfigurator(command);
@@ -61,12 +63,12 @@ internal class FakeConfigurator(ITypeRegistrar registrar) : ITestConfigurator
         return new FakeBranchConfigurator();
     }
 
-    public ICommandConfigurator AddAsyncDelegate<TSettings>(string name, Func<CommandContext, TSettings, Task<int>> func)
+    public ICommandConfigurator AddAsyncDelegate<TSettings>(string name, Func<CommandContext, TSettings, CancellationToken, Task<int>> func)
         where TSettings : CommandSettings
     {
         var command = CommandMetadata.FromAsyncDelegate<TSettings>(
             name,
-            (context, settings) => func(context, (TSettings)settings));
+            (context, settings) => func(context, (TSettings)settings, CancellationToken.None));
         Commands.Add(command);
 
         return new FakeCommandConfigurator(command);
