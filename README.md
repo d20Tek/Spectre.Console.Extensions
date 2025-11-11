@@ -30,8 +30,8 @@ For future releases, I will continue to investigate integration with other DI fr
 ## Installation
 This libraries are NuGet packages so they are easy to add to your project. To install these packages into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
-PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.50.7
-PM > Install-Package D20Tek.Spectre.Console.Extensions.MoreContainers -Version 1.50.7
+PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.53.1
+PM > Install-Package D20Tek.Spectre.Console.Extensions.MoreContainers -Version 1.53.1
 ``` 
 
 To install in the Visual Studio UI, go to the Tools menu > "Manage NuGet Packages". Then search for D20Tek.Spectre.Console.Extensions and install it from there.

@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release v1.53.1
+* Upgraded Spectre dependencies to latest version 0.53.
+* Handled breaking changes to Command/AsyncCommand Execute methods.
+* Added AnsiConsoleExtensions.WriteMessages & WriteMessagesConditional to write multi-line markup text.
+
 ## Release v1.52.1
 * Upgraded Spectre dependencies to latest version 0.52.
 * Modernized code in Spectre.Console.Extensions, unit tests, and sample projects.
