@@ -1,5 +1,11 @@
 # Release Notes
 
+## Release v1.54.1
+* Upgraded Spectre dependencies to latest version 0.53.
+* Updated library projects to support both .NET 9 & 10.
+* Upgraded unit test and sample projects to .NET 10.
+* Updated build scripts to required .NET 10.
+
 ## Release v1.53.1
 * Upgraded Spectre dependencies to latest version 0.53.
 * Handled breaking changes to Command/AsyncCommand Execute methods.
