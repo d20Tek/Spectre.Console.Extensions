@@ -16,7 +16,7 @@ internal sealed class EchoCommand(IAnsiConsole console) : Command<EchoCommand.Re
 
     private readonly IAnsiConsole _console = console;
 
-    public override int Execute(CommandContext context, Request request, CancellationToken cancellation)
+    protected override int Execute(CommandContext context, Request request, CancellationToken cancellation)
     {
         _console.MarkupLine($"[yellow]echo:[/] {request.Text}");
         return 0;

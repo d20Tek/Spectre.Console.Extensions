@@ -33,7 +33,6 @@ public static class HistoryTextPromptExtensions
     public static HistoryTextPrompt<T> PromptStyle<T>(this HistoryTextPrompt<T> obj, Style style)
     {
         ArgumentNullException.ThrowIfNull(obj);
-        ArgumentNullException.ThrowIfNull(style);
         obj.PromptStyle = style;
         return obj;
     }

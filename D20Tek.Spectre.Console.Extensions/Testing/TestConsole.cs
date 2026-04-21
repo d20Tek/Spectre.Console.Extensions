@@ -115,4 +115,7 @@ public class TestConsole : IAnsiConsole, IDisposable
     }
 
     internal void SetCursor(IAnsiConsoleCursor? cursor) => _cursor = cursor;
+
+    /// <inheritdoc/>
+    public void WriteAnsi(Action<AnsiWriter> action) => action(new AnsiWriter(Profile.Out.Writer));
 }

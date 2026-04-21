@@ -19,11 +19,11 @@ public class InteractiveCommandTests
         input.PushTextWithEnter("exit");
         console.TestInput = input;
 
-        var command = new TestInteractivePrompt(app, console);
+        ICommand command = new TestInteractivePrompt(app, console);
         var context = new CommandContext([], NullRemainingArguments.Instance, "test", null);
 
         // act
-        var result = await command.ExecuteAsync(context, CancellationToken.None);
+        var result = await command.ExecuteAsync(context, new EmptyCommandSettings(), CancellationToken.None);
 
         // assert
         Assert.AreEqual(0, result);
@@ -43,12 +43,11 @@ public class InteractiveCommandTests
         input.PushTextWithEnter("exit");
         console.TestInput = input;
 
-        var command = new TestInteractivePrompt(app, console);
+        ICommand command = new TestInteractivePrompt(app, console);
         var context = new CommandContext([], NullRemainingArguments.Instance, "test", null);
 
         // act
-        var result = await command.ExecuteAsync(context, CancellationToken.None);
-
+        var result = await command.ExecuteAsync(context, new EmptyCommandSettings(), CancellationToken.None);
         // assert
         Assert.AreEqual(0, result);
         StringAssert.StartsWith(console.Output, "Test Starting...");
@@ -66,12 +65,11 @@ public class InteractiveCommandTests
         input.PushTextWithEnter("exit");
         console.TestInput = input;
 
-        var command = new TestInteractivePrompt(app, console);
+        ICommand command = new TestInteractivePrompt(app, console);
         var context = new CommandContext([], NullRemainingArguments.Instance, "test", null);
 
         // act
-        var result = await command.ExecuteAsync(context, CancellationToken.None);
-
+        var result = await command.ExecuteAsync(context, new EmptyCommandSettings(), CancellationToken.None);
         // assert
         Assert.AreEqual(-1, result);
         StringAssert.StartsWith(console.Output, "Test Starting...");
@@ -89,12 +87,11 @@ public class InteractiveCommandTests
         input.PushTextWithEnter("exit");
         console.TestInput = input;
 
-        var command = new TestInteractivePrompt(app, console);
+        ICommand command = new TestInteractivePrompt(app, console);
         var context = new CommandContext([], NullRemainingArguments.Instance, "test", null);
 
         // act
-        var result = await command.ExecuteAsync(context, CancellationToken.None);
-
+        var result = await command.ExecuteAsync(context, new EmptyCommandSettings(), CancellationToken.None);
         // assert
         Assert.AreEqual(0, result);
         StringAssert.StartsWith(console.Output, "Test Starting...");

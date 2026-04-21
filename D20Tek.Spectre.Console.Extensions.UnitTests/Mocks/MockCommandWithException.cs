@@ -9,7 +9,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
 
 internal class MockCommandWithException : Command
 {
-    public override int Execute(CommandContext context, CancellationToken cancellation)
+    protected override int Execute(CommandContext context, CancellationToken cancellation)
     {
         throw new ArgumentOutOfRangeException(nameof(context));
     }

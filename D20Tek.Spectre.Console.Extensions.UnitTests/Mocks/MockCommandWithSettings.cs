@@ -22,7 +22,7 @@ internal class MockCommandWithSettings(IAnsiConsole console) : Command<MockComma
 
     private readonly IAnsiConsole _writer = console;
 
-    public override int Execute(
+    protected override int Execute(
         [NotNull] CommandContext context,
         [NotNull] MockSettings settings,
         CancellationToken cancellation)

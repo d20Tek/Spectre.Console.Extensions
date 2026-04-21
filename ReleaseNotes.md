@@ -1,5 +1,11 @@
 # Release Notes
 
+## Release v1.55.1
+* Upgraded Spectre dependencies to latest version 0.55.2.
+* Handled breaking changes to Command/AsyncCommand Execute methods moving to protected.
+* **NOTE:** This is a breaking change for anyone who has derived from Command or AsyncCommand classes. You will need to change your Execute method to be protected override instead of public override in your CLI projects.
+* Updated other dependencies to latest versions.
+
 ## Release v1.54.1
 * Upgraded Spectre dependencies to latest version 0.54.
 * Updated library projects to support both .NET 9 & 10.

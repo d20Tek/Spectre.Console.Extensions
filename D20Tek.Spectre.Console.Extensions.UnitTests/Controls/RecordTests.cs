@@ -15,7 +15,7 @@ public class RecordTests
     public void ReadLineRequest_WithChanges_ReturnUpdate()
     {
         // arrange
-        var request = new ReadLineRequest(null, null, false, null, [], []);
+        var request = new ReadLineRequest(null, Style.Plain, false, null, [], []);
 
         // act
         var result = request with
@@ -36,7 +36,7 @@ public class RecordTests
     public void InputState_WithChanges_ReturnUpdate()
     {
         // arrange
-        var request = new ReadLineRequest(null, null, false, null, [], []);
+        var request = new ReadLineRequest(null, Style.Plain, false, null, [], []);
         var state = new InputState(null, null, -1, true, null, -1, null, false, false);
 
         // act

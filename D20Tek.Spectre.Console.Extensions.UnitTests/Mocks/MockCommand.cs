@@ -11,7 +11,7 @@ internal class MockCommand(IAnsiConsole console) : Command
 {
     private readonly IAnsiConsole _writer = console;
 
-    public override int Execute(CommandContext context, CancellationToken cancellation)
+    protected override int Execute(CommandContext context, CancellationToken cancellation)
     {
         _writer.WriteLine("Success!");
         return 0;

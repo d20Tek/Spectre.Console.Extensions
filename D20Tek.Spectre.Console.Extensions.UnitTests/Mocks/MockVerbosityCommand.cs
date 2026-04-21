@@ -12,7 +12,7 @@ internal class MockVerbosityCommand(IVerbosityWriter console) : Command<Verbosit
 {
     private readonly IVerbosityWriter _writer = console;
 
-    public override int Execute(CommandContext context, VerbositySettings settings, CancellationToken cancellation)
+    protected override int Execute(CommandContext context, VerbositySettings settings, CancellationToken cancellation)
     {
         _writer.Verbosity = settings.Verbosity;
 
