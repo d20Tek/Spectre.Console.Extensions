@@ -1,5 +1,9 @@
 # Release Notes
 
+## Release v1.56.1
+* Upgraded Spectre dependencies to latest version 0.56.
+* Updated other dependencies to latest versions.
+
 ## Release v1.55.1
 * Upgraded Spectre dependencies to latest version 0.55.2.
 * Handled breaking changes to Command/AsyncCommand Execute methods moving to protected.
