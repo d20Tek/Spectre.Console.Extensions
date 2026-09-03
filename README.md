@@ -25,18 +25,16 @@ Additional Spectre Controls:
 
 Note: Only Microsoft.Extensions.DependencyInjection is implemented in the core extensions package (D20Tek.Spectre.Console.Extensions). The other DI containers have been repackaged into D20Tek.Spectre.Console.Extensions.MoreContainers, so that we could minimize the dependencies of the core package, and only add those dependencies for users that want to use one of those other frameworks. And, our TypeRegistrars continue to work for those different frameworks.
 
-For future releases, I will continue to investigate integration with other DI frameworks and logging integrations.
-
 ## Installation
 This libraries are NuGet packages so they are easy to add to your project. To install these packages into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
-PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.56.1
-PM > Install-Package D20Tek.Spectre.Console.Extensions.MoreContainers -Version 1.56.1
+PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.57.1
+PM > Install-Package D20Tek.Spectre.Console.Extensions.MoreContainers -Version 1.57.1
 ``` 
 
 To install in the Visual Studio UI, go to the Tools menu > "Manage NuGet Packages". Then search for D20Tek.Spectre.Console.Extensions and install it from there.
 
-Read more about the current release in our [Release Notes](ReleaseNotes.md).
+Read more about the current release in our [Changelog](CHANGELOG.md).
 
 ## Usage
 Once you've installed the NuGet package, you can start using it in your Spectre.Console projects.
@@ -147,6 +145,38 @@ namespace D20Tek.CountryService.Cli
 
 Note: these code snippets assume using the Microsoft.Extensions.DependencyInjection framework. But similar sample code also exists for the other DI frameworks.
 
+### Verbosity-Aware Logging
+Because the CommandAppBuilder bridges to a Microsoft.Extensions.DependencyInjection service collection, any command can already inject an `ILogger<T>` once logging is registered. To render log output through Spectre.Console with a minimum log level derived from a verbosity level, call `WithLogging` after configuring a DI container:
+```csharp
+using D20Tek.Spectre.Console.Extensions;
+using D20Tek.Spectre.Console.Extensions.Settings;
+
+return await new CommandAppBuilder()
+                 .WithDIContainer()
+                 .WithLogging(VerbosityLevel.Detailed)
+                 .WithStartup<Startup>()
+                 .WithDefaultCommand<DefaultCommand>()
+                 .Build()
+                 .RunAsync(args);
+```
+
+The verbosity level maps to a minimum `LogLevel` (Quiet -> Error, Minimal -> Warning, Normal -> Information, Detailed -> Debug, Diagnostic -> Trace). You can optionally supply a custom `IAnsiConsole` and configure how entries are rendered:
+```csharp
+builder.WithLogging(
+    VerbosityLevel.Normal,
+    console: AnsiConsole.Console,
+    configure: options =>
+    {
+        options.IncludeCategory = true;
+        options.IncludeTimestamp = true;
+    });
+```
+
+You can also register the provider directly against an `ILoggingBuilder` using `AddSpectreConsole`:
+```csharp
+services.AddLogging(logging => logging.AddSpectreConsole(VerbosityLevel.Normal));
+```
+
 ### Samples:
 For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, please review the following samples:
 
@@ -159,6 +189,7 @@ For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, plea
 * [SimpleInjector.Cli](samples/SimpleInjector.Cli) - Use the SimpleInjector DI framework to build type registrar and resolver.
 * [NoDI.Cli](samples/NoDI.Cli) - Use the CommandAppBuilder to configure a console app that does not use a DI framework.
 * [InteractivePrompt.Cli](samples/InteractivePrompt.Cli) - Create an interactive prompt that can run other registered commands while remaining in the prompt.
+* [Logging.Cli](samples/Logging.Cli) - Use WithLogging to enable verbosity-aware, Spectre-rendered logging and inject an ILogger&lt;T&gt; into a command.
 
 ### Testing Infrastructure
 This library also provides testing classes that help in building your CommandApp unit tests. Using the CommandAppTestContext allows you to easily configure and run commands in isolation.

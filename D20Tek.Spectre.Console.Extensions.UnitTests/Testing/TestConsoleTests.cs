@@ -105,4 +105,34 @@ public class TestConsoleTests
         // assert
         Assert.AreEqual(testCursor, c.Cursor);
     }
+
+    [TestMethod]
+    public void WriteAnsi()
+    {
+        // arranage
+        using var c = new TestConsole();
+
+        // act
+        c.WriteAnsi(writer => writer.Write("ansi output"));
+
+        // assert
+        Assert.Contains("ansi output", c.Output);
+    }
+
+    [TestMethod]
+    public void WriteAnsi_WithProvidedWriter_WritesToOutput()
+    {
+        // arranage
+        using var c = new TestConsole();
+
+        // act
+        c.WriteAnsi(writer =>
+        {
+            Assert.IsNotNull(writer);
+            writer.Write("first ").Write(42);
+        });
+
+        // assert
+        Assert.AreEqual("first 42", c.Output);
+    }
 }

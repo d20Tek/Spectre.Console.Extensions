@@ -15,7 +15,7 @@ The new Extensions.Testing namespace support test infrastructure classes to easi
     <RepositoryType>git</RepositoryType>
     <PackageTags>Spectre; Spectre.Console; CLI; dependency injection; testing; unit test; test infrastructure;</PackageTags>
     <PackageReleaseNotes>Latest Release: Upgrade to .NET 9. And Split off additional dependency injection containers into its own package to minimize dependencies in this core package.
-      For full release notes, please read: https://github.com/d20Tek/Spectre.Console.Extensions/blob/main/ReleaseNotes.md</PackageReleaseNotes>
+      For full release notes, please read: https://github.com/d20Tek/Spectre.Console.Extensions/blob/main/CHANGELOG.md</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <AnalysisLevel>latest</AnalysisLevel>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -33,6 +33,7 @@ The new Extensions.Testing namespace support test infrastructure classes to easi
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Spectre.Console" />
     <PackageReference Include="Spectre.Console.Cli" />
     <PackageReference Include="Wcwidth" />

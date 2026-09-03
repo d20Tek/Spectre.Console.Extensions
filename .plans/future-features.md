@@ -14,7 +14,7 @@ The library's strongest, genuinely differentiating areas are:
 
 ## Tier 1 - High Impact, Fills Genuine Gaps
 
-### 1. Verbosity-Aware Logging Integration (Microsoft.Extensions.Logging)
+### 1. Verbosity-Aware Logging Integration (Microsoft.Extensions.Logging) [DONE]
 - What it adds: Convenience and cohesion around Microsoft.Extensions.Logging, not basic injection support. Specifically:
   - A verbosity bridge that maps the existing VerbosityLevel enum to LogLevel, so the same -v|--verbosity switch that controls prompts and output also sets the minimum log level.
   - An IAnsiConsole-backed logger provider so log output renders through Spectre (consistent styling and markup, and respects TestConsole in tests) instead of the stock AddConsole() provider writing directly to System.Console.
@@ -63,15 +63,8 @@ Round out the "Controls" story with a themed family of culture-aware, validated 
 - Spectre.Console coverage: None. This is a larger investment and is intentionally a stretch goal.
 
 ### 8. Documentation and Changelog Parity
-- What it adds: An api-reference documentation set under docs/ and a CHANGELOG.md following the Keep a Changelog format.
-- Why it matters: Contributor guidelines require both api-reference docs and changelog entries whenever the public API changes. A public launch should include this structure. The repository currently has ReleaseNotes.md but no docs/ folder or CHANGELOG.md.
-
-## Explicitly Deprioritized
-
-These items were considered and removed because they would be thin wrappers over existing Spectre.Console.Cli APIs and risk appearing as padding:
-
-- Global exception handling: Already provided by SetExceptionHandler, PropagateExceptions, and AnsiConsole.WriteException. A builder passthrough or a default styled renderer would be a small convenience helper at most, not a feature.
-- Interceptor pipeline as a headline feature: The ICommandInterceptor mechanism already exists. Only CompositeCommandInterceptor (see Tier 2) is additive, and its value is minor.
+- What it adds: An api-reference documentation set under docs/ to complement the existing CHANGELOG.md.
+- Why it matters: Contributor guidelines require both api-reference docs and changelog entries whenever the public API changes. A public launch should include this structure. The repository now has a CHANGELOG.md following the Keep a Changelog format, but still lacks a docs/ folder.
 
 ## Recommended Splash Focus
 

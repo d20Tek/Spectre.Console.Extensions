@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Logging.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "greet Bob"
+    }
+  }
+}

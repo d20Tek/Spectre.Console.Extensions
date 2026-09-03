@@ -1,4 +1,21 @@
-# Release Notes
+# Changelog
+
+All notable changes to this project are documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+### Added
+- Verbosity-aware logging that renders through Spectre.Console. New public API includes `LoggingCommandAppBuilderExtensions.WithLogging`, `SpectreLoggingExtensions.AddSpectreConsole`, `SpectreConsoleLoggerProvider`, `SpectreConsoleLogger`, `SpectreConsoleLoggerOptions`, and the `VerbosityLevel`/`LogLevel` mapping extensions.
+- New `Logging.Cli` sample that demonstrates enabling verbosity-aware logging with `WithLogging` and injecting `ILogger<T>` into a command.
+
+### Changed
+- Upgraded Spectre dependencies to latest version 0.57.2.
+- Updated other dependencies to latest versions.
+- `SpectreLoggingExtensions.AddSpectreConsole` now sets the logging builder's minimum level from the mapped verbosity, so Debug and Trace entries are emitted when a more detailed verbosity is requested.
+
+### Changed
 
 ## Release v1.56.1
 * Upgraded Spectre dependencies to latest version 0.56.
