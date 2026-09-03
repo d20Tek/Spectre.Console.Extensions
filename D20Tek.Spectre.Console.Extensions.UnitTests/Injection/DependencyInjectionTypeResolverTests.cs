@@ -76,6 +76,6 @@ public class TypeResolverExtensionsTests
         // arrange
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => new DependencyInjectionTypeResolver(null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => new DependencyInjectionTypeResolver(null!));
     }
 }

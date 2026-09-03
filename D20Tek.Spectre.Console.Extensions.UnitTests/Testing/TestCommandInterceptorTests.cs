@@ -59,7 +59,7 @@ public class TestCommandInterceptorTests
         var i = new TestCommandInterceptor();
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => i.Intercept(null, _settings));
+        Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => i.Intercept(null!, _settings));
     }
 
     [TestMethod]
@@ -69,6 +69,6 @@ public class TestCommandInterceptorTests
         var i = new TestCommandInterceptor();
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => i.Intercept(_context, null));
+        Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => i.Intercept(_context, null!));
     }
 }

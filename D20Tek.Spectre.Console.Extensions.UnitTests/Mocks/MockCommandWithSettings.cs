@@ -5,7 +5,6 @@ using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
 
@@ -15,7 +14,7 @@ internal class MockCommandWithSettings(IAnsiConsole console) : Command<MockComma
     internal class MockSettings : CommandSettings
     {
         [CommandOption("-v|--value <TEXT>")]
-        [Description("The verbosity level for this operation (low, med, high).")]
+        [System.ComponentModel.Description("The verbosity level for this operation (low, med, high).")]
         [DefaultValue("default")]
         public string Value { get; set; } = string.Empty; 
     }

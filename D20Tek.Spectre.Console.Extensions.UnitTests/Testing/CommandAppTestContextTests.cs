@@ -32,7 +32,7 @@ public class CommandAppTestContextTests
         Assert.IsNotNull(result);
         Assert.AreEqual(0, result.ExitCode);
         Assert.Contains("Success", result.Output);
-        Assert.AreEqual("test", result.Context.Name);
+        Assert.AreEqual("test", result.Context!.Name);
         Assert.IsInstanceOfType(result.Settings, typeof(EmptyCommandSettings));
     }
 
@@ -137,7 +137,7 @@ public class CommandAppTestContextTests
         Assert.IsNotNull(result);
         Assert.AreEqual(0, result.ExitCode);
         Assert.Contains("Success", result.Output);
-        Assert.AreEqual("test", result.Context.Name);
+        Assert.AreEqual("test", result.Context!.Name);
         Assert.IsInstanceOfType(result.Settings, typeof(EmptyCommandSettings));
     }
 

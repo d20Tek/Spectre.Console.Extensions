@@ -48,7 +48,7 @@ public class TestConsoleInputTests
         var input = new TestConsoleInput();
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => input.PushTextWithEnter(null));
+        Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () => input.PushTextWithEnter(null!));
     }
 
 

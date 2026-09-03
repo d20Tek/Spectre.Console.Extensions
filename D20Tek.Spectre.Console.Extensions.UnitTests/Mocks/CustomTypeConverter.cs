@@ -13,11 +13,11 @@ internal class CustomType
 [ExcludeFromCodeCoverage]
 internal sealed class CustomTypeConverter : TypeConverter
 {
-    public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) =>
+    public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType) =>
         destinationType == typeof(string);
 
-    public override object ConvertTo(
-        ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+    public override object? ConvertTo(
+        ITypeDescriptorContext? context, CultureInfo? culture, object? value, Type destinationType)
     {
         if (value is CustomType custom)
         {

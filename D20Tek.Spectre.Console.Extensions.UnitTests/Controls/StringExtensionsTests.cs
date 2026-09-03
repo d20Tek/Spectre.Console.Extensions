@@ -65,7 +65,7 @@ public class StringExtensionsTests
     public void Repeat_WithNullText_ThrowsException()
     {
         // arrange
-        string text = null;
+        string text = null!;
 
         // act - assert
         Assert.Throws<ArgumentNullException>([ExcludeFromCodeCoverage]() => text.Repeat(5));

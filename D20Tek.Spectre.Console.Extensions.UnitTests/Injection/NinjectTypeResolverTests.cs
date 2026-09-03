@@ -90,6 +90,6 @@ public class NinjectTypeResolverTests
         // arrange
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => new NinjectTypeResolver(null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => new NinjectTypeResolver(null!));
     }
 }

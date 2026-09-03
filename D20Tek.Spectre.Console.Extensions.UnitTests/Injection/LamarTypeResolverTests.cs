@@ -76,6 +76,6 @@ public class LamarTypeResolverTests
         // arrange
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => _ = new LamarTypeResolver(null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => _ = new LamarTypeResolver(null!));
     }
 }

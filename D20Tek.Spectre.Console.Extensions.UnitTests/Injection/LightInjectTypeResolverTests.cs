@@ -90,6 +90,6 @@ public class LightInjectTypeResolverTests
         // arrange
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => new LightInjectTypeResolver(null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => new LightInjectTypeResolver(null!));
     }
 }

@@ -113,7 +113,7 @@ public class CommandAppBuilderTests
         // assert
         Assert.IsNotNull(result);
 
-        var resolver = result.Registrar.Build();
+        var resolver = result.Registrar!.Build();
         Assert.IsNotNull(resolver);
         Assert.IsNotNull(resolver.Resolve(typeof(IMockService)));
     }

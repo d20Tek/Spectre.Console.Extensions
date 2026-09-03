@@ -109,6 +109,6 @@ public class ConsoleVerbosityWriterTests
         // arrange
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => new ConsoleVerbosityWriter(null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => new ConsoleVerbosityWriter(null!));
     }
 }
