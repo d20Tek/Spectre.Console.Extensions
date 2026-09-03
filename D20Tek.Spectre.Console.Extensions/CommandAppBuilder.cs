@@ -1,6 +1,8 @@
 ﻿//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
+using D20Tek.Spectre.Console.Extensions.Injection;
+using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 
 namespace D20Tek.Spectre.Console.Extensions;
@@ -11,14 +13,39 @@ namespace D20Tek.Spectre.Console.Extensions;
 public class CommandAppBuilder
 {
     internal CommandApp? App { get; set; } = null;
-    
+
     internal Action? SetDefaultCommand { get; set; }
 
-    internal ITypeRegistrar? Registrar { get; set; }
+    /// <summary>
+    /// Gets the type registrar configured for this builder, or null if none has been set.
+    /// Exposed so that add-on extension packages can reach the underlying DI container.
+    /// </summary>
+    public ITypeRegistrar? Registrar { get; internal set; }
 
     internal StartupBase? Startup { get; set; }
 
     internal Action? SetCustomConfig { get; set; }
+
+    /// <summary>
+    /// Gets the underlying service collection from the configured registrar. Intended for
+    /// add-on extension packages that need to register additional services (for example
+    /// logging or configuration) into the builder's DI container.
+    /// </summary>
+    /// <returns>The registrar's service collection.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// When no registrar has been configured or the registrar does not support lifetimes.
+    /// Call WithDIContainer before using service-based extensions.
+    /// </exception>
+    public IServiceCollection GetServiceCollection()
+    {
+        if (Registrar is null)
+        {
+            throw new InvalidOperationException(
+                "A DI container is required. Call WithDIContainer before using this extension.");
+        }
+
+        return Registrar.WithLifetimes().Services;
+    }
 
     /// <summary>
     /// Sets up the Startup class to use in this builder.

@@ -7,15 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Public `CommandAppBuilder.Registrar` getter and `CommandAppBuilder.GetServiceCollection()` helper so add-on extension packages can access the builder's DI container.
 - Verbosity-aware logging that renders through Spectre.Console. New public API includes `LoggingCommandAppBuilderExtensions.WithLogging`, `SpectreLoggingExtensions.AddSpectreConsole`, `SpectreConsoleLoggerProvider`, `SpectreConsoleLogger`, `SpectreConsoleLoggerOptions`, and the `VerbosityLevel`/`LogLevel` mapping extensions.
 - New `Logging.Cli` sample that demonstrates enabling verbosity-aware logging with `WithLogging` and injecting `ILogger<T>` into a command.
 
 ### Changed
 - Upgraded Spectre dependencies to latest version 0.57.2.
 - Updated other dependencies to latest versions.
+- `LoggingCommandAppBuilderExtensions.WithLogging` now uses the new `GetServiceCollection()` accessor instead of reaching through the internal registrar.
 - `SpectreLoggingExtensions.AddSpectreConsole` now sets the logging builder's minimum level from the mapped verbosity, so Debug and Trace entries are emitted when a more detailed verbosity is requested.
-
-### Changed
 
 ## Release v1.56.1
 * Upgraded Spectre dependencies to latest version 0.56.

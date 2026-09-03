@@ -1,7 +1,6 @@
 //---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
-using D20Tek.Spectre.Console.Extensions.Injection;
 using D20Tek.Spectre.Console.Extensions.Logging;
 using D20Tek.Spectre.Console.Extensions.Settings;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,13 +41,7 @@ public static class LoggingCommandAppBuilderExtensions
     {
         ArgumentNullException.ThrowIfNull(builder);
 
-        if (builder.Registrar is null)
-        {
-            throw new InvalidOperationException(
-                "WithLogging requires a DI container. Call WithDIContainer before WithLogging.");
-        }
-
-        var services = builder.Registrar.WithLifetimes().Services;
+        var services = builder.GetServiceCollection();
         if (console is not null)
         {
             services.AddSingleton(console);
