@@ -159,6 +159,30 @@ namespace DependencyInjection.Cli
 }
 ```
 
+#### CommandAppBuilder pipeline
+The builder turns a few fluent calls into a fully wired `CommandApp`. Each stage adds one piece - the DI container, your startup, an optional default command - and `Build` assembles them so that when `RunAsync` executes, commands are resolved from the container with their dependencies injected:
+
+```mermaid
+flowchart TD
+    A["new CommandAppBuilder()"] --> B["WithDIContainer()<br/><i>register the DI container</i>"]
+    B --> C["WithStartup&lt;TStartup&gt;()<br/><i>ConfigureServices + ConfigureCommands</i>"]
+    C --> D["WithDefaultCommand&lt;TDefault&gt;()<br/><i>optional</i>"]
+    D --> E["Build()"]
+
+    subgraph Build ["Build() assembles the app"]
+        E --> F["Startup.ConfigureServices(registrar)<br/><i>register your services</i>"]
+        F --> G["new CommandApp(registrar)"]
+        G --> H["apply default command"]
+        H --> I["Startup.ConfigureCommands(config)<br/><i>register commands</i>"]
+    end
+
+    I --> J["RunAsync(args)"]
+    J --> K["Spectre parses args &amp; selects a command"]
+    K --> L["Command resolved from DI container<br/><i>dependencies injected</i>"]
+    L --> M["Command.Execute / ExecuteAsync"]
+    M --> N["returns exit code"]
+```
+
 
 ### Verbosity-Aware Logging
 Because the CommandAppBuilder bridges to a Microsoft.Extensions.DependencyInjection service collection, any command can already inject an `ILogger<T>` once logging is registered. To render log output through Spectre.Console with a minimum log level derived from a verbosity level, call `WithLogging` after configuring a DI container:
