@@ -177,6 +177,38 @@ You can also register the provider directly against an `ILoggingBuilder` using `
 services.AddLogging(logging => logging.AddSpectreConsole(VerbosityLevel.Normal));
 ```
 
+### Configuration and Options Binding
+The separate `D20Tek.Spectre.Console.Extensions.Configuration` package adds Microsoft.Extensions.Configuration and Options binding to the builder without pulling those dependencies into the core package. After configuring a DI container, call `WithConfiguration` to build and register an `IConfiguration`, then `WithOptions<T>` to bind a section to a strongly typed, validated options class:
+```csharp
+return await new CommandAppBuilder()
+                 .WithDIContainer()
+                 .WithConfiguration()
+                 .WithOptions<GreetingOptions>(GreetingOptions.SectionName)
+                 .WithStartup<Startup>()
+                 .WithDefaultCommand<GreetCommand>()
+                 .Build()
+                 .RunAsync(args);
+```
+By default `WithConfiguration` reads from an optional `appsettings.json` file and environment variables. Pass a configure delegate to customize the configuration sources. `WithOptions<T>` binds the named section and validates any data annotations on the options class. Any command can then inject `IConfiguration` or `IOptions<T>` through its constructor. Configuration values remain separate from command-line `CommandSettings`.
+
+You do not have to bind to a strongly typed options class. A command can also inject `IConfiguration` directly and read individual keys or sections:
+```csharp
+internal sealed class InfoCommand(IConfiguration configuration, IAnsiConsole console) : Command
+{
+    protected override int Execute(CommandContext context, CancellationToken cancellation)
+    {
+        var title = configuration["App:Title"];
+        var version = configuration.GetValue<string>("App:Version");
+        var features = configuration.GetSection("App:Features").Get<string[]>() ?? [];
+
+        console.MarkupLineInterpolated($"[bold]{title}[/] v[yellow]{version}[/]");
+        console.MarkupLineInterpolated($"Features: [green]{string.Join(", ", features)}[/]");
+        return 0;
+    }
+}
+```
+
+
 ### Samples:
 For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, please review the following samples:
 
@@ -190,6 +222,7 @@ For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, plea
 * [NoDI.Cli](samples/NoDI.Cli) - Use the CommandAppBuilder to configure a console app that does not use a DI framework.
 * [InteractivePrompt.Cli](samples/InteractivePrompt.Cli) - Create an interactive prompt that can run other registered commands while remaining in the prompt.
 * [Logging.Cli](samples/Logging.Cli) - Use WithLogging to enable verbosity-aware, Spectre-rendered logging and inject an ILogger&lt;T&gt; into a command.
+* [Configuration.Cli](samples/Configuration.Cli) - Use WithConfiguration and WithOptions&lt;T&gt; to bind configuration and inject IOptions&lt;T&gt; into a command.
 
 ### Testing Infrastructure
 This library also provides testing classes that help in building your CommandApp unit tests. Using the CommandAppTestContext allows you to easily configure and run commands in isolation.

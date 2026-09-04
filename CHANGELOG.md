@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Public `CommandAppBuilder.Registrar` getter and `CommandAppBuilder.GetServiceCollection()` helper so add-on extension packages can access the builder's DI container.
 - Verbosity-aware logging that renders through Spectre.Console. New public API includes `LoggingCommandAppBuilderExtensions.WithLogging`, `SpectreLoggingExtensions.AddSpectreConsole`, `SpectreConsoleLoggerProvider`, `SpectreConsoleLogger`, `SpectreConsoleLoggerOptions`, and the `VerbosityLevel`/`LogLevel` mapping extensions.
 - New `Logging.Cli` sample that demonstrates enabling verbosity-aware logging with `WithLogging` and injecting `ILogger<T>` into a command.
+- New `D20Tek.Spectre.Console.Extensions.Configuration` package that adds Microsoft.Extensions.Configuration and Options binding to the builder. New public API includes `ConfigurationCommandAppBuilderExtensions.WithConfiguration` and `ConfigurationCommandAppBuilderExtensions.WithOptions<TOptions>`.
+- New `Configuration.Cli` sample that demonstrates binding configuration with `WithConfiguration` and injecting `IOptions<T>` bound via `WithOptions<TOptions>` into a command.
 
 ### Changed
 - Upgraded Spectre dependencies to latest version 0.57.2.

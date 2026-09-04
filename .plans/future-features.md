@@ -23,7 +23,7 @@ The library's strongest, genuinely differentiating areas are:
 - Spectre.Console coverage: None. Spectre.Console.Cli does not ship ILogger wiring.
 - Important clarification: Basic logger injection already works today with no new code. The DependencyInjectionTypeRegistrar exposes the underlying IServiceCollection via its Services property, and the resolver forwards to IServiceProvider.GetService. A consumer can already call registrar.WithLifetimes().Services.AddLogging(...) in ConfigureServices, and any command can then inject ILogger<T> through its constructor. This feature is therefore about verbosity integration, Spectre-rendered output, and a fluent builder hook, not about enabling injection.
 
-### 2. Configuration and Options Binding (Microsoft.Extensions.Configuration)
+### 2. Configuration and Options Binding (Microsoft.Extensions.Configuration) - DONE
 - What it adds: A new separate package (D20Tek.Spectre.Console.Extensions.Configuration) that wires Microsoft.Extensions.Configuration and Options into the CommandAppBuilder. Two builder hooks:
   - WithConfiguration(...): builds an IConfiguration (appsettings.json plus environment variables by default, with an optional configure delegate) and registers it in the container.
   - WithOptions&lt;T&gt;(sectionName): binds a configuration section to a strongly typed options class, resolvable as IOptions&lt;T&gt;.
@@ -32,6 +32,7 @@ The library's strongest, genuinely differentiating areas are:
 - Packaging decision: Separate package. The code surface is small (roughly two extension methods), but it pulls in 4-5 additional Microsoft.Extensions.Configuration/Options dependencies. Keeping it out of the core package preserves the core's minimal-dependency goal, consistent with the MoreContainers split.
 - Design decision: Keep CommandSettings (CLI args) and IOptions&lt;T&gt; (config) separate; commands decide precedence explicitly. Config-backed defaults for command options can be added later if needed.
 - Implementation note: The builder hooks need access to the container. DONE - CommandAppBuilder now exposes a public ITypeRegistrar? Registrar getter and a public GetServiceCollection() helper that returns the registrar's IServiceCollection (throwing if no DI container is configured). Add-on extension packages (logging, configuration, and future ones) should call GetServiceCollection() rather than reaching through WithLifetimes().Services. The existing WithLogging hook was refactored to use this accessor.
+- Status: DONE - Package implemented with WithConfiguration and WithOptions&lt;T&gt; (data-annotation validated), covered by unit tests, and demonstrated by the Configuration.Cli sample.
 
 ### 3. Additional Prompt Controls
 Round out the "Controls" story with a themed family of culture-aware, validated prompts that follow the existing CurrencyPrompt pattern (IPrompt<T> plus IHasCulture, with a validator and presenter split).
