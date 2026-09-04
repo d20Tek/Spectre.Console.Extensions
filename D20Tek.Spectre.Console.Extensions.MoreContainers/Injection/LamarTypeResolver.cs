@@ -7,14 +7,14 @@ using Spectre.Console.Cli;
 namespace D20Tek.Spectre.Console.Extensions.Injection;
 
 /// <summary>
-/// Type resolver for Spectre.Console that uses the SimpleInjector framework.
+/// Type resolver for Spectre.Console that uses the Lamar framework.
 /// </summary>
 public sealed class LamarTypeResolver : ITypeResolver, IDisposable
 {
     private readonly Container _container;
 
     /// <summary>
-    /// Constructor that takes a container for SimpleInjector.
+    /// Constructor that takes a container for Lamar.
     /// </summary>
     /// <param name="container">Container to use in type resolution.</param>
     public LamarTypeResolver(Container container)

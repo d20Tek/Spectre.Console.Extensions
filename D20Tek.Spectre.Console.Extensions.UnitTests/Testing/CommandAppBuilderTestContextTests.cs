@@ -29,7 +29,7 @@ public class CommandAppBuilderTestContextTests
         Assert.IsNotNull(result);
         Assert.AreEqual(0, result.ExitCode);
         Assert.Contains("Success", result.Output);
-        Assert.AreEqual("mock", result.Context.Name);
+        Assert.AreEqual("mock", result.Context!.Name);
         Assert.IsInstanceOfType(result.Settings, typeof(EmptyCommandSettings));
     }
 
@@ -91,7 +91,7 @@ public class CommandAppBuilderTestContextTests
         Assert.IsNotNull(result);
         Assert.AreEqual(0, result.ExitCode);
         Assert.Contains("Success", result.Output);
-        Assert.AreEqual("mock", result.Context.Name);
+        Assert.AreEqual("mock", result.Context!.Name);
         Assert.IsInstanceOfType(result.Settings, typeof(EmptyCommandSettings));
     }
 

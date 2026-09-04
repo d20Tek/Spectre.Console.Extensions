@@ -2,13 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Spectre.Console Container Extensions</Title>
-    <Version>1.2.1</Version>
-    <Company>d20Tek</Company>
-    <Authors>DarthPedro</Authors>
     <Description>Extensions for common code and patterns when using Spectre.Console CLI app framework. 
 
 The current release contain implementations of ITypeRegistrar and ITypeResolver to integrate the Autofac, Lamar, LightInject, Ninject, and SimpleInjector dependency injection frameworks with Spectre.Console.</Description>
@@ -19,10 +14,11 @@ The current release contain implementations of ITypeRegistrar and ITypeResolver 
     <RepositoryType>git</RepositoryType>
     <PackageTags>Spectre; Spectre.Console; CLI; dependency injection; autofac; lamar; LightInject; Ninject</PackageTags>
     <PackageReleaseNotes>Split off additional dependency injection containers into this package to minimize dependencies in the core package.</PackageReleaseNotes>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\README.md">
+    <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
@@ -33,13 +29,14 @@ The current release contain implementations of ITypeRegistrar and ITypeResolver 
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="9.1.0" />
-    <PackageReference Include="Lamar" Version="16.0.0" />
-    <PackageReference Include="LightInject" Version="7.1.0" />
-    <PackageReference Include="Ninject" Version="3.3.6" />
-    <PackageReference Include="SimpleInjector" Version="5.5.2" />
-    <PackageReference Include="Spectre.Console" Version="0.56.0" />
-    <PackageReference Include="Spectre.Console.Cli" Version="0.55.0" />
+    <PackageReference Include="Autofac" />
+    <PackageReference Include="Lamar" />
+    <PackageReference Include="LightInject" />
+    <PackageReference Include="Ninject" />
+    <PackageReference Include="SimpleInjector" />
+    <PackageReference Include="Spectre.Console" />
+    <PackageReference Include="Spectre.Console.Cli" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>

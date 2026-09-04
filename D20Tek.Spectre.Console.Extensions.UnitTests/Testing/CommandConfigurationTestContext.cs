@@ -226,5 +226,5 @@ public class CommandConfigurationTestContextTests
     }
 
     [ExcludeFromCodeCoverage]
-    private int HandlerMethod(Exception ex, ITypeResolver resolver) => 0;
+    private int HandlerMethod(Exception ex, ITypeResolver? resolver) => 0;
 }

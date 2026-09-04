@@ -63,6 +63,7 @@ public static class CommandAppBuilderExtensions
     /// <param name="container">
     ///     [Optional] Provide pre-registered services container. Creates new instance when not specified.
     /// </param>
+    /// <param name="lifetime">ServiceLifetime for all Register methods, defaults to Singleton.</param>
     /// <returns>Returns the CommandAppBuilder</returns>
     public static CommandAppBuilder WithLightInjectContainer(
         this CommandAppBuilder builder,
@@ -99,6 +100,7 @@ public static class CommandAppBuilderExtensions
     /// <param name="serviceRegistry">
     ///     [Optional] Provide pre-registered services registry. Creates new instance when not specified.
     /// </param>
+    /// <param name="lifetime">ServiceLifetime for all Register methods, defaults to Singleton.</param>
     /// <returns>Returns the CommandAppBuilder</returns>
     public static CommandAppBuilder WithLamarContainer(
         this CommandAppBuilder builder,

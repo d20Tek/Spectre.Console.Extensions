@@ -90,6 +90,6 @@ public class AutofacTypeResolverTests
         // arrange
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => new AutofacTypeResolver(null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => new AutofacTypeResolver(null!));
     }
 }

@@ -2,9 +2,7 @@
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests;
 
@@ -113,7 +111,7 @@ public class CommandAppBuilderTests
         // assert
         Assert.IsNotNull(result);
 
-        var resolver = result.Registrar.Build();
+        var resolver = result.Registrar!.Build();
         Assert.IsNotNull(resolver);
         Assert.IsNotNull(resolver.Resolve(typeof(IMockService)));
     }
@@ -196,5 +194,29 @@ public class CommandAppBuilderTests
 
         // assert
         Assert.AreEqual(0, result);
+    }
+
+    [TestMethod]
+    public void GetServiceCollection_WithDIContainer_ReturnsServices()
+    {
+        // arrange
+        var builder = new CommandAppBuilder().WithDIContainer();
+
+        // act
+        var services = builder.GetServiceCollection();
+
+        // assert
+        Assert.IsNotNull(services);
+    }
+
+    [TestMethod]
+    public void GetServiceCollection_WithoutRegistrar_ThrowsException()
+    {
+        // arrange
+        var builder = new CommandAppBuilder();
+
+        // act - assert
+        Assert.ThrowsExactly<InvalidOperationException>(
+            [ExcludeFromCodeCoverage] () => builder.GetServiceCollection());
     }
 }

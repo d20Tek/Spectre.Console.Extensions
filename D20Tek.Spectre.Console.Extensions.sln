@@ -1,13 +1,15 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.32407.343
+# Visual Studio Version 18
+VisualStudioVersion = 18.9.12120.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".items", ".items", "{1E2AFA48-704D-4E7B-8A90-BB8D79F69E80}"
 	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		Directory.Packages.props = Directory.Packages.props
 		LICENSE = LICENSE
 		README.md = README.md
-		ReleaseNotes.md = ReleaseNotes.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "D20Tek.Spectre.Console.Extensions", "D20Tek.Spectre.Console.Extensions\D20Tek.Spectre.Console.Extensions.csproj", "{D01A1C74-5D45-4761-8BD2-B34004D6C708}"
@@ -41,7 +43,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lamar.Cli", "samples\Lamar.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D20Tek.Spectre.Console.Extensions.MoreContainers", "D20Tek.Spectre.Console.Extensions.MoreContainers\D20Tek.Spectre.Console.Extensions.MoreContainers.csproj", "{0FB8FC0F-B6F1-40E4-9C47-D43CCC6F6746}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "D20Tek.Spectre.Console.Extensions.Configuration", "D20Tek.Spectre.Console.Extensions.Configuration\D20Tek.Spectre.Console.Extensions.Configuration.csproj", "{D0530068-17BE-4379-95A3-4DBD21E7BA00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D20Tek.Spectre.Console.Extensions.Hosting", "D20Tek.Spectre.Console.Extensions.Hosting\D20Tek.Spectre.Console.Extensions.Hosting.csproj", "{65DF1E28-3B82-4636-87CB-9AFAD2B2673E}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractivePrompt.Cli", "samples\InteractivePrompt.Cli\InteractivePrompt.Cli.csproj", "{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging.Cli", "samples\Logging.Cli\Logging.Cli.csproj", "{9903BE21-C7A3-4D12-8919-6DCD04644544}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Configuration.Cli", "samples\Configuration.Cli\Configuration.Cli.csproj", "{17E61A95-44CC-4BCB-9504-A9C3336929B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericHost.Cli", "samples\GenericHost.Cli\GenericHost.Cli.csproj", "{A5B29380-384F-47DB-901C-FF6DD6C2E618}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,10 +101,30 @@ Global
 		{0FB8FC0F-B6F1-40E4-9C47-D43CCC6F6746}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FB8FC0F-B6F1-40E4-9C47-D43CCC6F6746}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FB8FC0F-B6F1-40E4-9C47-D43CCC6F6746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0530068-17BE-4379-95A3-4DBD21E7BA00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0530068-17BE-4379-95A3-4DBD21E7BA00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0530068-17BE-4379-95A3-4DBD21E7BA00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0530068-17BE-4379-95A3-4DBD21E7BA00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65DF1E28-3B82-4636-87CB-9AFAD2B2673E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65DF1E28-3B82-4636-87CB-9AFAD2B2673E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65DF1E28-3B82-4636-87CB-9AFAD2B2673E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65DF1E28-3B82-4636-87CB-9AFAD2B2673E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9903BE21-C7A3-4D12-8919-6DCD04644544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9903BE21-C7A3-4D12-8919-6DCD04644544}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9903BE21-C7A3-4D12-8919-6DCD04644544}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9903BE21-C7A3-4D12-8919-6DCD04644544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17E61A95-44CC-4BCB-9504-A9C3336929B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17E61A95-44CC-4BCB-9504-A9C3336929B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17E61A95-44CC-4BCB-9504-A9C3336929B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17E61A95-44CC-4BCB-9504-A9C3336929B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5B29380-384F-47DB-901C-FF6DD6C2E618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5B29380-384F-47DB-901C-FF6DD6C2E618}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5B29380-384F-47DB-901C-FF6DD6C2E618}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5B29380-384F-47DB-901C-FF6DD6C2E618}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +139,9 @@ Global
 		{379F0F43-AFAB-4DDB-9A7C-5385441BD3B3} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{55CFC515-C6AB-4BCF-8558-F226FF5CC8C2} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 		{3F8EAAF6-6E7B-4AE0-B63A-D0900643E840} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
+		{9903BE21-C7A3-4D12-8919-6DCD04644544} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
+		{17E61A95-44CC-4BCB-9504-A9C3336929B3} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
+		{A5B29380-384F-47DB-901C-FF6DD6C2E618} = {7DADA67F-CBE3-4664-B544-7D0FEA8E5081}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7D1641E6-17C4-4467-946F-C057C45F4A62}

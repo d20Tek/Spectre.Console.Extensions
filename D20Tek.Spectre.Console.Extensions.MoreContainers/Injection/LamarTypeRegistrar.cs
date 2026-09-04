@@ -16,6 +16,7 @@ public sealed class LamarTypeRegistrar : ITypeRegistrar, ISupportLifetimes
     private readonly ServiceLifetime _defaultLifetime;
     private readonly ServiceRegistry _registry;
 
+    /// <inheritdoc />
     public IServiceCollection Services => _registry;
 
     /// <summary>

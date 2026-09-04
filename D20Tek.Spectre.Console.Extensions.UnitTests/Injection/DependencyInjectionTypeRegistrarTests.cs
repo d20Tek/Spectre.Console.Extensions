@@ -133,6 +133,6 @@ public class DependencyInjectionTypeRegistrarTests
 
         // act
         Assert.ThrowsExactly<ArgumentNullException>([ExcludeFromCodeCoverage] () =>
-            registrar.RegisterLazy(typeof(ITestService), null));
+            registrar.RegisterLazy(typeof(ITestService), null!));
     }
 }

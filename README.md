@@ -25,18 +25,24 @@ Additional Spectre Controls:
 
 Note: Only Microsoft.Extensions.DependencyInjection is implemented in the core extensions package (D20Tek.Spectre.Console.Extensions). The other DI containers have been repackaged into D20Tek.Spectre.Console.Extensions.MoreContainers, so that we could minimize the dependencies of the core package, and only add those dependencies for users that want to use one of those other frameworks. And, our TypeRegistrars continue to work for those different frameworks.
 
-For future releases, I will continue to investigate integration with other DI frameworks and logging integrations.
-
 ## Installation
 This libraries are NuGet packages so they are easy to add to your project. To install these packages into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
-PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.56.1
-PM > Install-Package D20Tek.Spectre.Console.Extensions.MoreContainers -Version 1.56.1
+PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.57.1
+PM > Install-Package D20Tek.Spectre.Console.Extensions.Configuration -Version 1.57.1
+PM > Install-Package D20Tek.Spectre.Console.Extensions.Hosting -Version 1.57.1
+PM > Install-Package D20Tek.Spectre.Console.Extensions.MoreContainers -Version 1.57.1
 ``` 
 
 To install in the Visual Studio UI, go to the Tools menu > "Manage NuGet Packages". Then search for D20Tek.Spectre.Console.Extensions and install it from there.
 
-Read more about the current release in our [Release Notes](ReleaseNotes.md).
+Read more about the current release in our [Changelog](CHANGELOG.md).
+
+## Documentation
+Full documentation lives in the [docs](docs) folder:
+- [Introduction](docs/introduction.md) - what the packages are and the problems they solve.
+- [Getting Started](docs/getting-started-detailed.md) - an end-to-end walkthrough, with links to targeted [guides](docs/getting-started-detailed.md#guides).
+- [API Reference](docs/api-reference.md) - the complete public surface, split per topic and package.
 
 ## Usage
 Once you've installed the NuGet package, you can start using it in your Spectre.Console projects.
@@ -147,6 +153,74 @@ namespace D20Tek.CountryService.Cli
 
 Note: these code snippets assume using the Microsoft.Extensions.DependencyInjection framework. But similar sample code also exists for the other DI frameworks.
 
+### Verbosity-Aware Logging
+Because the CommandAppBuilder bridges to a Microsoft.Extensions.DependencyInjection service collection, any command can already inject an `ILogger<T>` once logging is registered. To render log output through Spectre.Console with a minimum log level derived from a verbosity level, call `WithLogging` after configuring a DI container:
+```csharp
+using D20Tek.Spectre.Console.Extensions;
+using D20Tek.Spectre.Console.Extensions.Settings;
+
+return await new CommandAppBuilder()
+                 .WithDIContainer()
+                 .WithLogging(VerbosityLevel.Detailed)
+                 .WithStartup<Startup>()
+                 .WithDefaultCommand<DefaultCommand>()
+                 .Build()
+                 .RunAsync(args);
+```
+
+The verbosity level maps to a minimum `LogLevel` (Quiet -> Error, Minimal -> Warning, Normal -> Information, Detailed -> Debug, Diagnostic -> Trace). You can optionally supply a custom `IAnsiConsole` and configure how entries are rendered:
+```csharp
+builder.WithLogging(
+    VerbosityLevel.Normal,
+    console: AnsiConsole.Console,
+    configure: options =>
+    {
+        options.IncludeCategory = true;
+        options.IncludeTimestamp = true;
+    });
+```
+
+You can also register the provider directly against an `ILoggingBuilder` using `AddSpectreConsole`:
+```csharp
+services.AddLogging(logging => logging.AddSpectreConsole(VerbosityLevel.Normal));
+```
+
+### Configuration and Options Binding
+The separate `D20Tek.Spectre.Console.Extensions.Configuration` package adds Microsoft.Extensions.Configuration and Options binding to the builder without pulling those dependencies into the core package. After configuring a DI container, call `WithConfiguration` to build and register an `IConfiguration`, then `WithOptions<T>` to bind a section to a strongly typed, validated options class:
+```csharp
+return await new CommandAppBuilder()
+                 .WithDIContainer()
+                 .WithConfiguration()
+                 .WithOptions<GreetingOptions>(GreetingOptions.SectionName)
+                 .WithStartup<Startup>()
+                 .WithDefaultCommand<GreetCommand>()
+                 .Build()
+                 .RunAsync(args);
+```
+By default `WithConfiguration` reads from an optional `appsettings.json` file and environment variables. Pass a configure delegate to customize the configuration sources. `WithOptions<T>` binds the named section and validates any data annotations on the options class. Any command can then inject `IConfiguration` or `IOptions<T>` through its constructor. Configuration values remain separate from command-line `CommandSettings`.
+
+See the [package README](D20Tek.Spectre.Console.Extensions.Configuration/README.md) for full usage, and the [Configuration.Cli](samples/Configuration.Cli) sample for a runnable example.
+
+You do not have to bind to a strongly typed options class. A command can also inject `IConfiguration` directly and read individual keys or sections:
+```csharp
+internal sealed class InfoCommand(IConfiguration configuration, IAnsiConsole console) : Command
+{
+    protected override int Execute(CommandContext context, CancellationToken cancellation)
+    {
+        var title = configuration["App:Title"];
+        var version = configuration.GetValue<string>("App:Version");
+        var features = configuration.GetSection("App:Features").Get<string[]>() ?? [];
+
+        console.MarkupLineInterpolated($"[bold]{title}[/] v[yellow]{version}[/]");
+        console.MarkupLineInterpolated($"Features: [green]{string.Join(", ", features)}[/]");
+        return 0;
+    }
+}
+```
+
+### Generic Host Integration
+The separate `D20Tek.Spectre.Console.Extensions.Hosting` package bridges Spectre.Console.Cli to the .NET Generic Host (`Microsoft.Extensions.Hosting`), so the host can own configuration, options, logging, hosted services, and lifetime while command types resolve from the host's service provider. See the [package README](D20Tek.Spectre.Console.Extensions.Hosting/README.md) for full usage, and the [GenericHost.Cli](samples/GenericHost.Cli) sample for a runnable example.
+
 ### Samples:
 For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, please review the following samples:
 
@@ -159,6 +233,9 @@ For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, plea
 * [SimpleInjector.Cli](samples/SimpleInjector.Cli) - Use the SimpleInjector DI framework to build type registrar and resolver.
 * [NoDI.Cli](samples/NoDI.Cli) - Use the CommandAppBuilder to configure a console app that does not use a DI framework.
 * [InteractivePrompt.Cli](samples/InteractivePrompt.Cli) - Create an interactive prompt that can run other registered commands while remaining in the prompt.
+* [Logging.Cli](samples/Logging.Cli) - Use WithLogging to enable verbosity-aware, Spectre-rendered logging and inject an ILogger&lt;T&gt; into a command.
+* [Configuration.Cli](samples/Configuration.Cli) - Use WithConfiguration and WithOptions&lt;T&gt; to bind configuration and inject IOptions&lt;T&gt; into a command.
+* [GenericHost.Cli](samples/GenericHost.Cli) - Bridge Spectre.Console.Cli to the .NET Generic Host so commands resolve from the host's service provider, injecting IOptions&lt;T&gt;, IAnsiConsole, and ILogger&lt;T&gt;.
 
 ### Testing Infrastructure
 This library also provides testing classes that help in building your CommandApp unit tests. Using the CommandAppTestContext allows you to easily configure and run commands in isolation.

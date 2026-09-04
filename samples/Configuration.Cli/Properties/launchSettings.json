@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Configuration.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "greet Bob --repeat 2"
+    },
+    "Configuration.Cli blank": {
+      "commandName": "Project",
+      "commandLineArgs": "greet John"
+    },
+    "Configuration.Cli info": {
+      "commandName": "Project",
+      "commandLineArgs": "info"
+    }
+  }
+}

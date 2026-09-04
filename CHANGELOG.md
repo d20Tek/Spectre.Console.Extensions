@@ -1,4 +1,33 @@
-# Release Notes
+# Changelog
+
+All notable changes to this project are documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## Release v1.57.1
+### Added
+- Public `CommandAppBuilder.Registrar` getter and `CommandAppBuilder.GetServiceCollection()` helper so add-on extension packages can access the builder's DI container.
+- Verbosity-aware logging that renders through Spectre.Console. New public API includes `LoggingCommandAppBuilderExtensions.WithLogging`, `SpectreLoggingExtensions.AddSpectreConsole`, `SpectreConsoleLoggerProvider`, `SpectreConsoleLogger`, `SpectreConsoleLoggerOptions`, and the `VerbosityLevel`/`LogLevel` mapping extensions.
+- New `Logging.Cli` sample that demonstrates enabling verbosity-aware logging with `WithLogging` and injecting `ILogger<T>` into a command.
+- New `D20Tek.Spectre.Console.Extensions.Configuration` package that adds Microsoft.Extensions.Configuration and Options binding to the builder. New public API includes `ConfigurationCommandAppBuilderExtensions.WithConfiguration` and `ConfigurationCommandAppBuilderExtensions.WithOptions<TOptions>`.
+- New `Configuration.Cli` sample that demonstrates binding configuration with `WithConfiguration` and injecting `IOptions<T>` bound via `WithOptions<TOptions>` into a command.
+- New `D20Tek.Spectre.Console.Extensions.Hosting` package that bridges Spectre.Console.Cli to the .NET Generic Host (`Microsoft.Extensions.Hosting`). New public API includes `HostCommandAppExtensions.RunCommandAppAsync`, `HostCommandAppExtensions.RunCommandApp`, `HostCommandAppExtensions.CreateCommandApp`, `HostCommandAppExtensions.CreateCommandAppBuilder`, and the `HostCommandAppBuilder` fluent builder. Run-time registrations captured from Spectre resolve through a composite provider, so a Spectre-registered type can depend on another Spectre-registered type while host services still take precedence.
+- New `HostStartupBase` and `HostStartupExtensions.WithStartup<TStartup>` in the Hosting package, providing a host-aware startup that splits `ConfigureServices` (run pre-build against the host's `IServiceCollection`) from `ConfigureCommands` (applied post-build when the CommandApp is built).
+- New `GenericHost.Cli` sample that demonstrates bridging Spectre.Console.Cli to the .NET Generic Host so command types resolve from the host's service provider.
+- New `docs/` documentation site with a flat structure: an introduction, a detailed getting-started guide, targeted `guide-*.md` task guides, and an `api-reference.md` hub with per-topic and per-package `api-reference-*.md` references covering the core, Configuration, Hosting, and MoreContainers packages.
+
+### Changed
+- Upgraded Spectre dependencies to latest version 0.57.2.
+- Updated other dependencies to latest versions.
+- `LoggingCommandAppBuilderExtensions.WithLogging` now uses the new `GetServiceCollection()` accessor instead of reaching through the internal registrar.
+- `SpectreLoggingExtensions.AddSpectreConsole` now sets the logging builder's minimum level from the mapped verbosity, so Debug and Trace entries are emitted when a more detailed verbosity is requested.
+- The Configuration and MoreContainers packages now ship dedicated, package-specific README files (packed as the NuGet package readme) instead of the root repository README.
+- Enabled SourceLink, symbol packages (snupkg), deterministic builds, and a shared package icon across all four NuGet packages, and consolidated shared package metadata and version into `Directory.Build.props`.
+
+### Fixed
+- Corrected XML documentation on `LamarTypeResolver`, which previously referred to SimpleInjector instead of Lamar.
+- Enabled XML documentation generation for the MoreContainers package and documented the previously undocumented public members so all four packages ship complete API docs.
 
 ## Release v1.56.1
 * Upgraded Spectre dependencies to latest version 0.56.

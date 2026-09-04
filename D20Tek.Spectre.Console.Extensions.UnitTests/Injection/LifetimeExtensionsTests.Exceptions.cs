@@ -19,7 +19,7 @@ public class LifetimeExtensionsExceptionTests
         // arrange
         var container = new ServiceCollection();
         var registrar = new DependencyInjectionTypeRegistrar(container);
-        TestService instance = null;
+        TestService instance = null!;
 
         // act - assert
         Assert.Throws<ArgumentNullException>([ExcludeFromCodeCoverage]() => 
@@ -35,7 +35,7 @@ public class LifetimeExtensionsExceptionTests
 
         // act - assert
         Assert.Throws<ArgumentNullException>([ExcludeFromCodeCoverage] () =>
-            registrar.WithLifetimes().RegisterSingleton<ITestService, TestService>(null));
+            registrar.WithLifetimes().RegisterSingleton<ITestService, TestService>(null!));
     }
 
     [TestMethod]
@@ -47,7 +47,7 @@ public class LifetimeExtensionsExceptionTests
 
         // act - assert
         Assert.Throws<ArgumentNullException>([ExcludeFromCodeCoverage] () =>
-            registrar.WithLifetimes().RegisterScoped<ITestService, TestService>(null));
+            registrar.WithLifetimes().RegisterScoped<ITestService, TestService>(null!));
     }
 
     [TestMethod]
@@ -59,6 +59,6 @@ public class LifetimeExtensionsExceptionTests
 
         // act - assert
         Assert.Throws<ArgumentNullException>([ExcludeFromCodeCoverage] () =>
-            registrar.WithLifetimes().RegisterTransient<ITestService, TestService>(null));
+            registrar.WithLifetimes().RegisterTransient<ITestService, TestService>(null!));
     }
 }

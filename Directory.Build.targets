@@ -1,0 +1,18 @@
+<Project>
+
+  <!--
+	Package-only settings. These apply solely to packable projects (the four NuGet packages that
+	set GeneratePackageOnBuild=True), so sample and test projects are unaffected. This file is
+	imported after each project's own settings, so GeneratePackageOnBuild is known here.
+  -->
+  <PropertyGroup Condition="'$(GeneratePackageOnBuild)' == 'True'">
+	<PackageIcon>icon.png</PackageIcon>
+	<IncludeSymbols>true</IncludeSymbols>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(GeneratePackageOnBuild)' == 'True'">
+	<None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
+
+</Project>

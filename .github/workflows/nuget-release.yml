@@ -49,6 +49,16 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Publish Spectre.Console.Extensions.Configuration (local)
+      run: dotnet nuget push D20Tek.Spectre.Console.Extensions.Configuration.${VERSION}.nupkg --source https://nuget.pkg.github.com/d20Tek/index.json --api-key ${GITHUB_TOKEN}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish Spectre.Console.Extensions.Hosting (local)
+      run: dotnet nuget push D20Tek.Spectre.Console.Extensions.Hosting.${VERSION}.nupkg --source https://nuget.pkg.github.com/d20Tek/index.json --api-key ${GITHUB_TOKEN}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Publish Spectre.Console.Extensions (nuget.org)
       run: dotnet nuget push D20Tek.Spectre.Console.Extensions.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_API_KEY}
       env:
@@ -56,5 +66,15 @@ jobs:
 
     - name: Publish Spectre.Console.Extensions.MoreContainers (nuget.org)
       run: dotnet nuget push D20Tek.Spectre.Console.Extensions.MoreContainers.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_API_KEY}
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+
+    - name: Publish Spectre.Console.Extensions.Configuration (nuget.org)
+      run: dotnet nuget push D20Tek.Spectre.Console.Extensions.Configuration.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_API_KEY}
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+
+    - name: Publish Spectre.Console.Extensions.Hosting (nuget.org)
+      run: dotnet nuget push D20Tek.Spectre.Console.Extensions.Hosting.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_API_KEY}
       env:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}

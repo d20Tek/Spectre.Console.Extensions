@@ -23,7 +23,7 @@ public class LightInjectTypeRegistrarExceptionTests
         // arrange
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => new LightInjectTypeRegistrar(null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => new LightInjectTypeRegistrar(null!));
     }
 
     [TestMethod]
@@ -34,7 +34,7 @@ public class LightInjectTypeRegistrarExceptionTests
         var registrar = new LightInjectTypeRegistrar(services);
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.Register(null, typeof(TestService)));
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.Register(null!, typeof(TestService)));
     }
 
     [TestMethod]
@@ -45,7 +45,7 @@ public class LightInjectTypeRegistrarExceptionTests
         var registrar = new LightInjectTypeRegistrar(services);
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.Register(typeof(ITestService), null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.Register(typeof(ITestService), null!));
     }
 
     [TestMethod]
@@ -56,7 +56,7 @@ public class LightInjectTypeRegistrarExceptionTests
         var registrar = new LightInjectTypeRegistrar(services);
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterInstance(null, new TestService()));
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterInstance(null!, new TestService()));
     }
 
     [TestMethod]
@@ -67,7 +67,7 @@ public class LightInjectTypeRegistrarExceptionTests
         var registrar = new LightInjectTypeRegistrar(services);
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterInstance(typeof(ITestService), null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterInstance(typeof(ITestService), null!));
     }
 
     [TestMethod]
@@ -78,7 +78,7 @@ public class LightInjectTypeRegistrarExceptionTests
         var registrar = new LightInjectTypeRegistrar(services);
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterLazy(null, null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterLazy(null!, null!));
     }
 
     [TestMethod]
@@ -89,6 +89,6 @@ public class LightInjectTypeRegistrarExceptionTests
         var registrar = new LightInjectTypeRegistrar(services);
 
         // act
-        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterLazy(typeof(ITestService), null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => registrar.RegisterLazy(typeof(ITestService), null!));
     }
 }

@@ -103,7 +103,7 @@ public class FakeConfiguratorTests
     [ExcludeFromCodeCoverage]
     internal class TestHelpProvider : IHelpProvider
     {
-        public IEnumerable<IRenderable> Write(ICommandModel model, ICommandInfo command) => 
+        public IEnumerable<IRenderable> Write(ICommandModel model, ICommandInfo? command) => 
             Enumerable.Empty<IRenderable>();
     }
 
