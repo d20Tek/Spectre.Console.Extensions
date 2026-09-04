@@ -1,6 +1,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Spectre.Console.Cli;
 
@@ -58,7 +59,8 @@ public static class HostCommandAppExtensions
 
     /// <summary>
     /// Creates a <see cref="CommandApp"/> bridged to the host using a
-    /// <see cref="HostTypeRegistrar"/>, applying the supplied command configuration.
+    /// <see cref="HostTypeRegistrar"/>, applying any registered <see cref="HostStartupBase"/>
+    /// command configuration followed by the supplied command configuration.
     /// </summary>
     /// <param name="host">The built host whose service provider resolves command types.</param>
     /// <param name="configure">Delegate to configure the CommandApp's commands.</param>
@@ -71,6 +73,12 @@ public static class HostCommandAppExtensions
 
         var registrar = new HostTypeRegistrar(host.Services);
         var app = new CommandApp(registrar);
+
+        foreach (var startup in host.Services.GetServices<HostStartupBase>())
+        {
+            app.Configure(config => startup.ConfigureCommands(config));
+        }
+
         app.Configure(configure);
         return app;
     }

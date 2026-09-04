@@ -156,6 +156,44 @@ internal sealed class GreetCommand(
 
 Command-line `CommandSettings` remain separate from host-driven configuration and options, so each command decides precedence explicitly.
 
+### Organizing setup with a startup class
+
+For larger apps, `HostStartupBase` keeps service registration and command configuration in one reusable place. Because the host owns the container and is immutable once built, the startup's two responsibilities run in different phases: `ConfigureServices` runs before the host is built (against the host's `IServiceCollection`), and `ConfigureCommands` runs after the host is built (when the CommandApp is created).
+
+```csharp
+using D20Tek.Spectre.Console.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Spectre.Console.Cli;
+
+internal sealed class AppStartup : HostStartupBase
+{
+    public override void ConfigureServices(IServiceCollection services)
+    {
+        services.AddSingleton<IGreetingService, GreetingService>();
+    }
+
+    public override IConfigurator ConfigureCommands(IConfigurator config)
+    {
+        config.AddCommand<GreetCommand>("greet");
+        return config;
+    }
+}
+```
+
+Register it on the host builder with `WithStartup<TStartup>()`. Its `ConfigureServices` runs immediately, and its `ConfigureCommands` is applied automatically when the CommandApp is built:
+
+```csharp
+var builder = Host.CreateApplicationBuilder(args);
+builder.WithStartup<AppStartup>();
+
+var host = builder.Build();
+
+return await host.CreateCommandAppBuilder()
+                 .RunAsync(args);
+```
+
+`WithStartup` works with the `IHost` extension methods too, and you can still add more commands through `ConfigureCommands` or the `configure` delegate; startup commands are applied first.
+
 ## Public API
 
 - `HostCommandAppExtensions.CreateCommandAppBuilder(this IHost)` - creates a fluent `HostCommandAppBuilder`.
@@ -163,6 +201,8 @@ Command-line `CommandSettings` remain separate from host-driven configuration an
 - `HostCommandAppExtensions.RunCommandAppAsync(this IHost, string[], Action<IConfigurator>)` - creates and runs a `CommandApp` asynchronously.
 - `HostCommandAppExtensions.RunCommandApp(this IHost, string[], Action<IConfigurator>)` - creates and runs a `CommandApp` synchronously.
 - `HostCommandAppBuilder` - fluent builder with `WithDefaultCommand<T>`, `ConfigureCommands`, `Build`, `RunAsync`, and `Run`.
+- `HostStartupBase` - host-aware startup base with `ConfigureServices(IServiceCollection)` (pre-build) and `ConfigureCommands(IConfigurator)` (post-build).
+- `HostStartupExtensions.WithStartup<TStartup>(this IHostApplicationBuilder)` - registers a `HostStartupBase` and runs its `ConfigureServices` pre-build.
 - `HostTypeRegistrar` / `HostTypeResolver` / `HostRegistration` - the bridge types that capture Spectre's run-time registrations and resolve them from the host provider.
 
 ## Sample

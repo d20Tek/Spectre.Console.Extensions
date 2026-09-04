@@ -1,6 +1,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Spectre.Console.Cli;
 
@@ -62,7 +63,8 @@ public sealed class HostCommandAppBuilder
 
     /// <summary>
     /// Builds the CommandApp bridged to the host, applying the default command and command
-    /// configuration specified on this builder.
+    /// configuration specified on this builder. When a <see cref="HostStartupBase"/> was
+    /// registered on the host (via WithStartup), its ConfigureCommands is applied as well.
     /// </summary>
     /// <returns>Returns the HostCommandAppBuilder.</returns>
     public HostCommandAppBuilder Build()
@@ -71,6 +73,12 @@ public sealed class HostCommandAppBuilder
         var app = new CommandApp(registrar);
 
         _setDefaultCommand?.Invoke(app);
+
+        var startups = _host.Services.GetServices<HostStartupBase>();
+        foreach (var startup in startups)
+        {
+            app.Configure(config => startup.ConfigureCommands(config));
+        }
 
         if (_configureCommands is not null)
         {
