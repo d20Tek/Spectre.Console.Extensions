@@ -1,38 +1,91 @@
-# d20Tek Spectre.Console Extensions
 [![CI Build](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-ci.yml/badge.svg)](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-ci.yml)
-[![Official Build](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-official.yml/badge.svg)](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/spectre-console-extensions-official.yml)
 [![NuGet Release](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/nuget-release.yml/badge.svg)](https://github.com/d20Tek/Spectre.Console.Extensions/actions/workflows/nuget-release.yml)
+[![NuGet](https://img.shields.io/nuget/v/D20Tek.Spectre.Console.Extensions.svg)](https://www.nuget.org/packages/D20Tek.Spectre.Console.Extensions/)
+# d20Tek Spectre.Console Extensions
 
-## Introduction
-This package provides extensions for common code and patterns when using Spectre.Console CLI app framework [SpectreConsole](https://github.com/spectreconsole/spectre.console).
+Extensions and helpers that streamline building Spectre.Console applications. This library focuses on reducing boilerplate around dependency injection, configuration, testing, and common CLI patterns.
 
-The current releases contain implementations of ITypeRegistrar and ITypeResolver for the following DI frameworks:
-- Microsoft.Extensions.DependencyInjection
-- Autofac
-- Lamar
-- LightInject
-- Ninject
+It is designed for developers who want Spectre.Console’s power without hand‑rolling DI registrars, command wiring, or test harnesses.
 
-We also support the CommandAppBuilder to easily create, configure, and run your instance of Spectre.Console.CommandApp.
+## Overview
+Spectre.Console is a strong foundation for building .NET CLI applications, but real-world apps quickly need:
 
-The new Spectre.Console.Extensions.Testing namespace supports test infrastructure classes to easily test commands, configuration, and end-to-end functionaly runs. There are various CommandAppTextContext classes and helpers that simplify unit test boilerplate code.
+- Dependency injection
+- Configuration binding
+- Command registration
+- Testing infrastructure
+- Reusable prompts and controls
 
-Additional Spectre Controls:
-- **CurrencyPrompt** - TextPrompt (culture-aware) for currency input validation and conversion to decimal value.
-- **CurrencyPresenter** - show currency in a culture-aware way, including abbreviations for large values.
-- **HistoryTextPrompt&lt;T&gt;** - duplicates TextPrompt and add ability to remember previous entries and use arrow up/down keys to navigate the list.
-- **Table** extension to add a separator row.
+This library provides a set of extensions that integrate these concerns cleanly into Spectre.Console’s CommandApp model.
 
-Note: Only Microsoft.Extensions.DependencyInjection is implemented in the core extensions package (D20Tek.Spectre.Console.Extensions). The other DI containers have been repackaged into D20Tek.Spectre.Console.Extensions.MoreContainers, so that we could minimize the dependencies of the core package, and only add those dependencies for users that want to use one of those other frameworks. And, our TypeRegistrars continue to work for those different frameworks.
+## Features
+- CommandAppBuilder — a fluent builder for configuring DI, commands, settings, and configuration.
+- Dependency Injection Support — built-in support for Microsoft.Extensions.DependencyInjection, plus optional packages for Autofac, Lamar, LightInject, and Ninject.
+- Configuration Binding — automatic binding of command settings from configuration sources.
+- Testing Infrastructure — helpers for end-to-end command testing using CommandAppTestContext.
+- Reusable Controls — additional prompts and helpers for common CLI scenarios.
+- Sample Applications — practical examples demonstrating DI, configuration, and testing patterns.
+
+## Why This Library Exists
+Spectre.Console provides excellent primitives, but real-world CLI applications often require:
+
+- Dependency injection
+- Configuration
+- Testability
+- Structured command registration
+
+Developers frequently end up writing custom DI registrars, configuration binders, and test harnesses. This library consolidates those patterns into a consistent, reusable set of extensions that I found useful in my own console applications.
+
+## Quickstart
+
+A minimal example showing DI, configuration, and command registration:
+
+```
+var builder = CommandAppBuilder.Create()
+    .WithCommand<HelloCommand>()
+    .WithConfiguration(args)
+    .WithServices(services =>
+    {
+        services.AddSingleton<IMyService, MyService>();
+    });
+
+return builder.Build().Run(args);
+```
+
+A simple command:
+
+```
+public class HelloCommand : Command<HelloSettings>
+{
+    private readonly IMyService _service;
+
+    public HelloCommand(IMyService service)
+    {
+        _service = service;
+    }
+
+    public override int Execute(CommandContext context, HelloSettings settings)
+    {
+        _service.Run();
+        return 0;
+    }
+}
+```
 
 ## Installation
 This libraries are NuGet packages so they are easy to add to your project. To install these packages into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
+// core package
 PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.57.1
+// optional integration with Microsoft.Extensions.Configuration and Options binding
 PM > Install-Package D20Tek.Spectre.Console.Extensions.Configuration -Version 1.57.1
+// optional integration with .NET generic host
 PM > Install-Package D20Tek.Spectre.Console.Extensions.Hosting -Version 1.57.1
+// additional DI containers
 PM > Install-Package D20Tek.Spectre.Console.Extensions.MoreContainers -Version 1.57.1
 ``` 
+
+The D20Tek.Spectre.Console.Extensions.MoreContainers package adds support for Autofac, Lamar, LightInject, and Ninject.
 
 To install in the Visual Studio UI, go to the Tools menu > "Manage NuGet Packages". Then search for D20Tek.Spectre.Console.Extensions and install it from there.
 
@@ -106,52 +159,6 @@ namespace DependencyInjection.Cli
 }
 ```
 
-### With Custom Code in Program
-You do not need to use the CommandAppBuilder. It is still possible to write custom code your Program.Main method. And that can be simpler for small console applications. 
-
-To add dependency injection this way, you can do the following:
-```csharp
-using D20Tek.Samples.Common.Commands;
-using D20Tek.Samples.Common.Services;
-using D20Tek.Spectre.Console.Extensions.Injection;
-using Microsoft.Extensions.DependencyInjection;
-using Spectre.Console.Cli;
-
-namespace D20Tek.CountryService.Cli
-{
-    public class Program
-    {
-        public static async Task<int> Main(string[] args)
-        {
-            // Create the DI container.
-            var services = new ServiceCollection();
-
-            // configure services here...
-            services.AddSingleton<IDisplayWriter, ConsoleDisplayWriter>();
-            var registrar = new DependencyInjectionTypeRegistrar(services);
-
-            // Create the CommandApp with specified command type and type registrar.
-            var app = new CommandApp<DefaultCommand>(registrar);
-
-            // Configure any commands in the application.
-            app.Configure(config =>
-            {
-                config.CaseSensitivity(CaseSensitivity.None);
-                config.SetApplicationName("Basic.Cli");
-                config.ValidateExamples();
-
-                config.AddCommand<DefaultCommand>("default")
-                    .WithDescription("Default command that displays some text.")
-                    .WithExample(new[] { "default", "--verbose", "high" });
-            });
-
-            return await app.RunAsync(args);
-        }
-    }
-}
-```
-
-Note: these code snippets assume using the Microsoft.Extensions.DependencyInjection framework. But similar sample code also exists for the other DI frameworks.
 
 ### Verbosity-Aware Logging
 Because the CommandAppBuilder bridges to a Microsoft.Extensions.DependencyInjection service collection, any command can already inject an `ILogger<T>` once logging is registered. To render log output through Spectre.Console with a minimum log level derived from a verbosity level, call `WithLogging` after configuring a DI container:
