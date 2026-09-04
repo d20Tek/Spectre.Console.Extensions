@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\D20Tek.Spectre.Console.Extensions.Configuration\D20Tek.Spectre.Console.Extensions.Configuration.csproj" />
+    <ProjectReference Include="..\D20Tek.Spectre.Console.Extensions.Hosting\D20Tek.Spectre.Console.Extensions.Hosting.csproj" />
     <ProjectReference Include="..\D20Tek.Spectre.Console.Extensions.MoreContainers\D20Tek.Spectre.Console.Extensions.MoreContainers.csproj" />
     <ProjectReference Include="..\D20Tek.Spectre.Console.Extensions\D20Tek.Spectre.Console.Extensions.csproj" />
     <ProjectReference Include="..\samples\DependencyInjection.Cli\DependencyInjection.Cli.csproj" />

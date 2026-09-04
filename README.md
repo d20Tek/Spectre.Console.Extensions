@@ -29,6 +29,8 @@ Note: Only Microsoft.Extensions.DependencyInjection is implemented in the core e
 This libraries are NuGet packages so they are easy to add to your project. To install these packages into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
 PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.57.1
+PM > Install-Package D20Tek.Spectre.Console.Extensions.Configuration -Version 1.57.1
+PM > Install-Package D20Tek.Spectre.Console.Extensions.Hosting -Version 1.57.1
 PM > Install-Package D20Tek.Spectre.Console.Extensions.MoreContainers -Version 1.57.1
 ``` 
 
@@ -208,6 +210,8 @@ internal sealed class InfoCommand(IConfiguration configuration, IAnsiConsole con
 }
 ```
 
+### Generic Host Integration
+The separate `D20Tek.Spectre.Console.Extensions.Hosting` package bridges Spectre.Console.Cli to the .NET Generic Host (`Microsoft.Extensions.Hosting`), so the host can own configuration, options, logging, hosted services, and lifetime while command types resolve from the host's service provider. See the [package README](D20Tek.Spectre.Console.Extensions.Hosting/README.md) for full usage, and the [GenericHost.Cli](samples/GenericHost.Cli) sample for a runnable example.
 
 ### Samples:
 For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, please review the following samples:
@@ -223,6 +227,7 @@ For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, plea
 * [InteractivePrompt.Cli](samples/InteractivePrompt.Cli) - Create an interactive prompt that can run other registered commands while remaining in the prompt.
 * [Logging.Cli](samples/Logging.Cli) - Use WithLogging to enable verbosity-aware, Spectre-rendered logging and inject an ILogger&lt;T&gt; into a command.
 * [Configuration.Cli](samples/Configuration.Cli) - Use WithConfiguration and WithOptions&lt;T&gt; to bind configuration and inject IOptions&lt;T&gt; into a command.
+* [GenericHost.Cli](samples/GenericHost.Cli) - Bridge Spectre.Console.Cli to the .NET Generic Host so commands resolve from the host's service provider, injecting IOptions&lt;T&gt;, IAnsiConsole, and ILogger&lt;T&gt;.
 
 ### Testing Infrastructure
 This library also provides testing classes that help in building your CommandApp unit tests. Using the CommandAppTestContext allows you to easily configure and run commands in isolation.

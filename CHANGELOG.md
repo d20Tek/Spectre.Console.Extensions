@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New `Logging.Cli` sample that demonstrates enabling verbosity-aware logging with `WithLogging` and injecting `ILogger<T>` into a command.
 - New `D20Tek.Spectre.Console.Extensions.Configuration` package that adds Microsoft.Extensions.Configuration and Options binding to the builder. New public API includes `ConfigurationCommandAppBuilderExtensions.WithConfiguration` and `ConfigurationCommandAppBuilderExtensions.WithOptions<TOptions>`.
 - New `Configuration.Cli` sample that demonstrates binding configuration with `WithConfiguration` and injecting `IOptions<T>` bound via `WithOptions<TOptions>` into a command.
+- New `D20Tek.Spectre.Console.Extensions.Hosting` package that bridges Spectre.Console.Cli to the .NET Generic Host (`Microsoft.Extensions.Hosting`). New public API includes `HostCommandAppExtensions.RunCommandAppAsync`, `HostCommandAppExtensions.RunCommandApp`, `HostCommandAppExtensions.CreateCommandApp`, `HostCommandAppExtensions.CreateCommandAppBuilder`, and the `HostCommandAppBuilder` fluent builder. Run-time registrations captured from Spectre resolve through a composite provider, so a Spectre-registered type can depend on another Spectre-registered type while host services still take precedence.
+- New `GenericHost.Cli` sample that demonstrates bridging Spectre.Console.Cli to the .NET Generic Host so command types resolve from the host's service provider.
 
 ### Changed
 - Upgraded Spectre dependencies to latest version 0.57.2.
