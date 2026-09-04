@@ -4,9 +4,6 @@
     <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Spectre.Console Container Extensions</Title>
-    <Version>1.2.1</Version>
-    <Company>d20Tek</Company>
-    <Authors>DarthPedro</Authors>
     <Description>Extensions for common code and patterns when using Spectre.Console CLI app framework. 
 
 The current release contain implementations of ITypeRegistrar and ITypeResolver to integrate the Autofac, Lamar, LightInject, Ninject, and SimpleInjector dependency injection frameworks with Spectre.Console.</Description>
@@ -17,10 +14,11 @@ The current release contain implementations of ITypeRegistrar and ITypeResolver 
     <RepositoryType>git</RepositoryType>
     <PackageTags>Spectre; Spectre.Console; CLI; dependency injection; autofac; lamar; LightInject; Ninject</PackageTags>
     <PackageReleaseNotes>Split off additional dependency injection containers into this package to minimize dependencies in the core package.</PackageReleaseNotes>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\README.md">
+    <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

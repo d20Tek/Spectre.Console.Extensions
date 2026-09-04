@@ -193,6 +193,8 @@ return await new CommandAppBuilder()
 ```
 By default `WithConfiguration` reads from an optional `appsettings.json` file and environment variables. Pass a configure delegate to customize the configuration sources. `WithOptions<T>` binds the named section and validates any data annotations on the options class. Any command can then inject `IConfiguration` or `IOptions<T>` through its constructor. Configuration values remain separate from command-line `CommandSettings`.
 
+See the [package README](D20Tek.Spectre.Console.Extensions.Configuration/README.md) for full usage, and the [Configuration.Cli](samples/Configuration.Cli) sample for a runnable example.
+
 You do not have to bind to a strongly typed options class. A command can also inject `IConfiguration` directly and read individual keys or sections:
 ```csharp
 internal sealed class InfoCommand(IConfiguration configuration, IAnsiConsole console) : Command

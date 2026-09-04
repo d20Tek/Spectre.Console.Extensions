@@ -1,3 +1,5 @@
+[![NuGet](https://img.shields.io/nuget/v/D20Tek.Spectre.Console.Extensions.Hosting.svg)](https://www.nuget.org/packages/D20Tek.Spectre.Console.Extensions.Hosting)
+
 # D20Tek.Spectre.Console.Extensions.Hosting
 
 `D20Tek.Spectre.Console.Extensions.Hosting` bridges [Spectre.Console.Cli](https://spectreconsole.net/cli/) to the .NET Generic Host (`Microsoft.Extensions.Hosting`). It lets the host own configuration, options binding, logging, hosted services, and application lifetime, while your command types resolve from the host's service provider.

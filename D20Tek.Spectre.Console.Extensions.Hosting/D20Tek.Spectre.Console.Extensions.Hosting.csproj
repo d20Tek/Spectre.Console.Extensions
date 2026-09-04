@@ -4,13 +4,9 @@
     <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Spectre.Console Generic Host Extensions</Title>
-    <Version>1.2.1</Version>
-    <Company>d20Tek</Company>
-    <Authors>d20Tek</Authors>
     <Description>Extensions for common code and patterns when using Spectre.Console CLI app framework.
 
-The current release bridges the .NET Generic Host (HostApplicationBuilder / IHostBuilder) to Spectre.Console.Cli, so CLI commands resolve from the host's already-built IServiceProvider and can inject IConfiguration, IOptions&lt;T&gt;, ILogger&lt;T&gt;, and any hosted services. It provides a low-level IHost.RunCommandAppAsync extension and a fluent HostCommandAppBuilder. This capability lives in a separate package to keep the core package's dependencies minimal.</Description>
-    <Copyright>Copyright (c) d20Tek.</Copyright>
+&lt;T&gt;, ILogger&lt;T&gt;, and any hosted services. It provides a low-level IHost.RunCommandAppAsync extension and a fluent HostCommandAppBuilder. This capability lives in a separate package to keep the core package's dependencies minimal.</Description>
     <PackageProjectUrl>https://github.com/d20Tek/Spectre.Console.Extensions</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/d20Tek/Spectre.Console.Extensions</RepositoryUrl>

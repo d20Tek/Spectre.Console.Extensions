@@ -21,6 +21,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated other dependencies to latest versions.
 - `LoggingCommandAppBuilderExtensions.WithLogging` now uses the new `GetServiceCollection()` accessor instead of reaching through the internal registrar.
 - `SpectreLoggingExtensions.AddSpectreConsole` now sets the logging builder's minimum level from the mapped verbosity, so Debug and Trace entries are emitted when a more detailed verbosity is requested.
+- The Configuration and MoreContainers packages now ship dedicated, package-specific README files (packed as the NuGet package readme) instead of the root repository README.
+- Enabled SourceLink, symbol packages (snupkg), deterministic builds, and a shared package icon across all four NuGet packages, and consolidated shared package metadata and version into `Directory.Build.props`.
+
+### Fixed
+- Corrected XML documentation on `LamarTypeResolver`, which previously referred to SimpleInjector instead of Lamar.
+- Enabled XML documentation generation for the MoreContainers package and documented the previously undocumented public members so all four packages ship complete API docs.
 
 ## Release v1.56.1
 * Upgraded Spectre dependencies to latest version 0.56.

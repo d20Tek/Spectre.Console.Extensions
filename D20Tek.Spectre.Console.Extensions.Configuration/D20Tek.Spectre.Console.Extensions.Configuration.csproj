@@ -4,13 +4,9 @@
     <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Spectre.Console Configuration Extensions</Title>
-    <Version>1.2.1</Version>
-    <Company>d20Tek</Company>
-    <Authors>d20Tek</Authors>
     <Description>Extensions for common code and patterns when using Spectre.Console CLI app framework.
 
-The current release wires Microsoft.Extensions.Configuration and Options binding into the CommandAppBuilder, so CLI commands can inject IConfiguration and IOptions&lt;T&gt; alongside the existing dependency injection container. It provides fluent WithConfiguration and WithOptions builder hooks. This capability lives in a separate package to keep the core package's dependencies minimal.</Description>
-    <Copyright>Copyright (c) d20Tek.</Copyright>
+&lt;T&gt; alongside the existing dependency injection container. It provides fluent WithConfiguration and WithOptions builder hooks. This capability lives in a separate package to keep the core package's dependencies minimal.</Description>
     <PackageProjectUrl>https://github.com/d20Tek/Spectre.Console.Extensions</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/d20Tek/Spectre.Console.Extensions</RepositoryUrl>
@@ -22,7 +18,7 @@ The current release wires Microsoft.Extensions.Configuration and Options binding
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\README.md">
+    <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

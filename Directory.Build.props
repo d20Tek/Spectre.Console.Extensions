@@ -7,4 +7,24 @@
 		<WarningLevel>5</WarningLevel>
 	</PropertyGroup>
 
+	<!-- Shared package metadata (applied to all projects; only packable projects produce packages). -->
+	<PropertyGroup>
+		<VersionPrefix>1.2.1</VersionPrefix>
+		<Company>d20Tek</Company>
+		<Authors>DarthPedro</Authors>
+		<Copyright>Copyright (c) d20Tek.</Copyright>
+	</PropertyGroup>
+
+	<!-- Reproducible build settings for reliable SourceLink and deterministic output. -->
+	<PropertyGroup>
+		<Deterministic>true</Deterministic>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	</PropertyGroup>
+
+	<!-- Only mark builds as CI builds on the CI server, so local builds stay path-friendly. -->
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
 </Project>
