@@ -13,7 +13,6 @@
 
   <ItemGroup Condition="'$(GeneratePackageOnBuild)' == 'True'">
 	<None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="\" Visible="false" />
-	<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>
