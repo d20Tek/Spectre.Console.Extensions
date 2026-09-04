@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New `D20Tek.Spectre.Console.Extensions.Hosting` package that bridges Spectre.Console.Cli to the .NET Generic Host (`Microsoft.Extensions.Hosting`). New public API includes `HostCommandAppExtensions.RunCommandAppAsync`, `HostCommandAppExtensions.RunCommandApp`, `HostCommandAppExtensions.CreateCommandApp`, `HostCommandAppExtensions.CreateCommandAppBuilder`, and the `HostCommandAppBuilder` fluent builder. Run-time registrations captured from Spectre resolve through a composite provider, so a Spectre-registered type can depend on another Spectre-registered type while host services still take precedence.
 - New `HostStartupBase` and `HostStartupExtensions.WithStartup<TStartup>` in the Hosting package, providing a host-aware startup that splits `ConfigureServices` (run pre-build against the host's `IServiceCollection`) from `ConfigureCommands` (applied post-build when the CommandApp is built).
 - New `GenericHost.Cli` sample that demonstrates bridging Spectre.Console.Cli to the .NET Generic Host so command types resolve from the host's service provider.
+- New `docs/` documentation site with a flat structure: an introduction, a detailed getting-started guide, targeted `guide-*.md` task guides, and an `api-reference.md` hub with per-topic and per-package `api-reference-*.md` references covering the core, Configuration, Hosting, and MoreContainers packages.
 
 ### Changed
 - Upgraded Spectre dependencies to latest version 0.57.2.

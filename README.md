@@ -38,6 +38,12 @@ To install in the Visual Studio UI, go to the Tools menu > "Manage NuGet Package
 
 Read more about the current release in our [Changelog](CHANGELOG.md).
 
+## Documentation
+Full documentation lives in the [docs](docs) folder:
+- [Introduction](docs/introduction.md) - what the packages are and the problems they solve.
+- [Getting Started](docs/getting-started-detailed.md) - an end-to-end walkthrough, with links to targeted [guides](docs/getting-started-detailed.md#guides).
+- [API Reference](docs/api-reference.md) - the complete public surface, split per topic and package.
+
 ## Usage
 Once you've installed the NuGet package, you can start using it in your Spectre.Console projects.
 If you would like basic information about how to build Spectre.Console CommandApps, please read: https://darthpedro.net/lessons-cli/.
