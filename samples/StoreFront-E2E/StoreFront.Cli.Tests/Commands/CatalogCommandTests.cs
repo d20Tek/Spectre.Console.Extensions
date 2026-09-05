@@ -43,8 +43,8 @@ public sealed class CatalogCommandTests
         var result = context.Run(["catalog"]);
 
         // Assert
-        StringAssert.Contains(result.Output, "COF-001");
-        StringAssert.Contains(result.Output, "House Blend Coffee");
+        Assert.Contains("COF-001", result.Output);
+        Assert.Contains("House Blend Coffee", result.Output);
     }
 
     [TestMethod]
@@ -58,7 +58,7 @@ public sealed class CatalogCommandTests
         var result = context.Run(["catalog"]);
 
         // Assert
-        StringAssert.Contains(result.Output, "8 product(s) in catalog.");
+        Assert.Contains("8 product(s) in catalog.", result.Output);
     }
 
     [TestMethod]
@@ -73,6 +73,6 @@ public sealed class CatalogCommandTests
 
         // Assert
         Assert.AreEqual(0, result.ExitCode);
-        StringAssert.Contains(result.Output, "0 product(s) in catalog.");
+        Assert.Contains("0 product(s) in catalog.", result.Output);
     }
 }

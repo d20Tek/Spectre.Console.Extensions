@@ -21,10 +21,8 @@ public sealed class CatalogServiceTests
         var products = service.GetProducts();
 
         // Assert
-        Assert.AreEqual(8, products.Count);
-        CollectionAssert.AreEqual(
-            products.Select(p => p.Sku).ToList(),
-            products.Select(p => p.Sku).OrderBy(s => s).ToList());
+        Assert.HasCount(8, products);
+        Assert.AreSequenceEqual(products.Select(p => p.Sku).ToList(), [.. products.Select(p => p.Sku).OrderBy(s => s)]);
     }
 
     [TestMethod]
@@ -39,7 +37,7 @@ public sealed class CatalogServiceTests
         var products = service.GetProducts();
 
         // Assert
-        Assert.AreEqual(0, products.Count);
+        Assert.IsEmpty(products);
     }
 
     [TestMethod]

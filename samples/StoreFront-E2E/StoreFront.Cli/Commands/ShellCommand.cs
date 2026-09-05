@@ -33,5 +33,5 @@ internal sealed class ShellCommand(ICommandApp app, IOptions<StoreOptions> optio
 
     /// <inheritdoc />
     protected override void ShowExitMessage(IAnsiConsole console) =>
-        console.MarkupLine("[green]Thanks for visiting StoreFront![/]");
+        console.MarkupLine($"[green]Thanks for visiting the {_options.Name}![/]");
 }

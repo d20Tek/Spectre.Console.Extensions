@@ -3,6 +3,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 using D20Tek.Spectre.Console.Extensions;
 using D20Tek.Spectre.Console.Extensions.Configuration;
+using D20Tek.Spectre.Console.Extensions.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using StoreFront.Cli.Commands;
 using StoreFront.Cli.Configuration;
@@ -33,7 +34,7 @@ public static class StoreApp
             .WithDIContainer()
             .WithConfiguration()
             .WithOptions<StoreOptions>(StoreOptions.SectionName)
-            .WithLogging()
+            .WithLogging(VerbosityLevel.Minimal)
             .WithStartup<Startup>()
             .WithDefaultCommand<ShellCommand>()
             .Build();

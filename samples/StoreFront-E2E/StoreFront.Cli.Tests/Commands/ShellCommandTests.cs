@@ -59,7 +59,7 @@ public sealed class ShellCommandTests
         await RunAsync(command);
 
         // Assert
-        StringAssert.Contains(console.Output, "Welcome to the StoreFront shell.");
+        Assert.Contains("Welcome to the StoreFront shell.", console.Output);
     }
 
     [TestMethod]
@@ -72,7 +72,7 @@ public sealed class ShellCommandTests
         await RunAsync(command);
 
         // Assert
-        StringAssert.Contains(console.Output, "Thanks for visiting StoreFront!");
+        Assert.Contains("Thanks for visiting", console.Output);
     }
 
     [TestMethod]
@@ -85,7 +85,7 @@ public sealed class ShellCommandTests
         await RunAsync(command);
 
         // Assert
-        StringAssert.Contains(console.Output, "store>");
+        Assert.Contains("store>", console.Output);
     }
 
     [TestMethod]
@@ -99,9 +99,9 @@ public sealed class ShellCommandTests
 
         // Assert
         Assert.AreEqual(0, result);
-        Assert.AreEqual(1, app.Invocations.Count);
+        Assert.HasCount(1, app.Invocations);
         var forwarded = app.Invocations[0].Where(a => !string.IsNullOrWhiteSpace(a)).ToArray();
-        CollectionAssert.AreEqual(new[] { "catalog" }, forwarded);
+        Assert.AreSequenceEqual(["catalog"], forwarded);
     }
 
     [TestMethod]
@@ -115,7 +115,6 @@ public sealed class ShellCommandTests
 
         // Assert
         var forwarded = app.Invocations[0].Where(a => !string.IsNullOrWhiteSpace(a)).ToArray();
-        CollectionAssert.AreEqual(
-            new[] { "checkout", "item", "COF001:2" }, forwarded);
+        Assert.AreSequenceEqual(["checkout", "item", "COF001:2"], forwarded);
     }
 }

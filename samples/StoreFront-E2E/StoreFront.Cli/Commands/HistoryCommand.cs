@@ -18,21 +18,15 @@ internal sealed class HistoryCommand(
     IReceiptService receipts,
     IOptions<StoreOptions> options,
     IAnsiConsole console)
-    : Command<HistoryCommand.Settings>
+    : Command<EmptyCommandSettings>
 {
     private readonly IReceiptService _receipts = receipts;
     private readonly StoreOptions _options = options.Value;
     private readonly IAnsiConsole _console = console;
 
-    /// <summary>
-    /// Settings for the history command.
-    /// </summary>
-    internal sealed class Settings : CommandSettings
-    {
-    }
-
     /// <inheritdoc />
-    protected override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)
+    protected override int Execute(
+        CommandContext context, EmptyCommandSettings settings, CancellationToken cancellationToken)
     {
         var transactions = _receipts.GetTransactions();
         if (transactions.Count == 0)

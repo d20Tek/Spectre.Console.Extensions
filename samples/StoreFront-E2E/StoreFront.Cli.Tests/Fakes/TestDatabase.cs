@@ -25,13 +25,11 @@ internal sealed class TestDatabase : IDisposable
         _connection = new SqliteConnection("DataSource=:memory:");
         _connection.Open();
 
-        using (var context = CreateContext())
+        using var context = CreateContext();
+        context.Database.EnsureCreated();
+        if (seed)
         {
-            context.Database.EnsureCreated();
-            if (seed)
-            {
-                SeedData.EnsureSeeded(context);
-            }
+            SeedData.EnsureSeeded(context);
         }
     }
 

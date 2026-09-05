@@ -32,7 +32,7 @@ public sealed class ReceiptServiceTests
         var transactions = service.GetTransactions();
 
         // Assert
-        Assert.AreEqual(0, transactions.Count);
+        Assert.HasCount(0, transactions);
     }
 
     [TestMethod]
@@ -48,8 +48,8 @@ public sealed class ReceiptServiceTests
         var transactions = service.GetTransactions();
 
         // Assert
-        Assert.AreEqual(1, transactions.Count);
-        Assert.AreEqual(1, transactions[0].Lines.Count);
+        Assert.HasCount(1, transactions);
+        Assert.HasCount(1, transactions[0].Lines);
     }
 
     [TestMethod]
@@ -67,7 +67,7 @@ public sealed class ReceiptServiceTests
         // Assert
         Assert.IsNotNull(transaction);
         Assert.AreEqual(id, transaction.Id);
-        Assert.AreEqual(1, transaction.Lines.Count);
+        Assert.HasCount(1, transaction.Lines);
     }
 
     [TestMethod]

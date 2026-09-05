@@ -43,8 +43,8 @@ public sealed class StoreAppE2ETests
 
         // Assert
         Assert.AreEqual(0, result.ExitCode);
-        StringAssert.Contains(result.Output, "COF-001");
-        StringAssert.Contains(result.Output, "8 product(s) in catalog.");
+        Assert.Contains("COF-001", result.Output);
+        Assert.Contains("8 product(s) in catalog.", result.Output);
     }
 
     [TestMethod]
@@ -57,9 +57,9 @@ public sealed class StoreAppE2ETests
 
         // Assert
         Assert.AreEqual(0, checkout.ExitCode);
-        StringAssert.Contains(checkout.Output, "House Blend Coffee");
+        Assert.Contains("House Blend Coffee", checkout.Output);
         Assert.AreEqual(0, history.ExitCode);
-        StringAssert.Contains(history.Output, "1 transaction(s).");
+        Assert.Contains("1 transaction(s).", history.Output);
     }
 
     [TestMethod]
@@ -80,6 +80,6 @@ public sealed class StoreAppE2ETests
 
         // Assert
         Assert.AreEqual(1, result.ExitCode);
-        StringAssert.Contains(result.Output, "No transaction found with id 999.");
+        Assert.Contains("No transaction found with id 999.", result.Output);
     }
 }

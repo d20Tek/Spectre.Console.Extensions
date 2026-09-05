@@ -44,9 +44,9 @@ public sealed class CheckoutCommandTests
 
         // Assert
         Assert.AreEqual(0, result.ExitCode);
-        StringAssert.Contains(result.Output, "House Blend Coffee");
-        StringAssert.Contains(result.Output, "Ceramic Mug");
-        StringAssert.Contains(result.Output, "Total");
+        Assert.Contains("House Blend Coffee", result.Output);
+        Assert.Contains("Ceramic Mug", result.Output);
+        Assert.Contains("Total", result.Output);
     }
 
     [TestMethod]
@@ -75,7 +75,7 @@ public sealed class CheckoutCommandTests
 
         // Assert
         Assert.AreEqual(1, result.ExitCode);
-        StringAssert.Contains(result.Output, "Invalid item 'COF-001'.");
+        Assert.Contains("Invalid item 'COF-001'.", result.Output);
     }
 
     [TestMethod]
@@ -90,7 +90,7 @@ public sealed class CheckoutCommandTests
 
         // Assert
         Assert.AreEqual(1, result.ExitCode);
-        StringAssert.Contains(result.Output, "Invalid item");
+        Assert.Contains("Invalid item", result.Output);
     }
 
     [TestMethod]
@@ -105,7 +105,7 @@ public sealed class CheckoutCommandTests
 
         // Assert
         Assert.AreEqual(1, result.ExitCode);
-        StringAssert.Contains(result.Output, "Invalid item 'COF-001:abc'.");
+        Assert.Contains("Invalid item 'COF-001:abc'.", result.Output);
     }
 
     [TestMethod]
@@ -120,7 +120,7 @@ public sealed class CheckoutCommandTests
 
         // Assert
         Assert.AreEqual(1, result.ExitCode);
-        StringAssert.Contains(result.Output, "Unknown product SKU 'NOPE-999'.");
+        Assert.Contains("Unknown product SKU 'NOPE-999'.", result.Output);
     }
 
     [TestMethod]
@@ -135,7 +135,7 @@ public sealed class CheckoutCommandTests
 
         // Assert
         Assert.AreEqual(1, result.ExitCode);
-        StringAssert.Contains(result.Output, "must be greater than zero");
+        Assert.Contains("must be greater than zero", result.Output);
     }
 
     [TestMethod]
@@ -150,7 +150,7 @@ public sealed class CheckoutCommandTests
 
         // Assert
         Assert.AreNotEqual(0, result.ExitCode);
-        StringAssert.Contains(result.Output, "At least one --item is required.");
+        Assert.Contains("At least one --item is required.", result.Output);
     }
 
     [TestMethod]

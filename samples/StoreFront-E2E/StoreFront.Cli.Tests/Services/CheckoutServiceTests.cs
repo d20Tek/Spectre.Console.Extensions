@@ -35,8 +35,8 @@ public sealed class CheckoutServiceTests
         Assert.AreEqual(expectedSubtotal, transaction.Subtotal);
         Assert.AreEqual(decimal.Round(expectedSubtotal * 0.10m, 2), transaction.Tax);
         Assert.AreEqual(transaction.Subtotal + transaction.Tax, transaction.Total);
-        Assert.AreEqual(2, transaction.Lines.Count);
-        Assert.IsTrue(transaction.Id > 0);
+        Assert.HasCount(2, transaction.Lines);
+        Assert.IsGreaterThan(0, transaction.Id);
     }
 
     [TestMethod]

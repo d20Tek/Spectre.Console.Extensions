@@ -12,20 +12,14 @@ namespace StoreFront.Cli.Commands;
 /// Lists the products available in the store catalog in a formatted table.
 /// </summary>
 internal sealed class CatalogCommand(ICatalogService catalog, IAnsiConsole console)
-    : Command<CatalogCommand.Settings>
+    : Command<EmptyCommandSettings>
 {
     private readonly ICatalogService _catalog = catalog;
     private readonly IAnsiConsole _console = console;
 
-    /// <summary>
-    /// Settings for the catalog command.
-    /// </summary>
-    internal sealed class Settings : CommandSettings
-    {
-    }
-
     /// <inheritdoc />
-    protected override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)
+    protected override int Execute(
+        CommandContext context, EmptyCommandSettings settings, CancellationToken cancellationToken)
     {
         var products = _catalog.GetProducts();
 

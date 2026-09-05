@@ -24,8 +24,7 @@ internal static class TestStoreServices
     /// <param name="context">The command app test context.</param>
     /// <param name="db">The in-memory test database whose contexts are injected.</param>
     /// <param name="options">Optional store options; defaults are used when null.</param>
-    public static void Register(
-        CommandAppTestContext context, TestDatabase db, StoreOptions? options = null)
+    public static void Register(CommandAppTestContext context, TestDatabase db, StoreOptions? options = null)
     {
         var services = context.Registrar.WithLifetimes().Services;
         services.AddLogging();

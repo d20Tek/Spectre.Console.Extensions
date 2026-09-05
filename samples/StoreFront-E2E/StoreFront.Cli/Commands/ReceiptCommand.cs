@@ -41,8 +41,7 @@ internal sealed class ReceiptCommand(
         var transaction = _receipts.FindById(settings.TransactionId);
         if (transaction is null)
         {
-            _console.MarkupLineInterpolated(
-                $"[red]No transaction found with id {settings.TransactionId}.[/]");
+            _console.MarkupLineInterpolated($"[red]No transaction found with id {settings.TransactionId}.[/]");
             return 1;
         }
 

@@ -14,8 +14,7 @@ public sealed class CatalogService(StoreDbContext context) : ICatalogService
     private readonly StoreDbContext _context = context;
 
     /// <inheritdoc />
-    public IReadOnlyList<Product> GetProducts() =>
-        _context.Products.AsNoTracking().OrderBy(p => p.Sku).ToList();
+    public IReadOnlyList<Product> GetProducts() => [.. _context.Products.AsNoTracking().OrderBy(p => p.Sku)];
 
     /// <inheritdoc />
     public Product? FindBySku(string sku)
