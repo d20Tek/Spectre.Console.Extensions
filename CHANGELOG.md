@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New `HostStartupBase` and `HostStartupExtensions.WithStartup<TStartup>` in the Hosting package, providing a host-aware startup that splits `ConfigureServices` (run pre-build against the host's `IServiceCollection`) from `ConfigureCommands` (applied post-build when the CommandApp is built).
 - New `GenericHost.Cli` sample that demonstrates bridging Spectre.Console.Cli to the .NET Generic Host so command types resolve from the host's service provider.
 - New `docs/` documentation site with a flat structure: an introduction, a detailed getting-started guide, targeted `guide-*.md` task guides, and an `api-reference.md` hub with per-topic and per-package `api-reference-*.md` references covering the core, Configuration, Hosting, and MoreContainers packages.
+- New `StoreFront-E2E` flagship sample: an interactive store front CLI backed by Entity Framework Core and SQLite that combines the `CommandAppBuilder` pipeline, dependency injection, configuration and options binding, verbosity-aware logging, the currency and table controls, and an interactive shell default command, along with a companion test project demonstrating the unit, command, and end-to-end testing helpers.
 
 ### Changed
 - Upgraded Spectre dependencies to latest version 0.57.2.

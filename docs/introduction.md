@@ -144,6 +144,10 @@ public sealed class GreetCommand : Command
 
 That is the entire setup. From here you can layer in configuration binding, verbosity-aware logging, Generic Host integration, an alternative DI container, or the extra prompt controls, each through a single additional call. The [Getting Started](getting-started-detailed.md) guide walks through these in order, and the targeted [guides](getting-started-detailed.md#guides) cover each feature in depth.
 
+## Flagship sample: StoreFront-E2E
+
+If you prefer to learn from a complete application, the [StoreFront-E2E](https://github.com/d20Tek/Spectre.Console.Extensions/tree/main/samples/StoreFront-E2E) sample brings the pieces together in one place. It is a small interactive store front CLI, backed by an Entity Framework Core SQLite database, that combines the `CommandAppBuilder` pipeline, dependency injection, configuration and options binding, verbosity-aware logging, the currency and table controls, and an interactive shell default command. A companion test project shows the library's testing helpers in action across unit, command, and end-to-end tests. It is a good reference for how these features fit together in a realistic application.
+
 ## Links
 
 - **Getting Started:** [End-to-end walkthrough](getting-started-detailed.md)
