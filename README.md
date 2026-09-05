@@ -255,6 +255,7 @@ The separate `D20Tek.Spectre.Console.Extensions.Hosting` package bridges Spectre
 ### Samples:
 For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, please review the following samples:
 
+* [StoreFront-E2E](samples/StoreFront-E2E) - Flagship end-to-end sample: an interactive store CLI backed by EF Core + SQLite that combines the CommandAppBuilder pipeline, dependency injection, configuration/options binding, verbosity-aware logging, the currency and table controls, an interactive shell default command, and the testing helpers (unit, command, and end-to-end tests).
 * [Basic Cli with DI](samples/Basic.Cli) - full listing for code in the Usage - Custom Code section above.
 * [DependencyInjection.Cli](samples/DependencyInjection.Cli) - More elaborate use of Microsoft.Extensions.DependencyInjection registrar and resolver. Along with using the CommandAppBuilder to remove some of the creation complexity.
 * [Autofac.Cli](samples/Autofac.Cli) - Use the Autofac DI framework to build type registrar and resolver.
@@ -267,6 +268,44 @@ For more detailed examples on how to use D20Tek.Spectre.Console.Extensions, plea
 * [Logging.Cli](samples/Logging.Cli) - Use WithLogging to enable verbosity-aware, Spectre-rendered logging and inject an ILogger&lt;T&gt; into a command.
 * [Configuration.Cli](samples/Configuration.Cli) - Use WithConfiguration and WithOptions&lt;T&gt; to bind configuration and inject IOptions&lt;T&gt; into a command.
 * [GenericHost.Cli](samples/GenericHost.Cli) - Bridge Spectre.Console.Cli to the .NET Generic Host so commands resolve from the host's service provider, injecting IOptions&lt;T&gt;, IAnsiConsole, and ILogger&lt;T&gt;.
+
+### Flagship sample: StoreFront-E2E
+The [StoreFront-E2E](samples/StoreFront-E2E) sample is a small but complete store CLI that demonstrates how the extension points fit together in one runnable application. It is organized as two projects:
+
+* `StoreFront.Cli` - an interactive store front backed by an EF Core SQLite database.
+* `StoreFront.Cli.Tests` - unit, command, and end-to-end tests that exercise the CLI using the library's testing helpers.
+
+What it showcases:
+
+* CommandAppBuilder pipeline wiring `WithDIContainer`, `WithConfiguration`, `WithOptions<StoreOptions>`, `WithLogging`, `WithStartup<Startup>`, and `WithDefaultCommand<ShellCommand>`.
+* An interactive shell (built on `InteractiveCommandBase`) as the default command, so the catalog, checkout, receipt, and history commands can be run in a single resident session.
+* Dependency injection of EF Core `StoreDbContext` and store services (`ICatalogService`, `ICheckoutService`, `IReceiptService`) into commands.
+* Configuration binding from `appsettings.json` into a strongly typed `StoreOptions` (store name, currency culture, tax rate, and database path).
+* Verbosity-aware logging injected as `ILogger<T>` into the checkout service.
+* The currency presenter and table separator controls used to render catalog listings and receipts.
+* Database transactions: a checkout is persisted within an explicit EF Core transaction; receipts and history read those persisted transactions back.
+
+Testing patterns it demonstrates:
+
+* Service-level unit tests running against an isolated in-memory SQLite connection.
+* Command-level tests using `CommandAppTestContext` with store services registered in the container.
+* End-to-end tests using `CommandAppE2ERunner` that invoke the full builder pipeline against a temporary SQLite database.
+
+Run it from the sample directory:
+
+```powershell
+dotnet run --project samples/StoreFront-E2E/StoreFront.Cli
+```
+
+Some commands to try:
+
+```text
+catalog
+checkout --item COF-001:2 --item MUG-001:1
+history
+receipt 1
+```
+
 
 ### Testing Infrastructure
 This library also provides testing classes that help in building your CommandApp unit tests. Using the CommandAppTestContext allows you to easily configure and run commands in isolation.
