@@ -17,7 +17,8 @@ extension points fit together in one runnable application.
   checkout, receipt, and history commands run in a single resident session.
 - Dependency injection of an EF Core `StoreDbContext` and store services into commands.
 - Configuration binding from `appsettings.json` into a strongly typed `StoreOptions` (store name,
-  currency culture, tax rate, and database path).
+  currency culture, tax rate, and database path), so users could customize the CLI for another 
+  storefront just by changing configuration.
 - Verbosity-aware logging injected as `ILogger<T>` into the checkout service.
 - The currency presenter and table separator controls used to render catalog listings and receipts.
 - Database transactions: a checkout is persisted within an explicit EF Core transaction; receipts
@@ -79,3 +80,5 @@ Run the tests with:
 ```powershell
 dotnet test StoreFront.Cli.Tests
 ```
+
+The StoreFront.Cli.Tests project demonstrates how to run commands using CommandAppTestContext and assert output and behavior.
