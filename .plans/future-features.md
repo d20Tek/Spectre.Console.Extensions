@@ -81,16 +81,6 @@ Round out the "Controls" story with a themed family of culture-aware, validated 
 - Why it matters: Cuts boilerplate for larger command sets.
 - Spectre.Console coverage: None. This is a larger investment and is intentionally a stretch goal.
 
-### 9. Documentation and Changelog Parity
+### 9. Documentation and Changelog Parity [DONE]
 - What it adds: An api-reference documentation set under docs/ to complement the existing CHANGELOG.md.
 - Why it matters: Contributor guidelines require both api-reference docs and changelog entries whenever the public API changes. A public launch should include this structure. The repository now has a CHANGELOG.md following the Keep a Changelog format, but still lacks a docs/ folder.
-
-## Recommended Splash Focus
-
-For the initial public release, prioritize the items that fill genuine gaps and extend existing strengths:
-1. Verbosity-aware logging integration (verbosity bridge, Spectre-rendered output, and a builder hook; note that basic logger injection already works today).
-2. Configuration and options binding.
-3. Generic Host integration (a sibling to CommandAppBuilder for teams that want the full .NET app model).
-4. One or two new prompt controls, starting with DatePrompt, then PathPrompt.
-
-This produces a coherent launch narrative: a complete toolkit for building, configuring, testing, and polishing Spectre.Console CLI apps.
