@@ -15,6 +15,9 @@ This document covers the test context classes, the end-to-end runner, and the re
 - [CommandAppBasicResult](#commandappbasicresult)
 - [CommandMetadata](#commandmetadata)
 - [CommandAppBuilderTestExtensions](#commandappbuildertestextensions)
+- [CommandAppResultAssertionExtensions](#commandappresultassertionextensions)
+- [CommandAppResultAssertions](#commandappresultassertions)
+- [CommandAppAssertionException](#commandappassertionexception)
 
 ## CommandAppBuilderTestContext
 
@@ -96,6 +99,44 @@ Describes a configured command or branch for assertions in configuration tests. 
 | Member | Signature | Description |
 |---|---|---|
 | `WithTestConfiguration` | `static CommandAppBuilder WithTestConfiguration(this CommandAppBuilder builder, Action<IConfigurator> action)` | Applies additional test configuration to the CommandApp after it is built. |
+
+## CommandAppResultAssertionExtensions
+
+Fluent assertion entry points over `CommandAppBasicResult` (and derived result types such as `CommandAppResult`), enabling expressions such as `result.ShouldSucceed().AndOutputContains("done")`. Failures throw a `CommandAppAssertionException`, so the helpers work with any test framework.
+
+| Member | Signature | Description |
+|---|---|---|
+| `Should` | `static CommandAppResultAssertions Should(this CommandAppBasicResult result)` | Begins a fluent assertion chain over the result. |
+| `ShouldSucceed` | `static CommandAppResultAssertions ShouldSucceed(this CommandAppBasicResult result)` | Asserts the app exited successfully (exit code 0). |
+| `ShouldFail` | `static CommandAppResultAssertions ShouldFail(this CommandAppBasicResult result)` | Asserts the app failed (non-zero exit code). |
+| `ShouldReturnExitCode` | `static CommandAppResultAssertions ShouldReturnExitCode(this CommandAppBasicResult result, int exitCode)` | Asserts the app returned the specified exit code. |
+
+## CommandAppResultAssertions
+
+Chainable assertions over a captured result. Every method returns the same instance so calls can be chained. Each assertion throws a `CommandAppAssertionException` when it fails.
+
+| Member | Signature | Description |
+|---|---|---|
+| Constructor | `CommandAppResultAssertions(CommandAppBasicResult result)` | Creates the assertions wrapper. Throws `ArgumentNullException` when `result` is null. |
+| `Result` | `CommandAppBasicResult Result { get; }` | The result being asserted against. |
+| `ShouldSucceed` / `AndSucceed` | `CommandAppResultAssertions ShouldSucceed()` / `AndSucceed()` | Asserts an exit code of zero. |
+| `ShouldFail` / `AndFail` | `CommandAppResultAssertions ShouldFail()` / `AndFail()` | Asserts a non-zero exit code. |
+| `ShouldReturnExitCode` / `AndReturnExitCode` | `CommandAppResultAssertions ShouldReturnExitCode(int exitCode)` / `AndReturnExitCode(int exitCode)` | Asserts a specific exit code. |
+| `AndOutputContains` | `CommandAppResultAssertions AndOutputContains(string expected, StringComparison comparison = StringComparison.Ordinal)` | Asserts the output contains the substring. |
+| `AndOutputDoesNotContain` | `CommandAppResultAssertions AndOutputDoesNotContain(string unexpected, StringComparison comparison = StringComparison.Ordinal)` | Asserts the output does not contain the substring. |
+| `AndOutputMatches` | `CommandAppResultAssertions AndOutputMatches(string pattern)` | Asserts the output matches the regular expression pattern. |
+| `AndOutputIsEmpty` | `CommandAppResultAssertions AndOutputIsEmpty()` | Asserts the output is empty. |
+| `AndOutputIsNotEmpty` | `CommandAppResultAssertions AndOutputIsNotEmpty()` | Asserts the output is not empty. |
+
+## CommandAppAssertionException
+
+The exception thrown when a fluent assertion over a command app result fails.
+
+| Member | Signature | Description |
+|---|---|---|
+| Constructor | `CommandAppAssertionException()` | Creates the exception. |
+| Constructor | `CommandAppAssertionException(string message)` | Creates the exception with a message. |
+| Constructor | `CommandAppAssertionException(string message, Exception innerException)` | Creates the exception with a message and inner exception. |
 
 ## Related
 

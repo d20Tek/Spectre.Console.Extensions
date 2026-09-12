@@ -55,6 +55,20 @@ StringAssert.Contains(result.Output, "Hello, World");
 - `CommandAppResult` - exposes the exit code and captured console output for context-based runs.
 - `CommandAppBasicResult` - exposes `ExitCode` and `Output` for end-to-end runs.
 
+## Fluent assertions
+
+The `Testing` namespace also provides a fluent assertion layer over any result type so you can express expectations more readably. The entry points (`ShouldSucceed`, `ShouldFail`, `ShouldReturnExitCode`, and `Should`) return a chainable `CommandAppResultAssertions` whose `And*` methods cover exit codes and output:
+
+```csharp
+var result = context.Run(new[] { "greet", "World" });
+
+result.ShouldSucceed()
+      .AndOutputContains("Hello, World")
+      .AndOutputDoesNotContain("error");
+```
+
+Assertions throw a `CommandAppAssertionException` when they fail, so they work with any test framework.
+
 ## Related
 
 - [API Reference: Testing](api-reference-test.md)

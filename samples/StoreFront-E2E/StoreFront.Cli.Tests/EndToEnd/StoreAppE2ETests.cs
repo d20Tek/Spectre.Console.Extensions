@@ -42,9 +42,9 @@ public sealed class StoreAppE2ETests
         var result = await CommandAppE2ERunner.RunAsync(StoreApp.RunAsync, "catalog");
 
         // Assert
-        Assert.AreEqual(0, result.ExitCode);
-        Assert.Contains("COF-001", result.Output);
-        Assert.Contains("8 product(s) in catalog.", result.Output);
+        result.ShouldSucceed()
+              .AndOutputContains("COF-001")
+              .AndOutputContains("8 product(s) in catalog.");
     }
 
     [TestMethod]
@@ -56,10 +56,8 @@ public sealed class StoreAppE2ETests
         var history = await CommandAppE2ERunner.RunAsync(StoreApp.RunAsync, "history");
 
         // Assert
-        Assert.AreEqual(0, checkout.ExitCode);
-        Assert.Contains("House Blend Coffee", checkout.Output);
-        Assert.AreEqual(0, history.ExitCode);
-        Assert.Contains("1 transaction(s).", history.Output);
+        checkout.ShouldSucceed().AndOutputContains("House Blend Coffee");
+        history.ShouldSucceed().AndOutputContains("1 transaction(s).");
     }
 
     [TestMethod]
@@ -69,7 +67,7 @@ public sealed class StoreAppE2ETests
         var result = await CommandAppE2ERunner.RunAsync(StoreApp.RunAsync, "checkout --item NOPE-999:1");
 
         // Assert
-        Assert.AreEqual(1, result.ExitCode);
+        result.ShouldReturnExitCode(1);
     }
 
     [TestMethod]
@@ -79,7 +77,6 @@ public sealed class StoreAppE2ETests
         var result = await CommandAppE2ERunner.RunAsync(StoreApp.RunAsync, "receipt 999");
 
         // Assert
-        Assert.AreEqual(1, result.ExitCode);
-        Assert.Contains("No transaction found with id 999.", result.Output);
+        result.ShouldReturnExitCode(1).AndOutputContains("No transaction found with id 999.");
     }
 }

@@ -5,6 +5,14 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Release v1.57.2
+### Added
+- Fluent test assertions over command app results in the `Testing` namespace. New public API includes `CommandAppResultAssertionExtensions` (`Should`, `ShouldSucceed`, `ShouldFail`, `ShouldReturnExitCode`), the chainable `CommandAppResultAssertions` type (with `And*` methods for exit code and output checks such as `AndOutputContains`, `AndOutputDoesNotContain`, `AndOutputMatches`, `AndOutputIsEmpty`, and `AndOutputIsNotEmpty`), and the framework-agnostic `CommandAppAssertionException`.
+
+### Changed
+- Updated package references to latest versions.
+- Updated nuget-release script to use Nuget Trusted Publishing. 
+
 ## Release v1.57.1
 ### Added
 - Public `CommandAppBuilder.Registrar` getter and `CommandAppBuilder.GetServiceCollection()` helper so add-on extension packages can access the builder's DI container.

@@ -29,7 +29,7 @@ public sealed class CheckoutCommandTests
         var result = context.Run(["checkout", "--item", "COF-001:2"]);
 
         // Assert
-        Assert.AreEqual(0, result.ExitCode);
+        result.ShouldSucceed();
     }
 
     [TestMethod]
@@ -43,10 +43,10 @@ public sealed class CheckoutCommandTests
         var result = context.Run(["checkout", "--item", "COF-001:2", "--item", "MUG-001:1"]);
 
         // Assert
-        Assert.AreEqual(0, result.ExitCode);
-        Assert.Contains("House Blend Coffee", result.Output);
-        Assert.Contains("Ceramic Mug", result.Output);
-        Assert.Contains("Total", result.Output);
+        result.ShouldSucceed()
+              .AndOutputContains("House Blend Coffee")
+              .AndOutputContains("Ceramic Mug")
+              .AndOutputContains("Total");
     }
 
     [TestMethod]
@@ -60,7 +60,7 @@ public sealed class CheckoutCommandTests
         var result = context.Run(["checkout", "--item", "COF-001 : 3"]);
 
         // Assert
-        Assert.AreEqual(0, result.ExitCode);
+        result.ShouldSucceed();
     }
 
     [TestMethod]
@@ -74,8 +74,7 @@ public sealed class CheckoutCommandTests
         var result = context.Run(["checkout", "--item", "COF-001"]);
 
         // Assert
-        Assert.AreEqual(1, result.ExitCode);
-        Assert.Contains("Invalid item 'COF-001'.", result.Output);
+        result.ShouldReturnExitCode(1).AndOutputContains("Invalid item 'COF-001'.");
     }
 
     [TestMethod]
@@ -89,8 +88,7 @@ public sealed class CheckoutCommandTests
         var result = context.Run(["checkout", "--item", "COF-001:2:extra"]);
 
         // Assert
-        Assert.AreEqual(1, result.ExitCode);
-        Assert.Contains("Invalid item", result.Output);
+        result.ShouldReturnExitCode(1).AndOutputContains("Invalid item");
     }
 
     [TestMethod]
@@ -104,8 +102,7 @@ public sealed class CheckoutCommandTests
         var result = context.Run(["checkout", "--item", "COF-001:abc"]);
 
         // Assert
-        Assert.AreEqual(1, result.ExitCode);
-        Assert.Contains("Invalid item 'COF-001:abc'.", result.Output);
+        result.ShouldReturnExitCode(1).AndOutputContains("Invalid item 'COF-001:abc'.");
     }
 
     [TestMethod]
@@ -119,8 +116,7 @@ public sealed class CheckoutCommandTests
         var result = context.Run(["checkout", "--item", "NOPE-999:1"]);
 
         // Assert
-        Assert.AreEqual(1, result.ExitCode);
-        Assert.Contains("Unknown product SKU 'NOPE-999'.", result.Output);
+        result.ShouldReturnExitCode(1).AndOutputContains("Unknown product SKU 'NOPE-999'.");
     }
 
     [TestMethod]
@@ -134,8 +130,7 @@ public sealed class CheckoutCommandTests
         var result = context.Run(["checkout", "--item", "COF-001:0"]);
 
         // Assert
-        Assert.AreEqual(1, result.ExitCode);
-        Assert.Contains("must be greater than zero", result.Output);
+        result.ShouldReturnExitCode(1).AndOutputContains("must be greater than zero");
     }
 
     [TestMethod]
@@ -149,8 +144,7 @@ public sealed class CheckoutCommandTests
         var result = context.Run(["checkout"]);
 
         // Assert
-        Assert.AreNotEqual(0, result.ExitCode);
-        Assert.Contains("At least one --item is required.", result.Output);
+        result.ShouldFail().AndOutputContains("At least one --item is required.");
     }
 
     [TestMethod]

@@ -42,7 +42,7 @@ public sealed class ReceiptCommandTests
         var result = context.Run(["receipt", id.ToString()]);
 
         // Assert
-        Assert.AreEqual(0, result.ExitCode);
+        result.ShouldSucceed();
     }
 
     [TestMethod]
@@ -57,8 +57,9 @@ public sealed class ReceiptCommandTests
         var result = context.Run(["receipt", id.ToString()]);
 
         // Assert
-        Assert.Contains("House Blend Coffee", result.Output);
-        Assert.Contains("Total", result.Output);
+        result.Should()
+              .AndOutputContains("House Blend Coffee")
+              .AndOutputContains("Total");
     }
 
     [TestMethod]
@@ -72,7 +73,6 @@ public sealed class ReceiptCommandTests
         var result = context.Run(["receipt", "999"]);
 
         // Assert
-        Assert.AreEqual(1, result.ExitCode);
-        Assert.Contains("No transaction found with id 999.", result.Output);
+        result.ShouldReturnExitCode(1).AndOutputContains("No transaction found with id 999.");
     }
 }

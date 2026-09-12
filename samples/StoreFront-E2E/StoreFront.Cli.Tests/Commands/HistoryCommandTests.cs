@@ -37,8 +37,7 @@ public sealed class HistoryCommandTests
         var result = context.Run(["history"]);
 
         // Assert
-        Assert.AreEqual(0, result.ExitCode);
-        Assert.Contains("No transactions have been recorded yet.", result.Output);
+        result.ShouldSucceed().AndOutputContains("No transactions have been recorded yet.");
     }
 
     [TestMethod]
@@ -53,8 +52,7 @@ public sealed class HistoryCommandTests
         var result = context.Run(["history"]);
 
         // Assert
-        Assert.AreEqual(0, result.ExitCode);
-        Assert.Contains("1 transaction(s).", result.Output);
+        result.ShouldSucceed().AndOutputContains("1 transaction(s).");
     }
 
     [TestMethod]
@@ -70,7 +68,6 @@ public sealed class HistoryCommandTests
         var result = context.Run(["history"]);
 
         // Assert
-        Assert.AreEqual(0, result.ExitCode);
-        Assert.Contains("2 transaction(s).", result.Output);
+        result.ShouldSucceed().AndOutputContains("2 transaction(s).");
     }
 }

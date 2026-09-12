@@ -71,7 +71,7 @@ Round out the "Controls" story with a themed family of culture-aware, validated 
 
 ## Tier 3 - Polish for a 1.0 Feel
 
-### 7. Fluent Assertions for Testing
+### 7. Fluent Assertions for Testing [Done]
 - What it adds: A fluent assertion helper set over CommandAppResult, for example result.ShouldSucceed().AndOutputContains(...).
 - Why it matters: Complements the differentiating testing infrastructure and improves the test authoring experience.
 - Spectre.Console coverage: None.
