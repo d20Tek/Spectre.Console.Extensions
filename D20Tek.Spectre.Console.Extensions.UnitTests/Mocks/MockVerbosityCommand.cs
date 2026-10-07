@@ -1,4 +1,4 @@
-﻿//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using D20Tek.Spectre.Console.Extensions.Services;
@@ -12,7 +12,7 @@ internal class MockVerbosityCommand(IVerbosityWriter console) : Command<Verbosit
 {
     private readonly IVerbosityWriter _writer = console;
 
-    protected override int Execute(CommandContext context, VerbositySettings settings, CancellationToken cancellation)
+    public override int Execute(CommandContext context, VerbositySettings settings, CancellationToken cancellation)
     {
         _writer.Verbosity = settings.Verbosity;
 

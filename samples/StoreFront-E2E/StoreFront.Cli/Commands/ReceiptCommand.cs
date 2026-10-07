@@ -36,7 +36,7 @@ internal sealed class ReceiptCommand(
     }
 
     /// <inheritdoc />
-    protected override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)
+    public override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)
     {
         var transaction = _receipts.FindById(settings.TransactionId);
         if (transaction is null)

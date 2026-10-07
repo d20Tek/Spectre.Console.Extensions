@@ -15,7 +15,7 @@ internal sealed class InfoCommand(IConfiguration configuration, IAnsiConsole con
 
     public sealed class Settings : CommandSettings { }
 
-    protected override int Execute(
+    public override int Execute(
         [NotNull] CommandContext context,
         [NotNull] Settings settings,
         CancellationToken cancellation)

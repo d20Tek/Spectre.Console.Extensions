@@ -5,6 +5,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Release v1.57.3
+### Changed
+- Updated `Spectre.Console.Cli` package references to version 0.57.2.
+
+### Breaking Changes
+- `Spectre.Console.Cli` 0.57.2 changed the base `Command.Execute`, `Command<TSettings>.Execute`, and `AsyncCommand.ExecuteAsync` members from `protected` to `public`. All command overrides in this repository (and in consuming projects) must change their `Execute`/`ExecuteAsync` overrides from `protected override` to `public override`, or they will fail to compile.
+
 ## Release v1.57.2
 ### Added
 - Fluent test assertions over command app results in the `Testing` namespace. New public API includes `CommandAppResultAssertionExtensions` (`Should`, `ShouldSucceed`, `ShouldFail`, `ShouldReturnExitCode`), the chainable `CommandAppResultAssertions` type (with `And*` methods for exit code and output checks such as `AndOutputContains`, `AndOutputDoesNotContain`, `AndOutputMatches`, `AndOutputIsEmpty`, and `AndOutputIsNotEmpty`), and the framework-agnostic `CommandAppAssertionException`.

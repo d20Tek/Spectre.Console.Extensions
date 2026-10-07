@@ -1,4 +1,4 @@
-﻿//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console;
@@ -21,7 +21,7 @@ internal class MockCommandWithSettings(IAnsiConsole console) : Command<MockComma
 
     private readonly IAnsiConsole _writer = console;
 
-    protected override int Execute(
+    public override int Execute(
         [NotNull] CommandContext context,
         [NotNull] MockSettings settings,
         CancellationToken cancellation)

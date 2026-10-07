@@ -1,4 +1,4 @@
-﻿using D20Tek.Spectre.Console.Extensions.Controls;
+using D20Tek.Spectre.Console.Extensions.Controls;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -18,7 +18,7 @@ internal class GetNetWorthCommand : Command<GetNetWorthCommand.Settings>
         public decimal? Max { get; set; }
     }
 
-    protected override int Execute(CommandContext context, Settings settings, CancellationToken cancellation)
+    public override int Execute(CommandContext context, Settings settings, CancellationToken cancellation)
     {
         var prompt = new CurrencyPrompt("Enter your net worth")
                             .WithDefaultValue(1000m)

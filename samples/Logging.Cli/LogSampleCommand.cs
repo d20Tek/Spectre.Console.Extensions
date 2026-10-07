@@ -20,7 +20,7 @@ internal sealed class LogSampleCommand(ILogger<LogSampleCommand> logger) : Comma
         public string Name { get; set; } = "world";
     }
 
-    protected override int Execute(
+    public override int Execute(
         [NotNull] CommandContext context,
         [NotNull] Settings settings,
         CancellationToken cancellation)

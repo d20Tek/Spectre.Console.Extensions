@@ -1,4 +1,4 @@
-﻿//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console;
@@ -11,7 +11,7 @@ internal class MockCommand(IAnsiConsole console) : Command
 {
     private readonly IAnsiConsole _writer = console;
 
-    protected override int Execute(CommandContext context, CancellationToken cancellation)
+    public override int Execute(CommandContext context, CancellationToken cancellation)
     {
         _writer.WriteLine("Success!");
         return 0;

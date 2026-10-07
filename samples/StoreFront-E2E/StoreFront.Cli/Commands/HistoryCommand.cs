@@ -25,7 +25,7 @@ internal sealed class HistoryCommand(
     private readonly IAnsiConsole _console = console;
 
     /// <inheritdoc />
-    protected override int Execute(
+    public override int Execute(
         CommandContext context, EmptyCommandSettings settings, CancellationToken cancellationToken)
     {
         var transactions = _receipts.GetTransactions();

@@ -1,4 +1,4 @@
-﻿//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console;
@@ -9,7 +9,7 @@ namespace NoDI.Cli;
 
 public class MyCommand : Command
 {
-    protected override int Execute([NotNull] CommandContext context, CancellationToken cancellation)
+    public override int Execute([NotNull] CommandContext context, CancellationToken cancellation)
     {
         AnsiConsole.WriteLine($"=> MyCommand: Executing command - {context.Name}.");
 
