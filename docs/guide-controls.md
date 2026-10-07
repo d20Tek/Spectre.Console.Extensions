@@ -1,6 +1,6 @@
 # Guide: Controls
 
-The core package adds extra Spectre.Console controls: a culture-aware currency prompt and presenter, and a history-enabled text prompt with recall and auto-completion.
+The core package adds extra Spectre.Console controls: a culture-aware currency prompt and presenter, a history-enabled text prompt with recall and auto-completion, and a filesystem path prompt with existence validation and auto-completion.
 
 ## Currency Prompt and Presenter
 
@@ -79,6 +79,38 @@ The prompt exposes a set of fluent extension methods:
 - `Secret(char?)` - mask input for secrets.
 - `WithDisplayConverter(Func<T, string>)` - control how values are displayed.
 - `PromptStyle(Style)`, `DefaultValueStyle(Style?)`, `ChoicesStyle(Style?)` - styling.
+
+## Path Prompt
+
+`PathPrompt` is a text prompt for filesystem path input. It validates that the entered path exists (optionally restricted to a file or a directory, and to a set of extensions), and offers Tab auto-completion against the entries of a base directory using the same low-level input infrastructure as `HistoryTextPrompt<T>`. It implements `IPrompt<string>`.
+
+### Basic usage
+
+```csharp
+using D20Tek.Spectre.Console.Extensions.Controls;
+
+var prompt = new PathPrompt("Enter a file path:")
+	.WithBaseDirectory(Directory.GetCurrentDirectory())
+	.WithPathKind(PathKind.File)
+	.WithExtensions(".json", ".txt");
+
+string path = AnsiConsole.Prompt(prompt);
+```
+
+Press Tab while typing to auto-complete against the files and directories found in the configured base directory.
+
+### Configure behavior
+
+The prompt exposes a set of fluent configuration methods:
+
+- `WithBaseDirectory(string)` - base directory used to resolve relative paths and list auto-complete entries. Defaults to the current working directory.
+- `WithPathKind(PathKind)` - restrict the kind of filesystem entry required (`Any`, `File`, or `Directory`) when existence is validated.
+- `WithExtensions(params string[])` - restrict accepted paths (and auto-complete entries) to the specified file extensions.
+- `WithDefaultValue(string)` - value used when the user presses Enter without input.
+- `WithErrorMessage(string)` - custom validation error message.
+- `WithPromptStyle(Style)` - style for the prompt label.
+- `MustExist(bool)` - control whether the entered path must exist on disk. Enabled by default.
+- `IncludeHidden(bool)` - control whether hidden files and directories are included in auto-complete entries. Disabled by default.
 
 ## Related
 
