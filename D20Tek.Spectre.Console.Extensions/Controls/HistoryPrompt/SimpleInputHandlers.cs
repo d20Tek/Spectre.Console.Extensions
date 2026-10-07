@@ -13,7 +13,7 @@ internal sealed class InsertHandler : IInputStateHandler
     public InputState Handle(ConsoleKeyInfo key, InputState state) =>
         ShouldHandle(key) ? state with { InsertMode = !state.InsertMode, Handled = true } : state;
 
-    private bool ShouldHandle(ConsoleKeyInfo key) =>
+    private static bool ShouldHandle(ConsoleKeyInfo key) =>
         key.Key == ConsoleKey.Insert ||
             key.Modifiers.HasFlag(ConsoleModifiers.Shift) && key.Key == ConsoleKey.F12 ||
             key.Key == ConsoleKey.F20;
@@ -37,7 +37,7 @@ internal sealed class LeftArrowHandler : IInputStateHandler
         return state;
     }
 
-    private bool ShouldHandle(ConsoleKeyInfo key) => key.Key == ConsoleKey.LeftArrow;
+    private static bool ShouldHandle(ConsoleKeyInfo key) => key.Key == ConsoleKey.LeftArrow;
 }
 
 internal sealed class RightArrowHandler : IInputStateHandler
@@ -46,7 +46,10 @@ internal sealed class RightArrowHandler : IInputStateHandler
     {
         if (ShouldHandle(key))
         {
-            if (state.CursorIndex > state.Buffer.Length - 1) return state with { Handled = true };
+            if (state.CursorIndex > state.Buffer.Length - 1)
+            {
+                return CompletionDescendHelper.TryDescendIntoDirectory(state) with { Handled = true };
+            }
 
             state.Request.AnsiConsole.Cursor.Show();
             state.Request.AnsiConsole.Cursor.MoveRight(1);
@@ -56,5 +59,28 @@ internal sealed class RightArrowHandler : IInputStateHandler
         return state;
     }
 
-    private bool ShouldHandle(ConsoleKeyInfo key) => key.Key == ConsoleKey.RightArrow;
+    private static bool ShouldHandle(ConsoleKeyInfo key) => key.Key == ConsoleKey.RightArrow;
+}
+
+// Shared helper that lets completion-aware prompts (such as PathPrompt) descend into a
+// directory suggestion so that subsequent Tab presses cycle its contents instead of the
+// parent directory's siblings. Used by both RightArrowHandler and DownArrowHandler.
+internal static class CompletionDescendHelper
+{
+    public static InputState TryDescendIntoDirectory(InputState state)
+    {
+        if (state.Request.CompletionProvider is not { } provider)
+        {
+            return state;
+        }
+
+        var bufferText = state.Buffer.ToString();
+        if (bufferText.Length == 0 || !bufferText.EndsWith(Path.DirectorySeparatorChar)
+            && !bufferText.EndsWith(Path.AltDirectorySeparatorChar))
+        {
+            return state;
+        }
+
+        return state with { CompletionItems = provider(bufferText) };
+    }
 }

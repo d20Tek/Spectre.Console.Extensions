@@ -11,16 +11,24 @@ internal sealed class AutoCompleteHandler : IInputStateHandler
         ShouldHandle(key, state) ? ProcessAutoCompletion(key, state) : state;
 
     private static bool ShouldHandle(ConsoleKeyInfo key, InputState state) =>
-        key.Key == ConsoleKey.Tab && state.CompletionItems.Count > 0;
+        key.Key == ConsoleKey.Tab && (state.CompletionItems.Count > 0 || state.Request.CompletionProvider is not null);
 
     private InputState ProcessAutoCompletion(ConsoleKeyInfo key, InputState state)
     {
+        var bufferText = state.Buffer.ToString();
+
+        // Reuse the active completion set while cycling through it (buffer matches a previous
+        // suggestion). Otherwise regenerate the completion set from the current typed text.
+        var completionItems = state.Request.CompletionProvider is { } provider && !state.CompletionItems.Contains(bufferText)
+            ? provider(bufferText)
+            : state.CompletionItems;
+
         var replace = AutoCompletionStrategy.AutoComplete(
-            state.CompletionItems,
-            state.Buffer.ToString(),
+            completionItems,
+            bufferText,
             key.Modifiers.HasFlag(ConsoleModifiers.Shift));
 
-        return RenderSuggestion(state.Request.AnsiConsole, replace, state.Buffer, state);
+        return RenderSuggestion(state.Request.AnsiConsole, replace, state.Buffer, state with { CompletionItems = completionItems });
     }
 
     private InputState RenderSuggestion(IAnsiConsole console, string replace, StringBuilder buffer, InputState state)

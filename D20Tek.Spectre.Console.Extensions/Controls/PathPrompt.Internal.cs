@@ -50,23 +50,53 @@ public sealed partial class PathPrompt
         new(_mustExist, _pathKind, _baseDirectory, _extensions, _errorMessage, _defaultValue);
 
     private ReadLineRequest CreateReadLineRequest(IAnsiConsole console) =>
-        new(console, _style, false, null, GetCompletionEntries(), []);
+        new(console, _style, false, null, [], [], GetCompletionEntries);
 
-    private List<string> GetCompletionEntries()
+    private List<string> GetCompletionEntries(string typedText)
     {
-        if (!Directory.Exists(_baseDirectory))
+        var (resolvedDirectory, typedDirectory, prefix) = SplitTypedPath(typedText);
+
+        if (!Directory.Exists(resolvedDirectory))
         {
             return [];
         }
 
-        var entries = Directory.EnumerateFileSystemEntries(_baseDirectory)
+        return [.. Directory.EnumerateFileSystemEntries(resolvedDirectory)
             .Where(IncludeEntry)
-            .Select(entry => 
-                Path.GetFileName(entry) + (Directory.Exists(entry) ? Path.DirectorySeparatorChar.ToString() : string.Empty))
-            .OrderBy(entry => entry, StringComparer.OrdinalIgnoreCase)
-            .ToList();
+            .Where(entry => Path.GetFileName(entry).StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            .Select(entry =>
+                typedDirectory
+                + Path.GetFileName(entry)
+                + (Directory.Exists(entry) ? Path.DirectorySeparatorChar.ToString() : string.Empty))
+            .OrderBy(entry => entry, StringComparer.OrdinalIgnoreCase)];
+    }
 
-        return entries.Count > 0 ? entries : [];
+    private (string ResolvedDirectory, string TypedDirectory, string Prefix) SplitTypedPath(string typedText)
+    {
+        if (string.IsNullOrEmpty(typedText))
+        {
+            return (_baseDirectory, string.Empty, string.Empty);
+        }
+
+        var typedDirectoryPart = Path.GetDirectoryName(typedText) ?? string.Empty;
+        var prefix = Path.GetFileName(typedText);
+
+        if (string.IsNullOrEmpty(typedDirectoryPart))
+        {
+            var resolved = Path.IsPathRooted(typedText) ? Path.GetPathRoot(typedText) ?? _baseDirectory : _baseDirectory;
+            return (resolved, string.Empty, prefix);
+        }
+
+        var resolvedDirectoryPart = Path.IsPathRooted(typedDirectoryPart)
+            ? typedDirectoryPart
+            : Path.Combine(_baseDirectory, typedDirectoryPart);
+
+        var typedDirectoryWithSeparator = typedDirectoryPart.EndsWith(Path.DirectorySeparatorChar)
+            || typedDirectoryPart.EndsWith(Path.AltDirectorySeparatorChar)
+                ? typedDirectoryPart
+                : typedDirectoryPart + Path.DirectorySeparatorChar;
+
+        return (resolvedDirectoryPart, typedDirectoryWithSeparator, prefix);
     }
 
     private bool IncludeEntry(string entry)
