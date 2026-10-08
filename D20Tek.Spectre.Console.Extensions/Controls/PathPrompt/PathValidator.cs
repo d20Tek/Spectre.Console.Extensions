@@ -37,7 +37,6 @@ internal sealed class PathValidator(
         }
 
         var resolved = ResolvePath(input);
-
         if (HasInvalidExtension(resolved))
         {
             return ValidationResult.Error(errorMessage ?? Errors.Extension(input, extensions!));

@@ -76,13 +76,13 @@ public class HelloCommand : Command<HelloSettings>
 This libraries are NuGet packages so they are easy to add to your project. To install these packages into your solution, you can use the NuGet Package Manager. In PM, please use the following command:
 ```  
 // core package
-PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.57.2
+PM > Install-Package D20Tek.Spectre.Console.Extensions -Version 1.57.3
 // optional integration with Microsoft.Extensions.Configuration and Options binding
-PM > Install-Package D20Tek.Spectre.Console.Extensions.Configuration -Version 1.57.2
+PM > Install-Package D20Tek.Spectre.Console.Extensions.Configuration -Version 1.57.3
 // optional integration with .NET generic host
-PM > Install-Package D20Tek.Spectre.Console.Extensions.Hosting -Version 1.57.2
+PM > Install-Package D20Tek.Spectre.Console.Extensions.Hosting -Version 1.57.3
 // additional DI containers
-PM > Install-Package D20Tek.Spectre.Console.Extensions.MoreContainers -Version 1.57.2
+PM > Install-Package D20Tek.Spectre.Console.Extensions.MoreContainers -Version 1.57.3
 ``` 
 
 The D20Tek.Spectre.Console.Extensions.MoreContainers package adds support for Autofac, Lamar, LightInject, and Ninject.

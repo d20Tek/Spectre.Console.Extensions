@@ -82,7 +82,7 @@ The prompt exposes a set of fluent extension methods:
 
 ## Path Prompt
 
-`PathPrompt` is a text prompt for filesystem path input. It validates that the entered path exists (optionally restricted to a file or a directory, and to a set of extensions), and offers Tab auto-completion against the entries of a base directory using the same low-level input infrastructure as `HistoryTextPrompt<T>`. It implements `IPrompt<string>`.
+`PathPrompt` is a text prompt for filesystem path input. It validates that the entered path exists (optionally restricted to a file or a directory, and to a set of extensions), and offers Tab auto-completion against the entries of the directory implied by the currently typed path, using the same low-level input infrastructure as `HistoryTextPrompt<T>`. It implements `IPrompt<string>`.
 
 ### Basic usage
 
@@ -97,7 +97,7 @@ var prompt = new PathPrompt("Enter a file path:")
 string path = AnsiConsole.Prompt(prompt);
 ```
 
-Press Tab while typing to auto-complete against the files and directories found in the configured base directory.
+Press Tab while typing to auto-complete against the files and directories in the directory implied by the typed text. Completion is path-aware: typing a relative or absolute path (for example `c:\dev`) resolves and completes against that directory's contents rather than always matching entries from the base directory. Pressing Tab repeatedly cycles through the sibling entries of that directory. When the current suggestion is a directory, press RightArrow or DownArrow to descend into it, after which Tab cycles that subdirectory's contents.
 
 ### Configure behavior
 

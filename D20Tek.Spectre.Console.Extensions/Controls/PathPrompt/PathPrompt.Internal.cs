@@ -56,10 +56,7 @@ public sealed partial class PathPrompt
     {
         var (resolvedDirectory, typedDirectory, prefix) = SplitTypedPath(typedText);
 
-        if (!Directory.Exists(resolvedDirectory))
-        {
-            return [];
-        }
+        if (!Directory.Exists(resolvedDirectory)) return [];
 
         return [.. Directory.EnumerateFileSystemEntries(resolvedDirectory)
             .Where(IncludeEntry)
@@ -71,19 +68,16 @@ public sealed partial class PathPrompt
             .OrderBy(entry => entry, StringComparer.OrdinalIgnoreCase)];
     }
 
-    private (string ResolvedDirectory, string TypedDirectory, string Prefix) SplitTypedPath(string typedText)
+    internal (string ResolvedDirectory, string TypedDirectory, string Prefix) SplitTypedPath(string typedText)
     {
-        if (string.IsNullOrEmpty(typedText))
-        {
-            return (_baseDirectory, string.Empty, string.Empty);
-        }
+        if (string.IsNullOrEmpty(typedText)) return (_baseDirectory, string.Empty, string.Empty);
 
         var typedDirectoryPart = Path.GetDirectoryName(typedText) ?? string.Empty;
         var prefix = Path.GetFileName(typedText);
 
         if (string.IsNullOrEmpty(typedDirectoryPart))
         {
-            var resolved = Path.IsPathRooted(typedText) ? Path.GetPathRoot(typedText) ?? _baseDirectory : _baseDirectory;
+            var resolved = Path.IsPathRooted(typedText) ? Path.GetPathRoot(typedText)! : _baseDirectory;
             return (resolved, string.Empty, prefix);
         }
 

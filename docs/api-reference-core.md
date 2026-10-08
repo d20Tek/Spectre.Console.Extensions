@@ -332,7 +332,7 @@ Fluent extension methods for `HistoryTextPrompt<T>`.
 
 ### PathPrompt
 
-A sealed text prompt for filesystem path input. Validates that the entered path exists (optionally restricted to a file or a directory, and to a set of extensions), and offers Tab auto-completion against the entries of a base directory. Implements `IPrompt<string>`.
+A sealed text prompt for filesystem path input. Validates that the entered path exists (optionally restricted to a file or a directory, and to a set of extensions), and offers Tab auto-completion against the entries of the directory implied by the currently typed path (supporting relative and absolute paths). Repeated Tab presses cycle through sibling entries; RightArrow or DownArrow descend into a directory suggestion so subsequent Tab presses cycle its contents. Implements `IPrompt<string>`.
 
 | Member | Signature | Description |
 |---|---|---|

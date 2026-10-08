@@ -4,6 +4,7 @@
 using D20Tek.Spectre.Console.Extensions.Controls;
 using D20Tek.Spectre.Console.Extensions.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics.CodeAnalysis;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Controls;
 
@@ -79,6 +80,7 @@ public class PathPromptCompletionTests : PathPromptTestsBase
     }
 
     [TestMethod]
+    [ExcludeFromCodeCoverage]
     public void Show_WithRootedDirectoryPathCompletion_DoesNotDuplicateSeparator()
     {
         // Arrange
@@ -200,6 +202,24 @@ public class PathPromptCompletionTests : PathPromptTestsBase
 
         // Assert
         Assert.AreEqual("anything.txt", result);
+    }
+
+    [TestMethod]
+    public void Show_WithTabOnTypedMissingSubdirectory_ReturnsNoCompletionsAndKeepsTypedText()
+    {
+        // Arrange
+        var typedText = Path.Combine("missingsubfolder", "file");
+        var console = new TestConsole();
+        console.TestInput.PushText(typedText);
+        console.TestInput.PushKey(ConsoleKey.Tab);
+        console.TestInput.PushKey(ConsoleKey.Enter);
+        var prompt = new PathPrompt("Path:").WithBaseDirectory(_tempDirectory).MustExist(false);
+
+        // Act
+        var result = prompt.Show(console);
+
+        // Assert
+        Assert.AreEqual(typedText, result);
     }
 
     [TestMethod]
