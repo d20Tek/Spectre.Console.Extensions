@@ -5,6 +5,24 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Release v1.57.3 (Current)
+### Added
+- `PathPrompt`: a filesystem path prompt with existence validation and Tab auto-completion. New public API includes `PathPrompt` (`WithBaseDirectory`, `WithPathKind`, `WithExtensions`, `WithDefaultValue`, `WithErrorMessage`, `WithPromptStyle`, `MustExist`, `IncludeHidden`, `Show`, `ShowAsync`) and the `PathKind` enum (`Any`, `File`, `Directory`). The prompt reuses the existing `HistoryTextPrompt<T>` low-level input and auto-complete infrastructure.
+
+### Changed
+- Updated package references to latest versions.
+- Updated `Spectre.Console.Cli` package references to version 0.57.2.
+
+### Fixed
+- `PathPrompt`: Backspace now correctly erases the previous character on screen instead of only removing it from the internal buffer.
+- `PathPrompt`: Tab auto-completion is now path-aware. It resolves and completes against the directory implied by the currently typed path (relative or absolute, for example `c:\dev`), instead of always completing against the base directory's entries.
+- `PathPrompt`: Repeated Tab presses now cycle through sibling entries of the resolved directory instead of unexpectedly descending into the first matched subdirectory.
+- `PathPrompt`: RightArrow and DownArrow, when the cursor is at the end of a directory suggestion, now descend into that directory so subsequent Tab presses cycle its contents.
+- `PathPrompt`: Completed rooted directory paths (for example `c:\`) no longer get a duplicated path separator appended.
+
+### Breaking Changes
+- `Spectre.Console.Cli` 0.57.2 changed the base `Command.Execute`, `Command<TSettings>.Execute`, and `AsyncCommand.ExecuteAsync` members from `protected` to `public`. All command overrides in this repository (and in consuming projects) must change their `Execute`/`ExecuteAsync` overrides from `protected override` to `public override`, or they will fail to compile.
+
 ## Release v1.57.2
 ### Added
 - Fluent test assertions over command app results in the `Testing` namespace. New public API includes `CommandAppResultAssertionExtensions` (`Should`, `ShouldSucceed`, `ShouldFail`, `ShouldReturnExitCode`), the chainable `CommandAppResultAssertions` type (with `And*` methods for exit code and output checks such as `AndOutputContains`, `AndOutputDoesNotContain`, `AndOutputMatches`, `AndOutputIsEmpty`, and `AndOutputIsNotEmpty`), and the framework-agnostic `CommandAppAssertionException`.

@@ -25,6 +25,12 @@ internal sealed class Startup : StartupBase
               .WithDescription("Requests current input for net worth.")
               .WithExample(["get-worth"]);
 
+        config.AddCommand<GetPathCommand>("get-path")
+              .WithAlias("p")
+              .WithDescription("Requests a filesystem path with existence validation and auto-completion.")
+              .WithExample(["get-path"])
+              .WithExample(["get-path", "--kind", "File", "--ext", ".json"]);
+
         return config;
     }
 

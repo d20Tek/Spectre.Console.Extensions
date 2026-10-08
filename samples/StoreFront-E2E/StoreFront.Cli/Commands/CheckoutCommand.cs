@@ -42,7 +42,7 @@ internal sealed class CheckoutCommand(
     }
 
     /// <inheritdoc />
-    protected override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)
+    public override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)
     {
         var cart = new List<CartItem>();
         foreach (var raw in settings.Items)

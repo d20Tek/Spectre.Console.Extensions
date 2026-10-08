@@ -52,12 +52,19 @@ Round out the "Controls" story with a themed family of culture-aware, validated 
 
 - DatePrompt / DateRangePrompt: Culture-aware date entry with format hints and range validation.
   - Spectre.Console coverage: None dedicated. Ask<DateTime>() exists, but there is no culture-aware, format-hinted, range-validating date control. Recommended first control because of its everyday utility and close similarity to CurrencyPrompt.
-- PathPrompt: Filesystem path input with existence validation and path auto-completion.
+- PathPrompt: Filesystem path input with existence validation and path auto-completion. [DONE]
   - Spectre.Console coverage: None. Leverages the existing HistoryTextPrompt autocomplete infrastructure. Genuinely new.
+  - Status: DONE - Implemented PathPrompt (IPrompt<string>) and the PathKind enum, reusing the existing HistoryTextPrompt low-level input and auto-complete infrastructure. Covered by exhaustive unit tests across PathPromptConfigurationTests, PathPromptValidationTests, PathPromptDefaultValueTests, PathPromptCompletionTests, PathPromptMiscTests, and PathValidatorTests. Documented in docs/guide-controls.md and docs/api-reference-core.md, with a CHANGELOG entry. Demonstrated by a new get-path command in the InteractivePrompt.Cli sample.
 - PatternPrompt (formerly proposed as MaskedPrompt): Patterned input such as phone numbers or identifiers, enforcing a format like (###) ###-####.
   - Spectre.Console coverage: Partial and easily confused. Spectre.Console provides secret masking (hiding input) but not pattern or format masking (enforcing a layout). Rename away from "Masked" to avoid ambiguity with the existing secret feature. Hold this item unless rebranded.
 
 ## Tier 2 - Minor Value-Add
+
+### 10. Controls.Cli Sample
+- What it adds: A new dedicated sample project (Controls.Cli) that showcases every control in the Controls namespace (CurrencyPrompt, HistoryTextPrompt<T>, PathPrompt, and future additions such as DatePrompt), one command per control, as a non-interactive, scriptable reference distinct from the interactive-shell demo concept.
+- Why it matters: InteractivePrompt.Cli currently doubles as the de facto Controls showcase (for example its get-worth and get-path commands), which works while the command list stays small. As more controls are added (DatePrompt, PatternPrompt, and so on), a dedicated sample keeps the showcase organized and makes it easy to point users at "the one control I care about" without digging through an interactive shell's help output.
+- Spectre.Console coverage: None, this is purely a samples/documentation investment, not a library feature.
+- Trigger: Revisit once the Controls namespace grows to roughly six or more controls, or sooner if users ask for a non-interactive controls reference.
 
 ### 5. CompositeCommandInterceptor
 - What it adds: A helper that composes multiple ICommandInterceptor instances into a chain (for example, timing plus logging plus telemetry).

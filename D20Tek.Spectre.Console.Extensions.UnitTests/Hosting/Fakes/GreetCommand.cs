@@ -11,7 +11,7 @@ internal sealed class GreetCommand(IGreetingService greetingService, IAnsiConsol
     private readonly IGreetingService _greetingService = greetingService;
     private readonly IAnsiConsole _console = console;
 
-    protected override int Execute(CommandContext context, CancellationToken cancellation)
+    public override int Execute(CommandContext context, CancellationToken cancellation)
     {
         _console.WriteLine(_greetingService.Greet("World"));
         return 0;

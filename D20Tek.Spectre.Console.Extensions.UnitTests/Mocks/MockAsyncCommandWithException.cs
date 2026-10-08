@@ -1,4 +1,4 @@
-﻿//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using Spectre.Console.Cli;
@@ -10,7 +10,7 @@ namespace D20Tek.Spectre.Console.Extensions.UnitTests.Mocks;
 
 internal class MockAsyncCommandWithException : AsyncCommand
 {
-    protected override Task<int> ExecuteAsync(CommandContext context, CancellationToken cancellation)
+    public override Task<int> ExecuteAsync(CommandContext context, CancellationToken cancellation)
     {
         throw new ArgumentOutOfRangeException(nameof(context));
     }

@@ -18,7 +18,7 @@ internal sealed class CatalogCommand(ICatalogService catalog, IAnsiConsole conso
     private readonly IAnsiConsole _console = console;
 
     /// <inheritdoc />
-    protected override int Execute(
+    public override int Execute(
         CommandContext context, EmptyCommandSettings settings, CancellationToken cancellationToken)
     {
         var products = _catalog.GetProducts();

@@ -11,10 +11,10 @@ internal static class UnicodeTextHelper
 
     [ExcludeFromCodeCoverage]
     public static void HandleMask(char charToRemove, char? mask, IAnsiConsole console) =>
-        console.Write((mask, UnicodeCalculator.GetWidth(charToRemove)) switch
+        console.Write(UnicodeCalculator.GetWidth(charToRemove) switch
         {
-            (not null, 1) => _backspaceText,
-            (not null, 2) => _backspaceUnicodeText,
+            1 => _backspaceText,
+            2 => _backspaceUnicodeText,
             _ => string.Empty
         });
 }

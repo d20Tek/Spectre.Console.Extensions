@@ -5,7 +5,9 @@ namespace D20Tek.Spectre.Console.Extensions.Controls.HistoryPrompt;
 internal static class AutoCompletionStrategy
 {
     public static string AutoComplete(List<string> autocomplete, string text, bool isBackDirection) =>
-        AutoComplete(autocomplete, text, isBackDirection, autocomplete.Find(i => i == text));
+        autocomplete.Count == 0
+            ? text
+            : AutoComplete(autocomplete, text, isBackDirection, autocomplete.Find(i => i == text));
 
     private static string AutoComplete(List<string> autocomplete, string text, bool isBackDirection, string? found) =>
         found switch

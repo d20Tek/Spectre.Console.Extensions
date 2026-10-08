@@ -8,7 +8,8 @@ internal sealed record ReadLineRequest(
     bool IsSecret,
     char? Mask,
     List<string> Items,
-    List<string> History)
+    List<string> History,
+    Func<string, List<string>>? CompletionProvider = null)
 {
     internal static ReadLineRequest Create<T>(HistoryTextPrompt<T> prompt, IAnsiConsole console) =>
         new(

@@ -33,7 +33,7 @@ internal sealed class GreetCommand(
         public int Repeat { get; set; }
     }
 
-    protected override int Execute(
+    public override int Execute(
         [NotNull] CommandContext context,
         [NotNull] Settings settings,
         CancellationToken cancellation)

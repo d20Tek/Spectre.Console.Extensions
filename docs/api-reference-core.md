@@ -35,6 +35,8 @@ This document covers the full public surface of the core package: the types that
   - [CurrencyPresenter](#currencypresenter)
   - [HistoryTextPrompt&lt;T&gt;](#historytextpromptt)
   - [HistoryTextPromptExtensions](#historytextpromptextensions)
+  - [PathPrompt](#pathprompt)
+  - [PathKind](#pathkind)
   - [TableExtensions](#tableextensions)
   - [AnsiConsoleExtensions](#ansiconsoleextensions)
 
@@ -327,6 +329,34 @@ Fluent extension methods for `HistoryTextPrompt<T>`.
 | `DefaultValueStyle` | `HistoryTextPrompt<T> DefaultValueStyle<T>(this HistoryTextPrompt<T> obj, Style? style)` | Sets the default value style. |
 | `ChoicesStyle` | `HistoryTextPrompt<T> ChoicesStyle<T>(this HistoryTextPrompt<T> obj, Style? style)` | Sets the choices style. |
 | `AddHistory` | `HistoryTextPrompt<T> AddHistory<T>(this HistoryTextPrompt<T> obj, IEnumerable<string> history)` | Seeds the navigable history list. |
+
+### PathPrompt
+
+A sealed text prompt for filesystem path input. Validates that the entered path exists (optionally restricted to a file or a directory, and to a set of extensions), and offers Tab auto-completion against the entries of the directory implied by the currently typed path (supporting relative and absolute paths). Repeated Tab presses cycle through sibling entries; RightArrow or DownArrow descend into a directory suggestion so subsequent Tab presses cycle its contents. Implements `IPrompt<string>`.
+
+| Member | Signature | Description |
+|---|---|---|
+| Constructor | `PathPrompt(string promptLabel)` | Creates the prompt with a label. Throws `ArgumentNullException` when the label is null, and `ArgumentException` when it is empty. |
+| `WithBaseDirectory` | `PathPrompt WithBaseDirectory(string baseDirectory)` | Sets the base directory used to resolve relative paths and list auto-complete entries. Defaults to the current working directory. |
+| `WithPathKind` | `PathPrompt WithPathKind(PathKind pathKind)` | Restricts the kind of filesystem entry required when existence is validated. Defaults to `PathKind.Any`. |
+| `WithExtensions` | `PathPrompt WithExtensions(params string[] extensions)` | Restricts accepted paths, and auto-complete entries, to the specified file extensions. |
+| `WithDefaultValue` | `PathPrompt WithDefaultValue(string value)` | Sets the default value used when input is empty. |
+| `WithErrorMessage` | `PathPrompt WithErrorMessage(string message)` | Sets a custom validation error message. |
+| `WithPromptStyle` | `PathPrompt WithPromptStyle(Style promptStyle)` | Sets the style used for the prompt label. |
+| `MustExist` | `PathPrompt MustExist(bool mustExist = true)` | Controls whether the entered path must exist on disk. Enabled by default. |
+| `IncludeHidden` | `PathPrompt IncludeHidden(bool includeHidden = true)` | Controls whether hidden files and directories are included in auto-complete entries. Disabled by default. |
+| `Show` | `string Show(IAnsiConsole console)` | Shows the prompt and returns the entered path. |
+| `ShowAsync` | `Task<string> ShowAsync(IAnsiConsole console, CancellationToken token)` | Shows the prompt asynchronously and returns the entered path. |
+
+### PathKind
+
+Specifies the kind of filesystem entry a `PathPrompt` should validate the input against.
+
+| Member | Description |
+|---|---|
+| `Any` | Accepts either a file or a directory. |
+| `File` | Requires the path to resolve to a file. |
+| `Directory` | Requires the path to resolve to a directory. |
 
 ### TableExtensions
 

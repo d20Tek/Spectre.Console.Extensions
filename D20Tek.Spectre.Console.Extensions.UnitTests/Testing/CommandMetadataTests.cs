@@ -75,4 +75,25 @@ public class CommandMetadataTests
         Assert.AreEqual(typeof(MyCommand), m.CommandType);
         Assert.IsNull(m.SettingsType);
     }
+
+    [ExcludeFromCodeCoverage]
+    internal class NotACommand
+    {
+    }
+
+    [TestMethod]
+    public void GetSettingsType_WithTypeNotImplementingICommand_ReturnsNull()
+    {
+        // arrange
+        var method = typeof(CommandMetadata).GetMethod(
+            "GetSettingsType",
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        Assert.IsNotNull(method);
+
+        // act
+        var result = method.Invoke(null, [typeof(NotACommand)]);
+
+        // assert
+        Assert.IsNull(result);
+    }
 }

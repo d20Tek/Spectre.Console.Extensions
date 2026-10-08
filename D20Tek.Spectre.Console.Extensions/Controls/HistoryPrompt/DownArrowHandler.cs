@@ -9,6 +9,11 @@ internal sealed class DownArrowHandler : IInputStateHandler
 
     public InputState Handle(ConsoleKeyInfo key, InputState state)
     {
+        if (key.Key == ConsoleKey.DownArrow && ShouldDescend(state))
+        {
+            return CompletionDescendHelper.TryDescendIntoDirectory(state) with { Handled = true };
+        }
+
         if (ShouldHandle(key, state.Request.History.Count, state.HistoryIndex))
         {
             ErasePrevious(state);
@@ -25,6 +30,14 @@ internal sealed class DownArrowHandler : IInputStateHandler
 
         return state;
     }
+
+    // DownArrow descends into a directory suggestion when there is no history to navigate
+    // and the cursor is at the end of a buffer that names a directory. This mirrors
+    // RightArrow's descend behavior for completion-aware prompts such as PathPrompt.
+    private static bool ShouldDescend(InputState state) =>
+        state.Request.CompletionProvider is not null
+        && state.Request.History.Count == 0
+        && state.CursorIndex == state.Buffer.Length;
 
     private static bool ShouldHandle(ConsoleKeyInfo key, int historyCount, int historyIndex) =>
         key.Key == ConsoleKey.DownArrow && historyCount > 0 && historyIndex > -1;
