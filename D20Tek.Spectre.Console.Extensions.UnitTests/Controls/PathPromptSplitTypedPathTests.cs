@@ -2,6 +2,7 @@
 // Copyright (c) d20Tek.  All rights reserved.
 //---------------------------------------------------------------------------------------------------------------------
 using D20Tek.Spectre.Console.Extensions.Controls;
+using System.Diagnostics.CodeAnalysis;
 
 namespace D20Tek.Spectre.Console.Extensions.UnitTests.Controls;
 
@@ -41,6 +42,7 @@ public class PathPromptSplitTypedPathTests
     }
 
     [TestMethod]
+    [ExcludeFromCodeCoverage]
     public void SplitTypedPath_WithNoDirectoryAndRooted_ReturnsPathRootAsResolved()
     {
         // Arrange
@@ -49,9 +51,21 @@ public class PathPromptSplitTypedPathTests
         var root = Path.GetPathRoot(baseDirectory)!;
         var driveOnly = root.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
 
-        // "C:" (drive letter with no separator) is rooted, but Path.GetDirectoryName returns null
-        // for it, so SplitTypedPath coalesces it to an empty directory part.
-        Assert.IsNull(Path.GetDirectoryName(driveOnly));
+        if (string.IsNullOrEmpty(driveOnly))
+        {
+            // On Unix-like systems, the root is "/" and trimming the separator leaves an empty
+            // string, which is not rooted and has no meaningful "drive letter" equivalent. Use
+            // the root itself (e.g. "/") to exercise the no-directory-part, rooted-text branch.
+            driveOnly = root;
+        }
+        else
+        {
+            // On Windows, "C:" (drive letter with no separator) is rooted, but
+            // Path.GetDirectoryName returns null for it, so SplitTypedPath coalesces it to an
+            // empty directory part.
+            Assert.IsNull(Path.GetDirectoryName(driveOnly));
+        }
+
         Assert.IsTrue(Path.IsPathRooted(driveOnly));
 
         // Act
